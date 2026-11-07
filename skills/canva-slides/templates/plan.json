@@ -1,0 +1,176 @@
+{
+  "title": "Quy luật phủ định của phủ định",
+  "language": "vi",
+  "mode": "talk",
+  "minutes": 15,
+  "audience": "giảng viên và sinh viên, môn Triết học Mác – Lênin",
+  "spine": "Phát triển không đi theo đường thẳng mà theo đường xoáy ốc: mỗi lần phủ định biện chứng giữ lại cái hợp lý và nâng sự vật lên trình độ cao hơn.",
+  "terminology": {
+    "ba tính chất": [
+      "khách quan",
+      "kế thừa",
+      "phổ biến"
+    ],
+    "banned": [
+      "phát triển (thay cho 'phổ biến' khi nói về tính chất)"
+    ]
+  },
+  "sections": [
+    {
+      "role": "cover",
+      "title": "Quy luật phủ định của phủ định",
+      "description": "Bìa. Nền tối, một vùng ảnh tranh khắc của người dùng sẽ được chèn sau; chỉ tiêu đề và một dòng thông tin.",
+      "points": [
+        "Triết học Mác – Lênin",
+        "<Họ tên> · <Ngày>"
+      ]
+    },
+    {
+      "role": "agenda",
+      "title": "Bốn phần giúp ta hiểu quy luật",
+      "description": "Mục lục 4 hàng đánh số, lưới thẳng hàng.",
+      "points": [
+        "Khái niệm phủ định biện chứng",
+        "Nội dung quy luật",
+        "Ví dụ minh hoạ",
+        "Ý nghĩa phương pháp luận"
+      ]
+    },
+    {
+      "role": "definition",
+      "title": "Phủ định biện chứng là mắt xích nối cái cũ với cái mới",
+      "description": "Một câu định nghĩa lớn ở giữa, bên dưới hai dòng hỗ trợ. Không bullet dài.",
+      "points": [
+        "Là sự phủ định tạo tiền đề cho sự phát triển",
+        "Không phải phủ định sạch trơn mà có kế thừa"
+      ]
+    },
+    {
+      "role": "three-up",
+      "title": "Phủ định biện chứng có ba tính chất",
+      "description": "Ba cột bằng nhau, mỗi cột một tính chất: tiêu đề đậm + một dòng. Không đánh số.",
+      "points": [
+        "Khách quan: do mâu thuẫn bên trong sự vật",
+        "Kế thừa: bỏ cái lỗi thời, giữ cái hợp lý",
+        "Phổ biến: có trong tự nhiên, xã hội, tư duy"
+      ]
+    },
+    {
+      "role": "comparison",
+      "title": "Chỉ phủ định biện chứng mới thúc đẩy phát triển",
+      "description": "Bảng so sánh 3 hàng x 2 cột; hàng cuối được làm nổi bật.",
+      "points": [
+        "Phủ định sạch trơn: cắt đứt phát triển",
+        "Kế thừa nguyên xi: cản trở phát triển",
+        "Phủ định biện chứng: kế thừa có chọn lọc"
+      ]
+    },
+    {
+      "role": "diagram",
+      "title": "Phát triển đi theo đường xoáy ốc, không theo đường thẳng",
+      "description": "Chỉ tiêu đề và một vùng trống lớn bên dưới để chèn sơ đồ xoáy ốc. Không vẽ minh hoạ, không ảnh.",
+      "points": [
+        "Mỗi vòng lặp lại điểm xuất phát",
+        "nhưng ở trình độ cao hơn"
+      ]
+    },
+    {
+      "role": "rows",
+      "title": "Quy luật chỉ ra khuynh hướng, hình thức và kết quả",
+      "description": "Ba hàng ngang: nhãn bên trái, nội dung bên phải.",
+      "points": [
+        "Khuynh hướng: phát triển đi lên",
+        "Hình thức: đường xoáy ốc",
+        "Kết quả: cái mới ra đời từ cái cũ"
+      ]
+    },
+    {
+      "role": "diagram",
+      "title": "Hai lần phủ định hoàn thành một chu kỳ",
+      "description": "Chuỗi A, không-A, A' bằng ba khối bằng nhau nối bằng mũi tên có nhãn.",
+      "points": [
+        "Lần 1: biến cái cũ thành cái đối lập",
+        "Lần 2: cái mới ra đời, kế thừa có chọn lọc"
+      ]
+    },
+    {
+      "role": "diagram",
+      "title": "Mỗi chu kỳ khởi đầu một chu kỳ mới ở trình độ cao hơn",
+      "description": "Chỉ tiêu đề và vùng trống lớn để chèn sơ đồ chu kỳ.",
+      "points": [
+        "Cái cũ -> phủ định -> cái mới",
+        "Chu kỳ tiếp theo bắt đầu từ cái mới"
+      ]
+    },
+    {
+      "role": "example",
+      "title": "Ví dụ 1: hạt lúa nảy mầm rồi lại cho hạt",
+      "description": "Chuỗi ba khối nối bằng mũi tên, chú thích ngắn dưới mỗi khối, một dòng giải thích vì sao đây là quy luật.",
+      "points": [
+        "Hạt lúa",
+        "Cây lúa",
+        "Nhiều hạt lúa mới"
+      ]
+    },
+    {
+      "role": "example",
+      "title": "Ví dụ 2: các hình thái kinh tế - xã hội kế tiếp nhau",
+      "description": "Chuỗi ba khối, mũi tên có nhãn 'kế thừa thành tựu'.",
+      "points": [
+        "Phong kiến",
+        "Tư bản chủ nghĩa",
+        "Xã hội chủ nghĩa"
+      ]
+    },
+    {
+      "role": "example",
+      "title": "Ví dụ 3: máy tính đi từ đèn điện tử đến vi mạch",
+      "description": "Chuỗi ba khối, chú thích ngắn.",
+      "points": [
+        "Đèn điện tử",
+        "Transistor",
+        "Vi mạch"
+      ]
+    },
+    {
+      "role": "example",
+      "title": "Ví dụ 4: lý thuyết khoa học bị phản chứng rồi được thay thế",
+      "description": "Chuỗi ba khối, mũi tên có nhãn.",
+      "points": [
+        "Mô hình cũ",
+        "Phản chứng",
+        "Mô hình mới kế thừa phần đúng"
+      ]
+    },
+    {
+      "role": "rows",
+      "title": "Nhận thức: nhìn sự vật trong khuynh hướng đi lên và quanh co",
+      "description": "Ba hàng đánh số, tiêu đề đậm + một dòng.",
+      "points": [
+        "Nhận thức khuynh hướng phát triển",
+        "Chấp nhận con đường quanh co",
+        "Nhận ra cái mới và bảo vệ nó"
+      ]
+    },
+    {
+      "role": "cards",
+      "title": "Thực tiễn: ủng hộ cái mới, kế thừa có chọn lọc, tránh cực đoan",
+      "description": "Ba thẻ bằng nhau, cùng số dòng.",
+      "points": [
+        "Ủng hộ cái mới",
+        "Kế thừa có chọn lọc",
+        "Tránh phủ định sạch trơn và bảo thủ"
+      ]
+    },
+    {
+      "role": "closing",
+      "title": "Phát triển là xoáy ốc: giữ cái hợp lý, vươn tới trình độ cao hơn",
+      "description": "Slide kết: ba ý cần nhớ và một dòng cảm ơn. Slide này ở lại trên màn hình trong lúc hỏi đáp.",
+      "points": [
+        "Phủ định biện chứng có kế thừa",
+        "Hai lần phủ định, một chu kỳ",
+        "Cảm ơn thầy cô và các bạn"
+      ]
+    }
+  ]
+}
