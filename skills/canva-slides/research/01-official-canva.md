@@ -444,7 +444,7 @@ Skills present in canva-skills but **absent** from openai/plugins: `cli`, `gener
 3. **Interactivity inverted**: it always asks "Which platforms and formats would you like to resize for?" whereas canva-sdks deliberately *does not ask* for an all-channels request (rule 4) and asks only for a named platform without a placement.
 4. **No de-duplication.** It says "Create both versions but inform the user they're the same size" — the exact opposite of canva-sdks' de-dup-with-multiple-labels rule.
 5. **Instagram feed size is 1:1 (1080×1080)**, while canva-sdks defaults feed to 4:5 (1080×1350) and reserves 1:1 for the aspect-ratio set. For a phone-first audience the 4:5 default occupies materially more screen.
-6. **Presentation**: an emoji checklist ("✅ Successfully resized…") and per-platform bullet blocks instead of a status table; it adds "Consistent naming: use the source design title with platform suffix", which canva-sdks lacks.
+6. **Presentation**: an emoji checklist ("yes Successfully resized…") and per-platform bullet blocks instead of a status table; it adds "Consistent naming: use the source design title with platform suffix", which canva-sdks lacks.
 7. **URL handling**: it explicitly says to extract the id from the URL and pass the id; canva-sdks permits passing the share URL straight to `get-design`.
 
 **Verdict.** Port nothing from this variant except the naming convention (title + platform suffix). Its 1:1 feed default, missing de-dup, and always-ask interaction are all regressions.

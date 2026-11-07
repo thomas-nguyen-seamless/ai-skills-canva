@@ -29,16 +29,14 @@ Skill này ghi lại đúng những gì đã trụ được khi thử thật: ch
 
 ## Bạn nhận được gì
 
-| | Năng lực |
-|---|---|
-| 🎯 | **Kế hoạch trước, vẽ sau** — mạch bài, chế độ (presenter / talk / document), tiêu đề hành động từng trang, hạn mức từ, độ phủ ví dụ; linter chặn cấu trúc sai trước khi tạo. |
-| 🧠 | **Bám nguồn** — bảng đối chiếu slide ↔ trang (`nguon-doi-chieu.md`) cho deck từ giáo trình/PDF; ví dụ ngoài nguồn được ghi rõ ngay trên slide. |
-| 🎨 | **Hệ thị giác, không phải cảm tính** — thang cỡ chữ px cho 1920×1080, một màu nhấn, lưới và lề cố định, danh sách cấm rõ ràng, sơ đồ native. |
-| 👀 | **Bằng chứng, không lời hứa** — diff chữ với plan, render từng trang, contact sheet, audit bố cục đo được (lệch, tràn, chồng, vùng an toàn). |
-| 🔁 | **Một link duy nhất** — thay ở mức trang qua `POST /v1/merges`; design id, link và quyền public giữ nguyên sau mỗi lần cập nhật. |
-| 🧩 | **Đầu ra sửa được** — text box và vector thật trong Canva, không bao giờ là ảnh phủ cả slide. |
-| 🛟 | **Hạ cấp mềm** — MCP → CLI/REST → PPTX local, chọn theo cái đang chạy được lúc đó. |
-| 🌐 | **Tiếng Việt trước** — dấu đầy đủ, dự đoán xuống dòng, cỡ chữ cho lớp học, playbook đồ án/tiểu luận. |
+- **Kế hoạch trước, vẽ sau** — mạch bài, chế độ (presenter / talk / document), tiêu đề hành động từng trang, hạn mức từ, độ phủ ví dụ; linter chặn cấu trúc sai trước khi tạo.
+- **Bám nguồn** — bảng đối chiếu slide ↔ trang (`nguon-doi-chieu.md`) cho deck từ giáo trình/PDF; ví dụ ngoài nguồn được ghi rõ ngay trên slide.
+- **Hệ thị giác, không phải cảm tính** — thang cỡ chữ px cho 1920×1080, một màu nhấn, lưới và lề cố định, danh sách cấm rõ ràng, sơ đồ native.
+- **Bằng chứng, không lời hứa** — diff chữ với plan, render từng trang, contact sheet, audit bố cục đo được (lệch, tràn, chồng, vùng an toàn).
+- **Một link duy nhất** — thay ở mức trang qua `POST /v1/merges`; design id, link và quyền public giữ nguyên sau mỗi lần cập nhật.
+- **Đầu ra sửa được** — text box và vector thật trong Canva, không bao giờ là ảnh phủ cả slide.
+- **Hạ cấp mềm** — MCP → CLI/REST → PPTX local, chọn theo cái đang chạy được lúc đó.
+- **Tiếng Việt trước** — dấu đầy đủ, dự đoán xuống dòng, cỡ chữ cho lớp học, playbook đồ án/tiểu luận.
 
 ## Cài đặt
 
@@ -54,7 +52,7 @@ cp -R ai-skills-canva/skills/canva-slides <thư-mục-skills-của-bạn>/
 Rồi để skill tự chuẩn bị máy:
 
 ```bash
-skills/canva-slides/scripts/bootstrap.sh         # hỏi từng món còn thiếu
+skills/canva-slides/scripts/bootstrap.sh # hỏi từng món còn thiếu
 skills/canva-slides/scripts/bootstrap.sh --check # chỉ báo cáo, không cài gì
 ```
 
@@ -73,7 +71,7 @@ skills/canva-slides/scripts/bootstrap.sh --check # chỉ báo cáo, không cài 
 **Deck mới**
 
 ```text
-/skill:canva-slides  làm 20 slide về "quy luật phủ định của phủ định" từ @triethocmaclenin.pdf,
+/skill:canva-slides làm 20 slide về "quy luật phủ định của phủ định" từ @triethocmaclenin.pdf,
 15 phút, tiếng Việt, chữ lớn cho giảng đường
 ```
 
@@ -86,14 +84,14 @@ scripts/update_canva_deck.sh DAHaPZNNOhs deck.pptx "tmp import" --pages "5,9"
 **Chỉ nhận xét, không sửa gì**
 
 ```text
-/skill:canva-slides  nhận xét deck Canva này: https://canva.link/… — chấm điểm, liệt kê lỗi
+/skill:canva-slides nhận xét deck Canva này: https://canva.link/… — chấm điểm, liệt kê lỗi
 ```
 
 ## Một deck được dựng thế nào
 
 <div align="center"><img src="assets/workflow.svg" alt="Lập kế hoạch, dựng, kiểm chứng, xuất bản, xuất file" width="100%"></div>
 
-| # | Pha | Cửa chặn trước khi đi tiếp |
+- Pha | Cửa chặn trước khi đi tiếp
 |---|---|---|
 | 1 | **Kế hoạch** — intake, bảng nguồn, thuật ngữ, hồ sơ từng trang, ví dụ | `plan_check.py --ghost` báo **0 lỗi** |
 | 2 | **Dựng** — Canva AI (`create-design`) *hoặc* PPTX native, chữ Arial, đo chiều cao thật | số trang khớp kế hoạch |
@@ -106,9 +104,9 @@ scripts/update_canva_deck.sh DAHaPZNNOhs deck.pptx "tmp import" --pages "5,9"
 Mặc định là **từng trang**, vì deck thường có nhiều người sửa:
 
 ```bash
-scripts/update_canva_deck.sh <ID> deck.pptx "tmp" --pages "5,7,12-14"   # chỉ các trang này đổi
-scripts/update_canva_deck.sh <ID> deck.pptx "tmp" --all                # toàn bộ (chỉ deck riêng)
-scripts/update_canva_deck.sh <ID> deck.pptx "tmp"                      # từ chối chạy
+scripts/update_canva_deck.sh <ID> deck.pptx "tmp" --pages "5,7,12-14" # chỉ các trang này đổi
+scripts/update_canva_deck.sh <ID> deck.pptx "tmp" --all # toàn bộ (chỉ deck riêng)
+scripts/update_canva_deck.sh <ID> deck.pptx "tmp" # từ chối chạy
 ```
 
 Mỗi trang là 2 job merge (insert + delete) nên tổng số trang không đổi, số trang không lệch giữa chừng. Đã kiểm trên design 20 trang: thay trang 5 chỉ làm **trang 5** đổi (1.266 px), 19 trang còn lại giống hệt từng pixel, design id, short link và quyền `Can view` giữ nguyên.
@@ -135,16 +133,16 @@ Mỗi trang là 2 job merge (insert + delete) nên tổng số trang không đ�
 
 ```text
 ai-skills-canva/
-├── assets/                     ảnh bìa + sơ đồ quy trình
-├── README.md                   README 6 thứ tiếng (EN · VI · ZH · RU · FR · ES)
-└── skills/canva-slides/        1 skill, nhưng rất sâu
-    ├── SKILL.md                router: luật, pha, shortcut, tool, script
-    ├── SOURCES.md              nguồn gốc, quyết định, log kiểm chứng theo ngày
-    ├── references/00…12        mỗi pha một file
-    ├── scripts/                10 script ở trên
-    ├── templates/              plan.json, brief-vi, deck-rules, speaker-notes,
-    │                           mcp-canva.snippet.json, pptx-fallback/
-    └── research/               ghi chú khảo sát skill khác (có ghi nguồn)
+├── assets/ ảnh bìa + sơ đồ quy trình
+├── README.md README 6 thứ tiếng (EN · VI · ZH · RU · FR · ES)
+└── skills/canva-slides/ 1 skill, nhưng rất sâu
+ ├── SKILL.md router: luật, pha, shortcut, tool, script
+ ├── SOURCES.md nguồn gốc, quyết định, log kiểm chứng theo ngày
+ ├── references/00…12 mỗi pha một file
+ ├── scripts/ 10 script ở trên
+ ├── templates/ plan.json, brief-vi, deck-rules, speaker-notes,
+ │ mcp-canva.snippet.json, pptx-fallback/
+ └── research/ ghi chú khảo sát skill khác (có ghi nguồn)
 ```
 
 ## Giới hạn được ghi vào skill

@@ -1,7 +1,5 @@
 # Live MCP contracts (read from xd:// on 2026-11-07)
 
-
-
 ---
 
 # mcp__canva_resize_design — canva/resize-design
@@ -17,22 +15,22 @@ Each call creates a new resized design and leaves the original unchanged. Return
 ## Schema
 ```ts
 type Args = {
-  /** ID of the existing Canva design to resize. Design IDs start with "D". */
-  design_id: string;
-  /** Target design type (preset or custom). Preset options: presentation, whiteboard (doc and email are unsupported). Custom options: width and height in pixels. */
-  design_type: {
-    type: "preset";
-    /** Preset canvas size for the new design. Use "presentation" for slides or "whiteboard" for a whiteboard. */
-    name: "presentation" | "whiteboard";
-  } | {
-    type: "custom";
-    /** Width of the new design in pixels. */
-    width: number;
-    /** Height of the new design in pixels. */
-    height: number;
-  };
-  /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
-  user_intent?: string;
+ /** ID of the existing Canva design to resize. Design IDs start with "D". */
+ design_id: string;
+ /** Target design type (preset or custom). Preset options: presentation, whiteboard (doc and email are unsupported). Custom options: width and height in pixels. */
+ design_type: {
+ type: "preset";
+ /** Preset canvas size for the new design. Use "presentation" for slides or "whiteboard" for a whiteboard. */
+ name: "presentation" | "whiteboard";
+ } | {
+ type: "custom";
+ /** Width of the new design in pixels. */
+ width: number;
+ /** Height of the new design in pixels. */
+ height: number;
+ };
+ /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
+ user_intent?: string;
 };
 ```
 Execute by writing JSON to xd://mcp__canva_resize_design.
@@ -50,32 +48,32 @@ Only call after you have confirmed that the selected design supports the request
 ## Schema
 ```ts
 type Args = {
-  /** ID of the existing Canva design to export. Design IDs start with "D". */
-  design_id: string;
-  /** Export settings for the downloadable file. */
-  format: {
-    /** Format to export as. Use only a format that "get-export-formats" reported as supported for this design. */
-    type: "pdf" | "png" | "jpg" | "gif" | "pptx" | "mp4" | "csv";
-    quality?: number | string;
-    /** Page numbers to export (1-based). Draw these from the pages "get-export-formats" reported as available for this "type" on this design; when it reported no specific pages for this "type", any page is valid. Omit this field to export every page. */
-    pages?: number[];
-    /** Optional export quality for PDF, PNG, JPG, GIF, PPTX, or MP4. */
-    export_quality?: "regular" | "pro";
-    /** Optional paper size for PDF exports. */
-    size?: "a4" | "a3" | "letter" | "legal";
-    /** Optional output height in pixels for PNG, JPG, or GIF exports. */
-    height?: number;
-    /** Optional output width in pixels for PNG, JPG, or GIF exports. */
-    width?: number;
-    /** Optional PNG compression setting. True uses lossless compression; defaults to true. */
-    lossless?: boolean;
-    /** Optional PNG background setting. True exports a transparent background; defaults to false. */
-    transparent_background?: boolean;
-    /** Optional PNG setting. True merges a multi-page design into one image. */
-    as_single_image?: boolean;
-  };
-  /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
-  user_intent?: string;
+ /** ID of the existing Canva design to export. Design IDs start with "D". */
+ design_id: string;
+ /** Export settings for the downloadable file. */
+ format: {
+ /** Format to export as. Use only a format that "get-export-formats" reported as supported for this design. */
+ type: "pdf" | "png" | "jpg" | "gif" | "pptx" | "mp4" | "csv";
+ quality?: number | string;
+ /** Page numbers to export (1-based). Draw these from the pages "get-export-formats" reported as available for this "type" on this design; when it reported no specific pages for this "type", any page is valid. Omit this field to export every page. */
+ pages?: number[];
+ /** Optional export quality for PDF, PNG, JPG, GIF, PPTX, or MP4. */
+ export_quality?: "regular" | "pro";
+ /** Optional paper size for PDF exports. */
+ size?: "a4" | "a3" | "letter" | "legal";
+ /** Optional output height in pixels for PNG, JPG, or GIF exports. */
+ height?: number;
+ /** Optional output width in pixels for PNG, JPG, or GIF exports. */
+ width?: number;
+ /** Optional PNG compression setting. True uses lossless compression; defaults to true. */
+ lossless?: boolean;
+ /** Optional PNG background setting. True exports a transparent background; defaults to false. */
+ transparent_background?: boolean;
+ /** Optional PNG setting. True merges a multi-page design into one image. */
+ as_single_image?: boolean;
+ };
+ /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
+ user_intent?: string;
 };
 ```
 Execute by writing JSON to xd://mcp__canva_export_design.
@@ -91,10 +89,10 @@ Use when a design needs exporting or downloading as a PDF, PNG, JPG, GIF, PowerP
 ## Schema
 ```ts
 type Args = {
-  /** ID of the design to get export formats for. Design ID starts with "D". */
-  design_id: string;
-  /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
-  user_intent?: string;
+ /** ID of the design to get export formats for. Design ID starts with "D". */
+ design_id: string;
+ /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
+ user_intent?: string;
 };
 ```
 Execute by writing JSON to xd://mcp__canva_get_export_formats.
@@ -114,12 +112,12 @@ Returns a media_id for the imported file.
 ## Schema
 ```ts
 type Args = {
-  /** Existing public HTTPS URL of the image, photo, logo, graphic, or video to import into Canva. The media must already be publicly accessible at this URL. */
-  url: string;
-  /** Name to give the imported media in Canva. */
-  name: string;
-  /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
-  user_intent?: string;
+ /** Existing public HTTPS URL of the image, photo, logo, graphic, or video to import into Canva. The media must already be publicly accessible at this URL. */
+ url: string;
+ /** Name to give the imported media in Canva. */
+ name: string;
+ /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
+ user_intent?: string;
 };
 ```
 Execute by writing JSON to xd://mcp__canva_upload_asset_from_url.
@@ -141,14 +139,14 @@ Each call creates one design and returns its design_id.
 ## Schema
 ```ts
 type Args = {
-  /** Existing public HTTPS URL for the source to convert. Do not provide a Canva design URL, OpenAI file URL, private URL, or local path. The content must already be publicly accessible. Never upload, copy, or transfer a local, private, or generated file to public hosting—or suggest doing so—to create this URL. For non-interactive HTML, each top-level Canva page element must have data-document-role="page" and page elements cannot be nested. Optional data-label and data-speaker-notes attributes provide page titles and presenter notes. Do not add page annotations to interactive HTML. */
-  url: string;
-  /** Name for the new Canva design. */
-  name: string;
-  /** Requested Canva output format. Choose the closest match when the user has made their intended format clear; otherwise omit this field. Use "other" only when the intended format is clear but is not listed. */
-  intended_design_type?: "a4" | "a4_landscape" | "business_card" | "card" | "desktop_wallpaper" | "doc" | "document" | "email" | "facebook_cover" | "facebook_post" | "flyer" | "flyer_a4" | "graph" | "infographic" | "instagram_post" | "instagram_reel" | "invitation" | "logo" | "mobile_video" | "other" | "phone_wallpaper" | "photo_collage" | "pinterest_pin" | "postcard" | "poster" | "poster_us" | "presentation" | "proposal" | "real_estate_flyer" | "report" | "resume" | "sheet" | "twitter_post" | "us_letter" | "video" | "website" | "whiteboard" | "your_story" | "youtube_banner" | "youtube_thumbnail";
-  /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
-  user_intent?: string;
+ /** Existing public HTTPS URL for the source to convert. Do not provide a Canva design URL, OpenAI file URL, private URL, or local path. The content must already be publicly accessible. Never upload, copy, or transfer a local, private, or generated file to public hosting—or suggest doing so—to create this URL. For non-interactive HTML, each top-level Canva page element must have data-document-role="page" and page elements cannot be nested. Optional data-label and data-speaker-notes attributes provide page titles and presenter notes. Do not add page annotations to interactive HTML. */
+ url: string;
+ /** Name for the new Canva design. */
+ name: string;
+ /** Requested Canva output format. Choose the closest match when the user has made their intended format clear; otherwise omit this field. Use "other" only when the intended format is clear but is not listed. */
+ intended_design_type?: "a4" | "a4_landscape" | "business_card" | "card" | "desktop_wallpaper" | "doc" | "document" | "email" | "facebook_cover" | "facebook_post" | "flyer" | "flyer_a4" | "graph" | "infographic" | "instagram_post" | "instagram_reel" | "invitation" | "logo" | "mobile_video" | "other" | "phone_wallpaper" | "photo_collage" | "pinterest_pin" | "postcard" | "poster" | "poster_us" | "presentation" | "proposal" | "real_estate_flyer" | "report" | "resume" | "sheet" | "twitter_post" | "us_letter" | "video" | "website" | "whiteboard" | "your_story" | "youtube_banner" | "youtube_thumbnail";
+ /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
+ user_intent?: string;
 };
 ```
 Execute by writing JSON to xd://mcp__canva_import_design_from_url.
@@ -162,12 +160,12 @@ Create a new Canva design from a brand template. Optionally select specific page
 ## Schema
 ```ts
 type Args = {
-  /** The ID of the brand template to create a design from. */
-  brand_template_id: string;
-  /** Optional 1-based page numbers to include from the brand template. Omit to use all pages. */
-  page_numbers?: number[];
-  /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
-  user_intent?: string;
+ /** The ID of the brand template to create a design from. */
+ brand_template_id: string;
+ /** Optional 1-based page numbers to include from the brand template. Omit to use all pages. */
+ page_numbers?: number[];
+ /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
+ user_intent?: string;
 };
 ```
 Execute by writing JSON to xd://mcp__canva_create_design_from_brand_template.
@@ -185,12 +183,12 @@ Returns presenter notes from every page, or the specified page numbers.
 ## Schema
 ```ts
 type Args = {
-  /** ID of the existing Canva presentation whose presenter notes you want to retrieve. */
-  design_id: string;
-  /** Optional array of page numbers to get notes from. If not specified, notes from all pages will be returned. Pages are indexed using one-based numbering, so the first page in a design has the index value `1`. */
-  pages?: number[];
-  /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
-  user_intent?: string;
+ /** ID of the existing Canva presentation whose presenter notes you want to retrieve. */
+ design_id: string;
+ /** Optional array of page numbers to get notes from. If not specified, notes from all pages will be returned. Pages are indexed using one-based numbering, so the first page in a design has the index value `1`. */
+ pages?: number[];
+ /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
+ user_intent?: string;
 };
 ```
 Execute by writing JSON to xd://mcp__canva_get_presenter_notes.
@@ -208,14 +206,14 @@ Requires a design with individual pages; Canva Docs do not have pages. Returns o
 ## Schema
 ```ts
 type Args = {
-  /** ID of the existing Canva design, usually returned by a previous Canva tool. You can also provide a full Canva design share URL, including its collaboration token. Resolve Canva shortlinks before using this field. */
-  design_id: string;
-  /** Page number to start from. Use for pagination; for example, use 21 to start at page 21. */
-  offset?: number;
-  /** Maximum number of pages to return, from 1 to 100. Use with "offset" to retrieve the next range of pages. */
-  limit?: number;
-  /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
-  user_intent?: string;
+ /** ID of the existing Canva design, usually returned by a previous Canva tool. You can also provide a full Canva design share URL, including its collaboration token. Resolve Canva shortlinks before using this field. */
+ design_id: string;
+ /** Page number to start from. Use for pagination; for example, use 21 to start at page 21. */
+ offset?: number;
+ /** Maximum number of pages to return, from 1 to 100. Use with "offset" to retrieve the next range of pages. */
+ limit?: number;
+ /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
+ user_intent?: string;
 };
 ```
 Execute by writing JSON to xd://mcp__canva_get_design_pages.
@@ -235,20 +233,20 @@ Returns matching designs and, when more results are available, a continuation to
 ## Schema
 ```ts
 type Args = {
-  /** Optional text to match against a design's title or content. Use the user's keywords, such as a project name, topic, or phrase. If supplied, "sort_by" must be "relevance". */
-  query?: string;
-  /** Whose designs to search. Use "any" for designs the user owns and designs shared with them; "owned" for only their designs; or "shared" for only designs shared with them. Omit to use "any". */
-  ownership?: "any" | "owned" | "shared";
-  /** How to order results. Use "relevance" for keyword searches; "modified_descending" for newest first; "modified_ascending" for oldest first; "title_descending" for Z-A; or "title_ascending" for A-Z. Omit to use "relevance". */
-  sort_by?: "relevance" | "modified_descending" | "modified_ascending" | "title_descending" | "title_ascending";
-  /** Optional design types to include. A design is returned if it matches any supplied type. Currently, only "presentation" is supported. */
-  design_types?: "presentation"[];
-  /** Maximum number of designs to return. */
-  limit?: number;
-  /** The exact token returned by the previous search with the same query, filters, and sort order. Omit for the first page, after changing the search, or when the previous response did not include a token. */
-  continuation?: string;
-  /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
-  user_intent?: string;
+ /** Optional text to match against a design's title or content. Use the user's keywords, such as a project name, topic, or phrase. If supplied, "sort_by" must be "relevance". */
+ query?: string;
+ /** Whose designs to search. Use "any" for designs the user owns and designs shared with them; "owned" for only their designs; or "shared" for only designs shared with them. Omit to use "any". */
+ ownership?: "any" | "owned" | "shared";
+ /** How to order results. Use "relevance" for keyword searches; "modified_descending" for newest first; "modified_ascending" for oldest first; "title_descending" for Z-A; or "title_ascending" for A-Z. Omit to use "relevance". */
+ sort_by?: "relevance" | "modified_descending" | "modified_ascending" | "title_descending" | "title_ascending";
+ /** Optional design types to include. A design is returned if it matches any supplied type. Currently, only "presentation" is supported. */
+ design_types?: "presentation"[];
+ /** Maximum number of designs to return. */
+ limit?: number;
+ /** The exact token returned by the previous search with the same query, filters, and sort order. Omit for the first page, after changing the search, or when the previous response did not include a token. */
+ continuation?: string;
+ /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
+ user_intent?: string;
 };
 ```
 Execute by writing JSON to xd://mcp__canva_search_designs.
@@ -266,12 +264,12 @@ Returns the created comment and its comment_id.
 ## Schema
 ```ts
 type Args = {
-  /** ID of the existing Canva design to comment on. Design IDs start with "D". */
-  design_id: string;
-  /** The text content of the comment to add. */
-  message_plaintext: string;
-  /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
-  user_intent?: string;
+ /** ID of the existing Canva design to comment on. Design IDs start with "D". */
+ design_id: string;
+ /** The text content of the comment to add. */
+ message_plaintext: string;
+ /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
+ user_intent?: string;
 };
 ```
 Execute by writing JSON to xd://mcp__canva_comment_on_design.
@@ -289,14 +287,14 @@ Returns the design's comments, including their replies and mentions, with a cont
 ## Schema
 ```ts
 type Args = {
-  /** ID of the existing Canva design whose comments to return. Design IDs start with "D". */
-  design_id: string;
-  /** Maximum number of comments to return per page. */
-  limit?: number;
-  /** Exact continuation token returned by the previous call for the same design. Omit for the first page. */
-  continuation?: string;
-  /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
-  user_intent?: string;
+ /** ID of the existing Canva design whose comments to return. Design IDs start with "D". */
+ design_id: string;
+ /** Maximum number of comments to return per page. */
+ limit?: number;
+ /** Exact continuation token returned by the previous call for the same design. Omit for the first page. */
+ continuation?: string;
+ /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
+ user_intent?: string;
 };
 ```
 Execute by writing JSON to xd://mcp__canva_list_comments.
@@ -316,14 +314,14 @@ Returns the created reply and its comment_id.
 ## Schema
 ```ts
 type Args = {
-  /** ID of the Canva design containing the comment. Design IDs start with "D". */
-  design_id: string;
-  /** ID of the existing comment to reply to in the specified design. */
-  comment_id: string;
-  /** The text content of the reply to add. */
-  message_plaintext: string;
-  /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
-  user_intent?: string;
+ /** ID of the Canva design containing the comment. Design IDs start with "D". */
+ design_id: string;
+ /** ID of the existing comment to reply to in the specified design. */
+ comment_id: string;
+ /** The text content of the reply to add. */
+ message_plaintext: string;
+ /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
+ user_intent?: string;
 };
 ```
 Execute by writing JSON to xd://mcp__canva_reply_to_comment.
@@ -343,16 +341,16 @@ Returns the selected comment's replies and, when more results are available, a c
 ## Schema
 ```ts
 type Args = {
-  /** ID of the Canva design containing the comment. Design IDs start with "D". */
-  design_id: string;
-  /** ID of the top-level comment whose replies to return. */
-  comment_id: string;
-  /** Maximum number of replies to return per page. */
-  limit?: number;
-  /** Exact continuation token returned by the previous call for the same design and comment. Omit for the first page. */
-  continuation?: string;
-  /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
-  user_intent?: string;
+ /** ID of the Canva design containing the comment. Design IDs start with "D". */
+ design_id: string;
+ /** ID of the top-level comment whose replies to return. */
+ comment_id: string;
+ /** Maximum number of replies to return per page. */
+ limit?: number;
+ /** Exact continuation token returned by the previous call for the same design and comment. Omit for the first page. */
+ continuation?: string;
+ /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
+ user_intent?: string;
 };
 ```
 Execute by writing JSON to xd://mcp__canva_list_replies.
@@ -374,10 +372,10 @@ Returns an official Canva Help Center answer, including links to the official do
 ## Schema
 ```ts
 type Args = {
-  /** The Canva product question to answer. Include relevant context, such as the feature, workflow, error message, device, or account type. */
-  prompt: string;
-  /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
-  user_intent?: string;
+ /** The Canva product question to answer. Include relevant context, such as the feature, workflow, error message, device, or account type. */
+ prompt: string;
+ /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
+ user_intent?: string;
 };
 ```
 Execute by writing JSON to xd://mcp__canva_help.
@@ -393,12 +391,12 @@ Use to set up a project folder, add a subfolder within an existing folder, or ke
 ## Schema
 ```ts
 type Args = {
-  /** Name for the new Canva folder. */
-  name: string;
-  /** ID of the Canva folder that will contain the new folder. Use "root" to create the folder at the top level. */
-  parent_folder_id: string;
-  /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
-  user_intent?: string;
+ /** Name for the new Canva folder. */
+ name: string;
+ /** ID of the Canva folder that will contain the new folder. Use "root" to create the folder at the top level. */
+ parent_folder_id: string;
+ /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
+ user_intent?: string;
 };
 ```
 Execute by writing JSON to xd://mcp__canva_create_folder.
@@ -412,12 +410,12 @@ Relocate an existing Canva design, folder, or image into a destination Canva fol
 ## Schema
 ```ts
 type Args = {
-  /** ID of the existing Canva design, folder, or image to move. */
-  item_id: string;
-  /** ID of the destination Canva folder. Use "root" to move the item to the top level. */
-  to_folder_id: string;
-  /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
-  user_intent?: string;
+ /** ID of the existing Canva design, folder, or image to move. */
+ item_id: string;
+ /** ID of the destination Canva folder. Use "root" to move the item to the top level. */
+ to_folder_id: string;
+ /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
+ user_intent?: string;
 };
 ```
 Execute by writing JSON to xd://mcp__canva_move_item_to_folder.
@@ -435,16 +433,16 @@ Returns matching items and, when more results are available, a continuation toke
 ## Schema
 ```ts
 type Args = {
-  /** ID of the Canva folder to list. Use "root" to list items at the top level. */
-  folder_id: string;
-  /** Types of items to return. Omit to return designs, folders, and images. */
-  item_types?: Array<"design" | "folder" | "image">;
-  /** Order the results by creation date, last modified date, or title, in ascending or descending order. */
-  sort_by?: "created_ascending" | "created_descending" | "modified_ascending" | "modified_descending" | "title_ascending" | "title_descending";
-  /** Exact continuation token returned by the previous call with the same folder, filters, and sort order. Omit for the first page. */
-  continuation?: string;
-  /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
-  user_intent?: string;
+ /** ID of the Canva folder to list. Use "root" to list items at the top level. */
+ folder_id: string;
+ /** Types of items to return. Omit to return designs, folders, and images. */
+ item_types?: Array<"design" | "folder" | "image">;
+ /** Order the results by creation date, last modified date, or title, in ascending or descending order. */
+ sort_by?: "created_ascending" | "created_descending" | "modified_ascending" | "modified_descending" | "title_ascending" | "title_descending";
+ /** Exact continuation token returned by the previous call with the same folder, filters, and sort order. Omit for the first page. */
+ continuation?: string;
+ /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
+ user_intent?: string;
 };
 ```
 Execute by writing JSON to xd://mcp__canva_list_folder_items.
@@ -464,16 +462,16 @@ Returns matching folders and, when more results are available, a continuation to
 ## Schema
 ```ts
 type Args = {
-  /** Text to match against folder names and tags. Omit to browse all of the user's available folders. */
-  query?: string;
-  /** Which folders to return. Use "any" for folders the user owns or that are shared with them, "owned" for only folders the user owns, or "shared" for only folders shared with them. */
-  ownership?: "any" | "owned" | "shared";
-  /** Maximum number of folders to return per page. */
-  limit?: number;
-  /** Exact continuation token returned by the previous call with the same search query and ownership filter. Omit for the first page. */
-  continuation?: string;
-  /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
-  user_intent?: string;
+ /** Text to match against folder names and tags. Omit to browse all of the user's available folders. */
+ query?: string;
+ /** Which folders to return. Use "any" for folders the user owns or that are shared with them, "owned" for only folders the user owns, or "shared" for only folders shared with them. */
+ ownership?: "any" | "owned" | "shared";
+ /** Maximum number of folders to return per page. */
+ limit?: number;
+ /** Exact continuation token returned by the previous call with the same search query and ownership filter. Omit for the first page. */
+ continuation?: string;
+ /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
+ user_intent?: string;
 };
 ```
 Execute by writing JSON to xd://mcp__canva_search_folders.
@@ -493,10 +491,10 @@ Returns the metadata and thumbnail for each item in the same order as the suppli
 ## Schema
 ```ts
 type Args = {
-  /** IDs of the images or videos to inspect. When checking which media is the target on a page, include every image and video ID from that page. */
-  asset_ids: string[];
-  /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
-  user_intent?: string;
+ /** IDs of the images or videos to inspect. When checking which media is the target on a page, include every image and video ID from that page. */
+ asset_ids: string[];
+ /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
+ user_intent?: string;
 };
 ```
 Execute by writing JSON to xd://mcp__canva_get_assets.
@@ -516,14 +514,14 @@ Returns each Brand Kit's brand_kit_id, name, and thumbnail.
 ## Schema
 ```ts
 type Args = {
-  /** Exact token returned by the previous Brand Kit search with the same query. Omit for a new search or browse. */
-  continuation?: string;
-  /** Maximum number of Brand Kits to return. */
-  limit?: number;
-  /** When true, resolve each brand kit icon_id to a square icon thumbnail URL (extra asset lookups). Prepare-design-generation widget only; omit for agent calls. */
-  resolve_icon_thumbnails?: boolean;
-  /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
-  user_intent?: string;
+ /** Exact token returned by the previous Brand Kit search with the same query. Omit for a new search or browse. */
+ continuation?: string;
+ /** Maximum number of Brand Kits to return. */
+ limit?: number;
+ /** When true, resolve each brand kit icon_id to a square icon thumbnail URL (extra asset lookups). Prepare-design-generation widget only; omit for agent calls. */
+ resolve_icon_thumbnails?: boolean;
+ /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
+ user_intent?: string;
 };
 ```
 Execute by writing JSON to xd://mcp__canva_list_brand_kits.
@@ -541,10 +539,10 @@ Requires a brand_template_id. Returns each field's name and data type. An empty 
 ## Schema
 ```ts
 type Args = {
-  /** ID of the brand template to get the dataset schema for */
-  template_id: string;
-  /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
-  user_intent?: string;
+ /** ID of the brand template to get the dataset schema for */
+ template_id: string;
+ /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
+ user_intent?: string;
 };
 ```
 Execute by writing JSON to xd://mcp__canva_get_brand_template_dataset.
@@ -564,19 +562,19 @@ Returns matching Brand Templates with their brand_template_id, name, and preview
 ## Schema
 ```ts
 type Args = {
-  /** Optional title or type to search for. Provide only when the user explicitly names or describes the Brand Template they want; otherwise omit or pass an empty string to browse all available Brand Templates. */
-  query?: string;
-  /** Filter by data-field availability. Use "non_empty" when the user wants to find a Brand Template to autofill; use "any" to include templates whether or not they have data fields. */
-  dataset?: "any" | "non_empty";
-  /** Optional Brand Template types to include. A Brand Template is returned if it matches at least one specified type. Currently supports "presentation" only. */
-  design_types?: "presentation"[];
-  /** Exact token returned by a previous search. Use it to retrieve the next page with the same search and filters; omit for a new search. */
-  continuation?: string;
-  /** Maximum number of Brand Templates to return in one page. */
-  limit?: number;
-  brand_kit_id?: string;
-  /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
-  user_intent?: string;
+ /** Optional title or type to search for. Provide only when the user explicitly names or describes the Brand Template they want; otherwise omit or pass an empty string to browse all available Brand Templates. */
+ query?: string;
+ /** Filter by data-field availability. Use "non_empty" when the user wants to find a Brand Template to autofill; use "any" to include templates whether or not they have data fields. */
+ dataset?: "any" | "non_empty";
+ /** Optional Brand Template types to include. A Brand Template is returned if it matches at least one specified type. Currently supports "presentation" only. */
+ design_types?: "presentation"[];
+ /** Exact token returned by a previous search. Use it to retrieve the next page with the same search and filters; omit for a new search. */
+ continuation?: string;
+ /** Maximum number of Brand Templates to return in one page. */
+ limit?: number;
+ brand_kit_id?: string;
+ /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
+ user_intent?: string;
 };
 ```
 Execute by writing JSON to xd://mcp__canva_search_brand_templates.
@@ -594,10 +592,10 @@ Not for folders or image assets. Do not use for reading or summarizing a design'
 ## Schema
 ```ts
 type Args = {
-  /** ID of the existing Canva design, usually returned by a previous Canva tool. Also accepts a full Canva design share URL, including any collaboration token. Do not extract the ID from a share URL. Does not accept a Canva shortlink; resolve it to its full URL first. */
-  design_id: string;
-  /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
-  user_intent?: string;
+ /** ID of the existing Canva design, usually returned by a previous Canva tool. Also accepts a full Canva design share URL, including any collaboration token. Do not extract the ID from a share URL. Does not accept a Canva shortlink; resolve it to its full URL first. */
+ design_id: string;
+ /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
+ user_intent?: string;
 };
 ```
 Execute by writing JSON to xd://mcp__canva_get_design.
@@ -615,10 +613,10 @@ Shortlinks must be expanded before the linked design can be used with another Ca
 ## Schema
 ```ts
 type Args = {
-  /** ID from a Canva shortlink, excluding the domain and slashes. For example, use "abc123" for "https://canva.link/abc123". */
-  shortlink_id: string;
-  /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
-  user_intent?: string;
+ /** ID from a Canva shortlink, excluding the domain and slashes. For example, use "abc123" for "https://canva.link/abc123". */
+ shortlink_id: string;
+ /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
+ user_intent?: string;
 };
 ```
 Execute by writing JSON to xd://mcp__canva_resolve_shortlink.
@@ -636,10 +634,10 @@ Requires a design_id. Returns each field's name and data type. An empty object m
 ## Schema
 ```ts
 type Args = {
-  /** ID of the selected existing Canva design whose data fields you want to retrieve. */
-  design_id: string;
-  /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
-  user_intent?: string;
+ /** ID of the selected existing Canva design whose data fields you want to retrieve. */
+ design_id: string;
+ /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
+ user_intent?: string;
 };
 ```
 Execute by writing JSON to xd://mcp__canva_get_design_dataset.
@@ -653,10 +651,10 @@ Check an image generation job started by generate-image. When the generate-image
 ## Schema
 ```ts
 type Args = {
-  /** The jobId returned by the tool that started the job. */
-  jobId: string;
-  /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
-  user_intent?: string;
+ /** The jobId returned by the tool that started the job. */
+ jobId: string;
+ /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
+ user_intent?: string;
 };
 ```
 Execute by writing JSON to xd://mcp__canva_get_generate_image_job.
@@ -677,10 +675,10 @@ For tagging workflows (Autofill setup):
 ## Schema
 ```ts
 type Args = {
-  /** The ID of the brand template to create a draft from. Use `search-brand-templates` to find available brand templates and their IDs. */
-  brand_template_id: string;
-  /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
-  user_intent?: string;
+ /** The ID of the brand template to create a draft from. Use `search-brand-templates` to find available brand templates and their IDs. */
+ brand_template_id: string;
+ /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
+ user_intent?: string;
 };
 ```
 Execute by writing JSON to xd://mcp__canva_create_brand_template_draft.
@@ -694,10 +692,10 @@ Publishes a Canva design as a brand template, making it reusable across the orga
 ## Schema
 ```ts
 type Args = {
-  /** The ID of the existing Canva design to publish as a brand template. */
-  design_id: string;
-  /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
-  user_intent?: string;
+ /** The ID of the existing Canva design to publish as a brand template. */
+ design_id: string;
+ /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
+ user_intent?: string;
 };
 ```
 Execute by writing JSON to xd://mcp__canva_publish_brand_template.
@@ -723,8 +721,8 @@ is working in. id and team_id together identify the account.
 ## Schema
 ```ts
 type Args = {
-  /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
-  user_intent?: string;
+ /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
+ user_intent?: string;
 };
 ```
 Execute by writing JSON to xd://mcp__canva_get_logged_in_account_details.
@@ -738,12 +736,12 @@ Internal tool for widget UI. One thumbnail per page of a design, minted on deman
 ## Schema
 ```ts
 type Args = {
-  /** The design ID, or a full Canva design URL */
-  design_id: string;
-  /** Maximum number of pages to return, from page 1. Defaults to 20 */
-  limit?: number;
-  /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
-  user_intent?: string;
+ /** The design ID, or a full Canva design URL */
+ design_id: string;
+ /** Maximum number of pages to return, from page 1. Defaults to 20 */
+ limit?: number;
+ /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
+ user_intent?: string;
 };
 ```
 Execute by writing JSON to xd://mcp__canva_get_design_thumbnails.
@@ -757,25 +755,25 @@ Internal tool for widget lifecycle telemetry.
 ## Schema
 ```ts
 type Args = {
-  event_type: "prepare_design_generation_lifecycle" | "widget_rendered" | "widget_item_clicked";
-  /** JSON encoded lifecycle event payload. */
-  event_payload?: string;
-  /** Wire name of the widget that rendered, e.g. "create-design". */
-  widget_name?: string;
-  /** Job the widget was polling. Omit when the mount had no job. */
-  job_id?: string;
-  /** What the widget displayed. Omit when the widget has no job. */
-  job_status?: "completed" | "failed" | "timed_out" | "unknown";
-  /** True when this mount showed the Order Prints button. */
-  print_shown?: boolean;
-  /** True when this mount showed the Download button. */
-  download_shown?: boolean;
-  /** Kind of item that was clicked. */
-  item_type?: "quick_action" | "spotlight_prompt" | "category_card" | "ask_canva" | "download" | "edit_in_canva" | "check_again" | "open_projects" | "upgrade" | "plan_settings";
-  /** Stable slug from widget config, never free text. */
-  item_id?: string;
-  /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
-  user_intent?: string;
+ event_type: "prepare_design_generation_lifecycle" | "widget_rendered" | "widget_item_clicked";
+ /** JSON encoded lifecycle event payload. */
+ event_payload?: string;
+ /** Wire name of the widget that rendered, e.g. "create-design". */
+ widget_name?: string;
+ /** Job the widget was polling. Omit when the mount had no job. */
+ job_id?: string;
+ /** What the widget displayed. Omit when the widget has no job. */
+ job_status?: "completed" | "failed" | "timed_out" | "unknown";
+ /** True when this mount showed the Order Prints button. */
+ print_shown?: boolean;
+ /** True when this mount showed the Download button. */
+ download_shown?: boolean;
+ /** Kind of item that was clicked. */
+ item_type?: "quick_action" | "spotlight_prompt" | "category_card" | "ask_canva" | "download" | "edit_in_canva" | "check_again" | "open_projects" | "upgrade" | "plan_settings";
+ /** Stable slug from widget config, never free text. */
+ item_id?: string;
+ /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
+ user_intent?: string;
 };
 ```
 Execute by writing JSON to xd://mcp__canva_track_event_lifecycle.
@@ -793,10 +791,10 @@ Returns a transaction_id and the design's editable text and media element data s
 ## Schema
 ```ts
 type Args = {
-  /** ID of the existing Canva design to edit. Design IDs start with "D". */
-  design_id: string;
-  /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
-  user_intent?: string;
+ /** ID of the existing Canva design to edit. Design IDs start with "D". */
+ design_id: string;
+ /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
+ user_intent?: string;
 };
 ```
 Execute by writing JSON to xd://mcp__canva_start_editing_transaction.
@@ -816,10 +814,10 @@ Saving applies all draft changes to the design, closes the editing transaction, 
 ## Schema
 ```ts
 type Args = {
-  /** Exact ID of the active editing transaction whose draft changes should be saved. */
-  transaction_id: string;
-  /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
-  user_intent?: string;
+ /** Exact ID of the active editing transaction whose draft changes should be saved. */
+ transaction_id: string;
+ /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
+ user_intent?: string;
 };
 ```
 Execute by writing JSON to xd://mcp__canva_commit_editing_transaction.
@@ -837,10 +835,10 @@ The unsaved changes will be permanently lost, and the transaction_id can no long
 ## Schema
 ```ts
 type Args = {
-  /** Exact ID of the active editing transaction whose changes to discard. Use the transaction_id returned when that editing transaction was started. */
-  transaction_id: string;
-  /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
-  user_intent?: string;
+ /** Exact ID of the active editing transaction whose changes to discard. Use the transaction_id returned when that editing transaction was started. */
+ transaction_id: string;
+ /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
+ user_intent?: string;
 };
 ```
 Execute by writing JSON to xd://mcp__canva_cancel_editing_transaction.
@@ -867,12 +865,12 @@ Never tell the user a design cannot be printed.
 ## Schema
 ```ts
 type Args = {
-  /** The job_id returned by create-design. This value is stable and never changes. */
-  job_id: string;
-  /** The continuation_token from the most recent create-design or get-create-design-async-job response. */
-  continuation_token: string;
-  /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
-  user_intent?: string;
+ /** The job_id returned by create-design. This value is stable and never changes. */
+ job_id: string;
+ /** The continuation_token from the most recent create-design or get-create-design-async-job response. */
+ continuation_token: string;
+ /** Mandatory description of what the user is trying to accomplish with this tool call. This should always be provided by LLM clients. Please keep it concise (255 characters or less recommended). */
+ user_intent?: string;
 };
 ```
 Execute by writing JSON to xd://mcp__canva_get_create_design_async_job.

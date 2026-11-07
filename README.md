@@ -42,16 +42,14 @@ This skill encodes what actually held up under live testing: a plan gate before 
 
 ## What you get
 
-| | Capability |
-|---|---|
-| 🎯 | **Narrative plan first** — spine, mode (presenter / talk / document), per-slide action titles, word budgets, example coverage; a linter blocks a bad structure before generation. |
-| 🧠 | **Source-faithful decks** — a slide-to-page ledger (`nguon-doi-chieu.md`) for textbook or PDF-based work; examples outside the source are labelled on the slide. |
-| 🎨 | **Visual system, not vibes** — px type scale for 1920×1080, one accent, grid and margins, an explicit anti-slop veto list, native diagrams. |
-| 👀 | **Proof, not promises** — text diff against the plan, per-page render, contact sheet, measured layout audit (drift, overflow, overlap, safe zones). |
-| 🔁 | **Same link forever** — page-level replacement through `POST /v1/merges`; design id, link and public sharing survive updates. |
-| 🧩 | **Native, editable output** — real text boxes and vector shapes in Canva, never slide-sized images. |
-| 🛟 | **Graceful degradation** — MCP → CLI/REST → local PPTX, chosen by what actually works right now. |
-| 🌐 | **Vietnamese-first** — diacritics, wrap prediction, classroom type sizes, coursework playbooks. |
+- **Narrative plan first** — spine, mode (presenter / talk / document), per-slide action titles, word budgets, example coverage; a linter blocks a bad structure before generation.
+- **Source-faithful decks** — a slide-to-page ledger (`nguon-doi-chieu.md`) for textbook or PDF-based work; examples outside the source are labelled on the slide.
+- **Visual system, not vibes** — px type scale for 1920×1080, one accent, grid and margins, an explicit anti-slop veto list, native diagrams.
+- **Proof, not promises** — text diff against the plan, per-page render, contact sheet, measured layout audit (drift, overflow, overlap, safe zones).
+- **Same link forever** — page-level replacement through `POST /v1/merges`; design id, link and public sharing survive updates.
+- **Native, editable output** — real text boxes and vector shapes in Canva, never slide-sized images.
+- **Graceful degradation** — MCP → CLI/REST → local PPTX, chosen by what actually works right now.
+- **Vietnamese-first** — diacritics, wrap prediction, classroom type sizes, coursework playbooks.
 
 ## Install
 
@@ -67,8 +65,8 @@ cp -R ai-skills-canva/skills/canva-slides <your-skills-dir>/
 Then let the skill prepare the machine:
 
 ```bash
-skills/canva-slides/scripts/bootstrap.sh      # asks once per missing tool
-skills/canva-slides/scripts/bootstrap.sh --check   # report only, install nothing
+skills/canva-slides/scripts/bootstrap.sh # asks once per missing tool
+skills/canva-slides/scripts/bootstrap.sh --check # report only, install nothing
 ```
 
 `bootstrap.sh` **only installs what is missing** — present tools are reported as `[ok] … (already installed, skipped)` and are never reinstalled. It then checks the two things it cannot do for you: the Canva CLI login and the MCP mount.
@@ -86,7 +84,7 @@ skills/canva-slides/scripts/bootstrap.sh --check   # report only, install nothin
 **New deck**
 
 ```text
-/skill:canva-slides  make a 20-slide deck on "law of the negation of the negation"
+/skill:canva-slides make a 20-slide deck on "law of the negation of the negation"
 from @triethocmaclenin.pdf — 15 minutes, Vietnamese, large type for a lecture hall
 ```
 
@@ -99,14 +97,14 @@ scripts/update_canva_deck.sh DAHaPZNNOhs deck.pptx "tmp import" --pages "5,9"
 **Review only, change nothing**
 
 ```text
-/skill:canva-slides  review this Canva deck: https://canva.link/…  — score it, list defects
+/skill:canva-slides review this Canva deck: https://canva.link/… — score it, list defects
 ```
 
 ## How a deck is built
 
 <div align="center"><img src="assets/workflow.svg" alt="Plan, build, verify, publish, export" width="100%"></div>
 
-| # | Phase | Gate before moving on |
+- Phase | Gate before moving on
 |---|---|---|
 | 1 | **Plan** — intake, source ledger, terminology, per-slide record, examples | `plan_check.py --ghost` reports **0 errors** |
 | 2 | **Build** — Canva AI (`create-design`) *or* native PPTX in Arial, measured text | page count equals the plan |
@@ -119,9 +117,9 @@ scripts/update_canva_deck.sh DAHaPZNNOhs deck.pptx "tmp import" --pages "5,9"
 The default is **per page**, because decks usually have more than one author:
 
 ```bash
-scripts/update_canva_deck.sh <ID> deck.pptx "tmp" --pages "5,7,12-14"   # only these pages change
-scripts/update_canva_deck.sh <ID> deck.pptx "tmp" --all                # every page (solo decks only)
-scripts/update_canva_deck.sh <ID> deck.pptx "tmp"                      # refuses to run
+scripts/update_canva_deck.sh <ID> deck.pptx "tmp" --pages "5,7,12-14" # only these pages change
+scripts/update_canva_deck.sh <ID> deck.pptx "tmp" --all # every page (solo decks only)
+scripts/update_canva_deck.sh <ID> deck.pptx "tmp" # refuses to run
 ```
 
 Two merge jobs per page (insert + delete) keep the page count constant, so numbering never drifts while you work. Verified on a 20-page design: replacing page 5 changed **only** page 5 (1,266 px), the other 19 pages exported pixel-identical, and the design id, short link and `Can view` sharing all stayed the same.
@@ -148,16 +146,16 @@ Two merge jobs per page (insert + delete) keep the page count constant, so numbe
 
 ```text
 ai-skills-canva/
-├── assets/                     hero + workflow diagrams
-├── README.md                   this file (EN · VI · ZH · RU · FR · ES)
-└── skills/canva-slides/        the skill (one, deep)
-    ├── SKILL.md                router: rules, phases, shortcuts, tools, scripts
-    ├── SOURCES.md              provenance, conflict decisions, dated verification log
-    ├── references/00…12        one file per phase
-    ├── scripts/                the 10 scripts above
-    ├── templates/              plan.json, brief-vi, deck-rules, speaker-notes,
-    │                           mcp-canva.snippet.json, pptx-fallback/
-    └── research/               reading notes on the skills surveyed (sources cited)
+├── assets/ hero + workflow diagrams
+├── README.md this file (EN · VI · ZH · RU · FR · ES)
+└── skills/canva-slides/ the skill (one, deep)
+ ├── SKILL.md router: rules, phases, shortcuts, tools, scripts
+ ├── SOURCES.md provenance, conflict decisions, dated verification log
+ ├── references/00…12 one file per phase
+ ├── scripts/ the 10 scripts above
+ ├── templates/ plan.json, brief-vi, deck-rules, speaker-notes,
+ │ mcp-canva.snippet.json, pptx-fallback/
+ └── research/ reading notes on the skills surveyed (sources cited)
 ```
 
 ## Limits this skill encodes

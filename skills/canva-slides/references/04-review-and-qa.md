@@ -28,8 +28,8 @@ YuliangXiu (thumbnail wall, Layout Doctrine), anthropics (visual QA on fresh ima
 | 5 | Render every page (thumbnails inside one transaction), **show every image**, build a contact sheet | `get-design-thumbnail`, `scripts/contact_sheet.py` |
 | 6 | Three-pass scan per page (below) | eyes |
 | 7 | Reader test with a cold agent (optional but recommended for graded decks) | subagent |
-| 8 | Score (section 5), list findings by severity, set the release status | |
-| 9 | Fix in one declared pass (`05`), commit, re-render everything, re-run steps 2-6 | |
+| 8 | Score (section 5), list findings by severity, set the release status |
+| 9 | Fix in one declared pass (`05`), commit, re-render everything, re-run steps 2-6 |
 | 10 | Export PDF/PPTX, verify page count and open the PDF at 50% zoom (`07`) | `export-design` |
 
 ### Three-pass scan (per page, from the rendered image)
@@ -149,14 +149,14 @@ await tool.mcp__canva_cancel_editing_transaction({transaction_id: tx.transaction
 ## 8. Report format (deliver this, not an essay)
 
 ```
-## Review - "<title>" (<N> slides)   Status: <READY|DRAFT - FIXES REQUIRED|DRAFT - VERIFICATION INCOMPLETE>   Score: <n>/100
+## Review - "<title>" (<N> slides) Status: <READY|DRAFT - FIXES REQUIRED|DRAFT - VERIFICATION INCOMPLETE> Score: <n>/100
 Gates: structure PASS | text-diff PASS | audit PASS | render PASS (all 16 pages viewed) | export NOT_RUN | reader-test NOT_RUN
 ### Top priorities (max 5)
 1. <slide n> [P0] <what> - evidence: <thumbnail/box> - fix: <op>
-### Page by page          (one block per page with findings, severity High/Med/Low, concrete fix)
-### What is working       (2-4 items; keeps the critique usable)
+### Page by page (one block per page with findings, severity High/Med/Low, concrete fix)
+### What is working (2-4 items; keeps the critique usable)
 ### Not verified / manual (what the API cannot do or you could not check)
-### Round log             (round k: fixed A,B; pending C)
+### Round log (round k: fixed A,B; pending C)
 ```
 
 Finding schema when fan-out is used: `{slide, severity, lens, box:[x,y,w,h] (px), problem, fix_op}`; merge findings on the same box (+/- 20 px) with the same problem into one.

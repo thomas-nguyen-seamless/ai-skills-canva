@@ -29,10 +29,10 @@ There is **no delete-design tool and no undo after commit**. Before a declared p
 
 ```
 start-editing-transaction {design_id}
-  -> transaction {transaction_id, status:"open"}, edit_design_url, richtexts[], fills[], pages[], thumbnails[1]
-perform-editing-operations {transaction_id, operations[], page_index, pages}   (repeatable, batched)
-get-design-thumbnail {transaction_id, page_index}                              (one page per call; SHOW every image you fetch)
-commit-editing-transaction {transaction_id}   |   cancel-editing-transaction {transaction_id}
+ -> transaction {transaction_id, status:"open"}, edit_design_url, richtexts[], fills[], pages[], thumbnails[1]
+perform-editing-operations {transaction_id, operations[], page_index, pages} (repeatable, batched)
+get-design-thumbnail {transaction_id, page_index} (one page per call; SHOW every image you fetch)
+commit-editing-transaction {transaction_id} | cancel-editing-transaction {transaction_id}
 ```
 
 Rules:
@@ -56,9 +56,9 @@ Rules:
 ## 4. Reading a transaction payload
 
 ```
-richtexts[]  {page_index, element_id, regions[{type:"character", text}], containerElement{type:"TEXT"|"SHAPE", position{top,left}, dimension{width,height}}}
-fills[]      {type:"image", asset_id, page_index, editable, alt_text?, containerElement{type:"RECT", position, dimension}, element_id}
-pages[]      {page_id, page_number, dimension{1920x1080}, is_responsive, is_empty, is_editable}
+richtexts[] {page_index, element_id, regions[{type:"character", text}], containerElement{type:"TEXT"|"SHAPE", position{top,left}, dimension{width,height}}}
+fills[] {type:"image", asset_id, page_index, editable, alt_text?, containerElement{type:"RECT", position, dimension}, element_id}
+pages[] {page_id, page_number, dimension{1920x1080}, is_responsive, is_empty, is_editable}
 ```
 
 - Group a page's elements by `page_index`; sort by `position.top` then `left` to see the reading order and the grid.
@@ -77,10 +77,10 @@ All coordinates are slide pixels (1920x1080). `top`/`left` are relative to the p
 { "type": "find_and_replace_text", "element_id": "...", "find_text": "phát triển", "replace_text": "phổ biến" }
 { "type": "format_text", "element_id": "...", "formatting": { "font_size": 38, "font_weight": "bold", "text_align": "start", "color": "#0F2740", "line_height": 1.3 } }
 { "type": "position_element", "element_id": "...", "top": 380, "left": 130 }
-{ "type": "resize_element", "element_id": "...", "width": 1500 }                       // TEXT: never pass height (auto)
+{ "type": "resize_element", "element_id": "...", "width": 1500 } // TEXT: never pass height (auto)
 { "type": "insert_fill", "page_id": "PB...", "asset_type": "image", "asset_id": "MA...", "alt_text": "...", "top": 230, "left": 140, "width": 1600, "height": 760 }
 { "type": "update_fill", "element_id": "...", "asset_type": "image", "asset_id": "MA...", "alt_text": "..." }
-{ "type": "delete_element", "element_id": "pageId-groupId" }                           // GROUP id, see below
+{ "type": "delete_element", "element_id": "pageId-groupId" } // GROUP id, see below
 { "type": "update_title", "title": "..." }
 ```
 

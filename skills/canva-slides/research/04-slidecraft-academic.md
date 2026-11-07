@@ -52,9 +52,9 @@ Two modes (`SKILL.md` §Step 1):
 
 1. **Lead with the research question** — state the central question or claim explicitly by slide 2 or 3 at the latest; never bury it.
 2. **Choose one narrative spine and keep it**:
-   - **SCR** — Situation (what was known) → Complication (what is missing/broken/contested) → Resolution (your contribution).
-   - **Funnel + Answer** — broad context → specific gap → approach → findings → implications.
-   - **Answer First** — conclusion first, then support; reserved for senior or time-pressured audiences (grant panels, advisory boards, short talks).
+ - **SCR** — Situation (what was known) → Complication (what is missing/broken/contested) → Resolution (your contribution).
+ - **Funnel + Answer** — broad context → specific gap → approach → findings → implications.
+ - **Answer First** — conclusion first, then support; reserved for senior or time-pressured audiences (grant panels, advisory boards, short talks).
 3. **One argument per presentation** — pick the claim that can be made convincingly in the slot; everything else goes to the appendix.
 4. **One job per slide** — if a slide is doing two things, split it.
 5. **Flow test** — each title should make the next one feel like a natural consequence; a slide that could sit anywhere without loss is misplaced or dispensable.
@@ -460,7 +460,7 @@ Claims to be a "super-skill" covering content framework (Kevin Hale / Geoff Rals
 5. **Apply the design system** (below).
 6. **Generate** via PPTX (PptxGenJS), HTML (React/Vite/Framer Motion) or Marp.
 
-**Review mode** goes slide by slide with ✅/❌/🔧 and seven red flags: headline >10 words; no numbers; jargon; too many bullets; missing comparison; team without credentials; ask without use of funds.
+**Review mode** goes slide by slide with yes/no/ and seven red flags: headline >10 words; no numbers; jargon; too many bullets; missing comparison; team without credentials; ask without use of funds.
 
 ### The 3-vertebrae framework (`README.md`)
 
@@ -521,7 +521,7 @@ Each phase has inputs, outputs and exit criteria; the file states "do not skip p
 - **Distinctiveness**: commit to one aesthetic direction; distinctive typography (explicitly **not Inter, Roboto or Arial**); character/narrative where possible; reserve demo space; provide a narration script.
 - **Slide patterns** (`references/slide-patterns.md`): title/hero; problem split **55–60 / 40–45**; solution as a three-step pipeline; use-case **2×2** narrative grid + **~280 px** sidebar; flow diagram **5–7** boxes with identical width and min-height; architecture diagram with cloud-service styling and a "deployed" badge; video placeholder **16:9**, dashed accent border, **70–75 % viewport, max 960 px**; card grid **3×2** is most readable, descriptions **8–15 words**; team 2×2 (or 1×4), 3×2 for 5–6, 4×2 for 7–8, split for 9+; optional composable visual, mascot card, quote split.
 - **Global styling requirements**: navigation dots, slide counter, key hint, arrow-key navigation, click halves, staggered entry animations, consistent uppercase section label with a thin coloured line.
-- **Emoji logo**: one primary emoji per deck, **2–5 supporting max**, consistent family, avoid 💡🚀⭐✨💎⚡ and generic 🎯🎨🧠📊; hex badge for refined styles, oversized raw emoji for playful, bracketed mono for terminal styles; never rotate the logo emoji.
+- **Emoji logo**: one primary emoji per deck, **2–5 supporting max**, consistent family, avoid fast and generic ; hex badge for refined styles, oversized raw emoji for playful, bracketed mono for terminal styles; never rotate the logo emoji.
 - **Style presets** (13, each with an exact font block): Warm Editorial (Fraunces + Outfit), Cyber Terminal (Syne + JetBrains Mono + DM Sans), Citrus Punch (Bricolage Grotesque + Plus Jakarta), Electric Dusk (Manrope), Pastel Chapters (Nunito), Crafted Tactile (Caveat + Space Grotesk + DM Mono), Studio Electric (Barlow 900 + IBM Plex Mono), Moody Nocturnal (DM Serif Display italic + Inter + JetBrains Mono), Kawaii Retro (Big Shoulders + Albert Sans + Press Start 2P), Friendly Casual (Fraunces italic + Bricolage), Lo-Fi Underground (Bebas Neue + Caveat + Space Grotesk), Bold Poster (Shrikhand + Libre Baskerville), Architectural Grid (Newsreader + Hanken Grotesk + DM Mono).
 - **Colour priority** (a genuinely novel rule): preset archetype first → negative preferences **100 %** respected → theme context → positive preferences **weak** (honour in 2–3 of 5) → variety and contrast. Users' stated colour is "a hypothesis, not a requirement".
 - **Per-script type discipline**: display weight **800** default; import weights 400/500/600/700/800; import italics if used; the `font-family` name must match the `@import` or the browser silently falls back; always use CSS variables.
@@ -645,7 +645,7 @@ Short slots have lower unit cost because introductions and restatements disappea
 | Supplementary box in body | **2.5–3.0** |
 | Secondary box inside a figure | **~1.5** |
 
-  Reference: cyan `#00c4e4` = 10.0, pure yellow `#ffff00` = 19.6; a heading colour below 10 looks sunken. A body callout must not use the 1.5 secondary value (it merges with the ground): the author's `#2f2f37` (1.58) sank, `#555561` (2.86) stood up. The ceiling is set by the emphasis colour placed inside: yellow emphasis requires ground-to-yellow ≥6. White-on-fill has its own floor: **3.0** against white for large bold (~25 pt), **4.0+** for small in-figure text (17–19 px). The same colour reads brighter as a large fill and darker as thin text — raise text/line colours **1–2 steps** above the fill colour. Conflicts between two colours are usually **tone (lightness/saturation)**, not hue: match tone first, separate hue last (hue carries meaning — yellow→green reads "success"). Create contrast by **lowering everything except the hero** rather than adding colours, in **doubling steps 21 → 10 → 6 → 3**; steps within 1.5× are invisible. Projected headers stop at ~10; below 7 is unreadable because projectors lift black.
+ Reference: cyan `#00c4e4` = 10.0, pure yellow `#ffff00` = 19.6; a heading colour below 10 looks sunken. A body callout must not use the 1.5 secondary value (it merges with the ground): the author's `#2f2f37` (1.58) sank, `#555561` (2.86) stood up. The ceiling is set by the emphasis colour placed inside: yellow emphasis requires ground-to-yellow ≥6. White-on-fill has its own floor: **3.0** against white for large bold (~25 pt), **4.0+** for small in-figure text (17–19 px). The same colour reads brighter as a large fill and darker as thin text — raise text/line colours **1–2 steps** above the fill colour. Conflicts between two colours are usually **tone (lightness/saturation)**, not hue: match tone first, separate hue last (hue carries meaning — yellow→green reads "success"). Create contrast by **lowering everything except the hero** rather than adding colours, in **doubling steps 21 → 10 → 6 → 3**; steps within 1.5× are invisible. Projected headers stop at ~10; below 7 is unreadable because projectors lift black.
 - **Brand colours**: take hex values from the product's CSS/docs; raise lightness for text, darken fills and reverse white text, and allow the brand colour unfiltered only on the cover band. When deriving a dark deck from a light one, don't machine-replace figure colours — rebuild figures as dark-grey panels (`#2c2c35`→`#18181e`, border `#3c3c46`) with white text and one dark-teal hero (`#00788c`).
 - **Show candidates on real pages**: render the same page once per candidate and tile them **2×2**; test on both an emphasis-heavy page and a figure-heavy page. Do the same for fonts (cover + bullets + table pages).
 - **Bulk colour replacement**: don't use "exclude this colour" searches (a line containing both target and excluded colour is skipped); search for the exact colours being replaced and verify the old colour count is 0 afterwards, including SVGs.
@@ -917,7 +917,7 @@ Deduplicated across all eight skills. "Source" gives the repo file and heading; 
 |---|---|---|---|
 | I1 | No decorative icons | academic and medical forbid decorative icons, clip art, stock photos | academic §3; medical `DESIGN_PRINCIPLES.md` #8 |
 | I2 | Logo discipline | power default: logo every slide, 24 px tall, bottom-left, inside the 5 % zone; YC: top-right ≤60 px; hackathon: logo emoji once | power `SKILL.md`; yc; Esther |
-| I3 | Emoji logo | 1 primary + 2–5 supporting; avoid 💡🚀⭐✨💎⚡; consistent family | Esther `slide-patterns.md` "Rules to prevent emoji chaos" |
+| I3 | Emoji logo | 1 primary + 2–5 supporting; avoid fast; consistent family | Esther `slide-patterns.md` "Rules to prevent emoji chaos" |
 | I4 | No emoji in medical/academic | professional/academic style bans emoji and casual punctuation | medical `DESIGN_PRINCIPLES.md` #8; academic §3 |
 | I5 | Illustration selection | depict the slide's key noun, not the vibe; positive images only under positive conclusions | minorun `slide-figures` "選び方" |
 | I6 | Real screenshots for products | screenshots for products/repos, illustrations for concepts | minorun `slide-figures` "選び方" |

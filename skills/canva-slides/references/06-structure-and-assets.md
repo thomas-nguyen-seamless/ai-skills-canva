@@ -78,9 +78,9 @@ Why: no operation adds shapes or text boxes, so curves and diagrams have to be i
 3. **Render at the final size**: `size:[w,h]` = the pixel box you will place. 1 image px = 1 slide px, so `title_px 40+` and `body_px 30+` land at classroom size. Typical: 1600x760 at left 140, top 230 (leaves title zone clear).
 4. `uv run --with pillow python scripts/diagrams.py spec.json out.png`, then **look at it** (`read out.png`). Reject: overlapping labels, text under 28 px, crossings, clipped edges.
 5. **Upload** (single-use URL, raw bytes):
-   - `create-upload-url {}` -> `{ uploadUrl }` (camelCase)
-   - `bash scripts/post_upload.sh "<uploadUrl>" out.png` -> `{ "mediaId": "MA..." }`
-   - On any failure fetch a **new** URL; never retry a used one. Upload each asset just before the page that needs it (official `bulk-create` rule: failures stay local).
+ - `create-upload-url {}` -> `{ uploadUrl }` (camelCase)
+ - `bash scripts/post_upload.sh "<uploadUrl>" out.png` -> `{ "mediaId": "MA..." }`
+ - On any failure fetch a **new** URL; never retry a used one. Upload each asset just before the page that needs it (official `bulk-create` rule: failures stay local).
 6. **Place** in one transaction: delete the old art/labels (group ids!), `insert_fill` with `alt_text` describing the structure, `top/left/width/height` exactly the PNG size. Re-read `richtexts`: no stale labels left. Commit. Render the page.
 7. Keep the spec JSON next to the deck (the user's folder) so a label change is a 1-minute re-render + `update_fill`.
 

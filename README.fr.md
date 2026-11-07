@@ -29,16 +29,14 @@ Cette compétence consigne ce qui a tenu en conditions réelles : un contrôle d
 
 ## Ce que vous obtenez
 
-| | Capacité |
-|---|---|
-| 🎯 | **Le plan d'abord** — fil conducteur, mode (orateur / exposé / document), titres affirmatifs par page, limites de mots, couverture des exemples ; un linter bloque une structure fautive avant génération. |
-| 🧠 | **Fidèle à la source** — tableau de correspondance page de slide ↔ page du document pour un support de cours ou un PDF ; les exemples hors source sont signalés sur la diapositive. |
-| 🎨 | **Un système visuel, pas des impressions** — échelle typographique en px pour 1920×1080, un seul accent, grille et marges, liste d'interdits « anti-effet IA », schémas natifs. |
-| 👀 | **Des preuves, pas des promesses** — diff de texte, rendu page par page, planche contact, audit mesuré de la mise en page (décalages, débordements, chevauchements, zones de sécurité). |
-| 🔁 | **Un lien pour toujours** — remplacement page par page via `POST /v1/merges` ; l'id du design, le lien et le partage public survivent aux mises à jour. |
-| 🧩 | **Rendu natif modifiable** — vraies zones de texte et formes vectorielles dans Canva, jamais des images pleine page. |
-| 🛟 | **Dégradation progressive** — MCP → CLI/REST → PPTX local, selon ce qui fonctionne à l'instant donné. |
-| 🌐 | **Vietnamien d'abord** — diacritiques, prédiction des retours à la ligne, tailles pour l'amphi, scénarios de mémoire et de soutenance. |
+- **Le plan d'abord** — fil conducteur, mode (orateur / exposé / document), titres affirmatifs par page, limites de mots, couverture des exemples ; un linter bloque une structure fautive avant génération.
+- **Fidèle à la source** — tableau de correspondance page de slide ↔ page du document pour un support de cours ou un PDF ; les exemples hors source sont signalés sur la diapositive.
+- **Un système visuel, pas des impressions** — échelle typographique en px pour 1920×1080, un seul accent, grille et marges, liste d'interdits « anti-effet IA », schémas natifs.
+- **Des preuves, pas des promesses** — diff de texte, rendu page par page, planche contact, audit mesuré de la mise en page (décalages, débordements, chevauchements, zones de sécurité).
+- **Un lien pour toujours** — remplacement page par page via `POST /v1/merges` ; l'id du design, le lien et le partage public survivent aux mises à jour.
+- **Rendu natif modifiable** — vraies zones de texte et formes vectorielles dans Canva, jamais des images pleine page.
+- **Dégradation progressive** — MCP → CLI/REST → PPTX local, selon ce qui fonctionne à l'instant donné.
+- **Vietnamien d'abord** — diacritiques, prédiction des retours à la ligne, tailles pour l'amphi, scénarios de mémoire et de soutenance.
 
 ## Installation
 
@@ -54,7 +52,7 @@ cp -R ai-skills-canva/skills/canva-slides <votre-dossier-de-compétences>/
 Puis laissez la compétence préparer la machine :
 
 ```bash
-skills/canva-slides/scripts/bootstrap.sh         # demande une fois par outil manquant
+skills/canva-slides/scripts/bootstrap.sh # demande une fois par outil manquant
 skills/canva-slides/scripts/bootstrap.sh --check # rapport seul, aucune installation
 ```
 
@@ -73,7 +71,7 @@ skills/canva-slides/scripts/bootstrap.sh --check # rapport seul, aucune installa
 **Nouvelle présentation**
 
 ```text
-/skill:canva-slides  fais 20 diapos sur « la loi de la négation de la négation »
+/skill:canva-slides fais 20 diapos sur « la loi de la négation de la négation »
 depuis @triethocmaclenin.pdf — 15 minutes, vietnamien, grands caractères pour l'amphi
 ```
 
@@ -86,14 +84,14 @@ scripts/update_canva_deck.sh DAHaPZNNOhs deck.pptx "tmp import" --pages "5,9"
 **Relire seulement, sans rien changer**
 
 ```text
-/skill:canva-slides  évalue cette présentation Canva : https://canva.link/… — note et liste les défauts
+/skill:canva-slides évalue cette présentation Canva : https://canva.link/… — note et liste les défauts
 ```
 
 ## Comment un deck se construit
 
 <div align="center"><img src="assets/workflow.svg" alt="Planifier, construire, vérifier, publier, exporter" width="100%"></div>
 
-| # | Étape | Condition pour avancer |
+- Étape | Condition pour avancer
 |---|---|---|
 | 1 | **Plan** — brief, tableau des sources, terminologie, fiche par diapo, exemples | `plan_check.py --ghost` renvoie **0 erreur** |
 | 2 | **Construction** — IA Canva (`create-design`) *ou* PPTX natif (Arial, hauteur mesurée) | nombre de pages = plan |
@@ -106,9 +104,9 @@ scripts/update_canva_deck.sh DAHaPZNNOhs deck.pptx "tmp import" --pages "5,9"
 Le mode par défaut est **page par page**, car un deck a souvent plusieurs auteurs :
 
 ```bash
-scripts/update_canva_deck.sh <ID> deck.pptx "tmp" --pages "5,7,12-14"   # seules ces pages changent
-scripts/update_canva_deck.sh <ID> deck.pptx "tmp" --all                # toutes les pages (deck solo)
-scripts/update_canva_deck.sh <ID> deck.pptx "tmp"                      # refuse de s'exécuter
+scripts/update_canva_deck.sh <ID> deck.pptx "tmp" --pages "5,7,12-14" # seules ces pages changent
+scripts/update_canva_deck.sh <ID> deck.pptx "tmp" --all # toutes les pages (deck solo)
+scripts/update_canva_deck.sh <ID> deck.pptx "tmp" # refuse de s'exécuter
 ```
 
 Deux tâches merge par page (insertion + suppression) gardent le nombre de pages constant : la numérotation ne dérive jamais. Vérifié sur un design de 20 pages : remplacer la page 5 ne modifie **que** la page 5 (1 266 px), les 19 autres sont identiques au pixel près ; l'id, le lien court et le partage `Can view` sont conservés.
@@ -135,16 +133,16 @@ Deux tâches merge par page (insertion + suppression) gardent le nombre de pages
 
 ```text
 ai-skills-canva/
-├── assets/                     bannière et schéma de processus
-├── README.md                   README en 6 langues (EN · VI · ZH · RU · FR · ES)
-└── skills/canva-slides/        une compétence, mais profonde
-    ├── SKILL.md                routeur : règles, phases, raccourcis, outils, scripts
-    ├── SOURCES.md              provenance, arbitrages, journal de vérification daté
-    ├── references/00…12        un fichier par phase
-    ├── scripts/                les 10 scripts ci-dessus
-    ├── templates/              plan.json, brief-vi, deck-rules, speaker-notes,
-    │                           mcp-canva.snippet.json, pptx-fallback/
-    └── research/               notes de lecture sur les compétences étudiées
+├── assets/ bannière et schéma de processus
+├── README.md README en 6 langues (EN · VI · ZH · RU · FR · ES)
+└── skills/canva-slides/ une compétence, mais profonde
+ ├── SKILL.md routeur : règles, phases, raccourcis, outils, scripts
+ ├── SOURCES.md provenance, arbitrages, journal de vérification daté
+ ├── references/00…12 un fichier par phase
+ ├── scripts/ les 10 scripts ci-dessus
+ ├── templates/ plan.json, brief-vi, deck-rules, speaker-notes,
+ │ mcp-canva.snippet.json, pptx-fallback/
+ └── research/ notes de lecture sur les compétences étudiées
 ```
 
 ## Limites encodées dans la compétence

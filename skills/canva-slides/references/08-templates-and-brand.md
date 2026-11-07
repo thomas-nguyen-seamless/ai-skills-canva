@@ -6,9 +6,9 @@ Sources merged: official `branded-presentation`, `generate-deck`, `brand-check`,
 ## 1. Decide the path
 
 ```
-brand kit exists AND user wants on-brand?  -> 2 (legacy generate-design)
-brand TEMPLATE exists AND rows of data?    -> 3 (template run)  [needs autofill-design]
-neither (this account)                     -> 4 (token block + create-design)  <- default here
+brand kit exists AND user wants on-brand? -> 2 (legacy generate-design)
+brand TEMPLATE exists AND rows of data? -> 3 (template run) [needs autofill-design]
+neither (this account) -> 4 (token block + create-design) <- default here
 ```
 
 Never auto-select a brand kit, even if exactly one exists: ask once ("dùng brand kit X chứ?"). If none exist say so in one line and continue (resolves the official branded-presentation vs generate-deck contradiction).

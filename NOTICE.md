@@ -10,7 +10,7 @@ Skills and repositories consulted (licenses as published by their authors):
 - `canva-sdks/canva-skills` — Apache-2.0 (official Canva org)
 - `inactive-skills/` deck skills inside that repo — Apache-2.0
 - community Canva skill packs (TerminalSkills, design-director, social-media-skills,
-  10x, openclaw, canva-developer-agent-kit) — MIT / Apache-2.0 as stated per repo
+ 10x, openclaw, canva-developer-agent-kit) — MIT / Apache-2.0 as stated per repo
 - `anthropics/skills` (pptx, canvas-design, doc-coauthoring) and other slide-craft skills
 
 `skills/canva-slides/research/` contains reading notes and summaries, not copies of the

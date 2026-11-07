@@ -13,13 +13,13 @@ TerminalSkills `canva` (limits, URL lifetimes, "jobs are not results"); 10x `can
 | Show in the room / email | `pdf` | omit `pages` for all; `size` only matters for paper (a4/a3/letter/legal); `export_quality:"pro"` if the plan allows |
 | Lecturer wants an editable copy | `pptx` | check the result opens; fonts may substitute |
 | Page-by-page proof, review without a transaction, or images for a doc | `png` | `lossless:true` (default), `as_single_image:false`; `width`/`height` are honoured (960x540 returned one image per page, verified) and credit-free |
-| Handout | `pdf` (+ say that Canva notes pages are not exported) | |
+| Handout | `pdf` (+ say that Canva notes pages are not exported) |
 
 MP4/GIF/CSV are not deck outputs. A deck without `pdf` **and** `pptx` is not delivered (design-director/10x consensus: PDF for the room, PPTX for handoff, PNG for review).
 
 3. The result is a **download URL, valid ~24 h** (TerminalSkills). Download it at once to a named file, e.g.
-   `curl -sSL -o "$HOME/Documents/<deck>.pdf" "<url>"`, then verify: file size > 0, page count equals the slide count
-   (`uv run --with pypdf python -c "import pypdf,sys;print(len(pypdf.PdfReader(sys.argv[1]).pages))" file.pdf`).
+ `curl -sSL -o "$HOME/Documents/<deck>.pdf" "<url>"`, then verify: file size > 0, page count equals the slide count
+ (`uv run --with pypdf python -c "import pypdf,sys;print(len(pypdf.PdfReader(sys.argv[1]).pages))" file.pdf`).
 4. Never store signed URLs. Thumbnails expire in ~15 min; `edit_url`/`view_url` last ~30 days. Hand humans the **edit link**, not a thumbnail URL.
 5. Throttles: exports 75 per 5 min per user per document, 500 per 24 h. Do not loop exports.
 6. Exports are asynchronous behind the tool: treat "accepted" as not-yet-done until a URL arrives; on `failed` read the error and do not blindly resubmit (`license_required` -> an asset in the deck needs a licence: replace it).
@@ -60,7 +60,7 @@ For coursework, thesis defence or seminar, produce (in the notes file, not on sl
 ## 5. Hand-off message (template)
 
 ```
-Deck: <title> - <N> slides 16:9      Edit link: <edit_url>
+Deck: <title> - <N> slides 16:9 Edit link: <edit_url>
 Delivered: PDF <path>, PPTX <path>, notes <path>
 Changes this round: <slide list, one line each>
 What is image vs text: <diagram slides: labels are part of the image (re-render to change)>
@@ -76,9 +76,9 @@ For each thing the API cannot do, emit one block:
 
 ```
 Slide <n>: <what to change>
-  Requested by: <person or "you">
-  Why manual: <API limit, e.g. cannot change font family / background / add text box / write notes>
-  -> Steps: <exact editor clicks>
+ Requested by: <person or "you">
+ Why manual: <API limit, e.g. cannot change font family / background / add text box / write notes>
+ -> Steps: <exact editor clicks>
 ```
 
 Do not apologise for API limits and do not over-explain them: state the limit once, give the steps.

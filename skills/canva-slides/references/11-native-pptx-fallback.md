@@ -7,14 +7,14 @@ Use when **both** `create-design` (credit quota) and `start-editing-transaction`
 Docs: Connect/REST `POST /v1/imports` ("Create design import job", octet-stream body + `Import-Metadata` header, scope `design:content:write`, 20 req/min; `.pptx`, `.ppt`, `.pdf`, `.key`, `.docx`, `.xlsx`, ... listed under "Supported file types") and Canva CLI `canva api design-imports create`. Canva Help "Import PowerPoint presentations": `.pptx/.ppt/.potx`, <= 300 MB, **<= 300 slides, <= 1,400 elements and images per file**; charts, SmartArt, 3D, WordArt are ignored; font matching is best-effort; beta feature.
 
 ```sh
-npx -y @canva/cli@latest login                 # user approves in the browser (once; token stays local)
-npx -y @canva/cli@latest api users me|profile  # confirm WHICH account (it can differ from the MCP account!)
+npx -y @canva/cli@latest login # user approves in the browser (once; token stays local)
+npx -y @canva/cli@latest api users me|profile # confirm WHICH account (it can differ from the MCP account!)
 npx -y @canva/cli@latest api design-imports create --file deck.pptx --title "<=50 chars" \
-   --mime-type application/vnd.openxmlformats-officedocument.presentationml.presentation
-npx -y @canva/cli@latest api design-imports get <jobId>       # poll; success -> result.designs[0].id, page_count
+ --mime-type application/vnd.openxmlformats-officedocument.presentationml.presentation
+npx -y @canva/cli@latest api design-imports get <jobId> # poll; success -> result.designs[0].id, page_count
 npx -y @canva/cli@latest api exports create --design-id <id> --format png --format-width 960 --format-height 540
-npx -y @canva/cli@latest api exports get <jobId>               # per-page review images
-npx -y @canva/cli@latest api exports create --design-id <id> --format pdf   # text layer: run verify_text.py on it
+npx -y @canva/cli@latest api exports get <jobId> # per-page review images
+npx -y @canva/cli@latest api exports create --design-id <id> --format pdf # text layer: run verify_text.py on it
 ```
 
 The MCP `import-design-from-url` needs a public URL and forbids local/generated files; the MCP has no local-file import. The CLI/REST route is the supported one. The imported design lands in the account the CLI is logged into. **Verified 2026-11-07: it is the same account as the MCP** - `api users me` reports `team_user.user_id`/`team_id` (a different id namespace), yet MCP `get-design` and `get-design-content` read the imported design immediately (owner ids match the MCP account). So after a CLI import you can go straight back to MCP tools for text/diff/export.
@@ -65,11 +65,11 @@ Official docs: [Create design merge job](https://www.canva.dev/docs/apps/rest-ap
 canva api design-imports create --file deck.pptx --title "..." --mime-type ...pptx
 # 2) copy the new pages into the EXISTING design (design id and link stay)
 canva api merges create --type modify_existing_design --design-id <TARGET> \
-  --operations '[{"type":"insert_pages","source":{"type":"design","design_id":"<NEW>","page_numbers":[1..N]},"after_page_number":0}]'
+ --operations '[{"type":"insert_pages","source":{"type":"design","design_id":"<NEW>","page_numbers":[1..N]},"after_page_number":0}]'
 # 3) delete the old pages, now shifted to N+1 .. 2N
 canva api merges create --type modify_existing_design --design-id <TARGET> \
-  --operations '[{"type":"delete_pages","page_numbers":[N+1..2N]}]'
-canva api merges get <jobId>   # poll each job
+ --operations '[{"type":"delete_pages","page_numbers":[N+1..2N]}]'
+canva api merges get <jobId> # poll each job
 ```
 
 One mode by default (`scripts/update_canva_deck.sh`) - per page, because decks are usually shared:

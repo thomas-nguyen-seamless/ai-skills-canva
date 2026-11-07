@@ -16,10 +16,10 @@ huashu (lock grammar early), carousel-builder (character budgets), our own regen
 
 ```json
 {
-  "brief": "<see section 3>",
-  "format": "Presentation (16:9)",
-  "outline": { "sections": [ { "title": "...", "description": "...", "points": ["...", "..."] } ] },
-  "user_intent": "one line stating the goal"
+ "brief": "<see section 3>",
+ "format": "Presentation (16:9)",
+ "outline": { "sections": [ { "title": "...", "description": "...", "points": ["...", "..."] } ] },
+ "user_intent": "one line stating the goal"
 }
 ```
 
@@ -59,9 +59,9 @@ Lock the grammar early (huashu): if the stakes are high, generate a **2-slide pr
 
 ```json
 {
-  "title": "Mỗi vòng xoáy lặp lại điểm xuất phát nhưng ở trình độ cao hơn",
-  "description": "<role> + <visual: native chain|table|cards | large empty area for a custom diagram> + <layout register: editorial|balanced|data-dense> + <anything the generator must NOT draw>",
-  "points": ["<= 12 words", "<= 12 words", "<= 12 words"]
+ "title": "Mỗi vòng xoáy lặp lại điểm xuất phát nhưng ở trình độ cao hơn",
+ "description": "<role> + <visual: native chain|table|cards | large empty area for a custom diagram> + <layout register: editorial|balanced|data-dense> + <anything the generator must NOT draw>",
+ "points": ["<= 12 words", "<= 12 words", "<= 12 words"]
 }
 ```
 

@@ -43,97 +43,97 @@ that every claim is bound to a design ID, a job ID, an element coordinate or an
 
 ### Prescribed process (as executed)
 1. **Capability scan before planning.** Re-pull the live tool schemas instead of trusting
-   the previous session's matrix (`rifaterdemsahin_canva-mcp/4_Formula/llm_thinking_log.md`, 2026-07-12 SPEC-016 entry:
-   "Re-pulled the live tool schemas … rather than trusting the SPEC-015 matrix from memory").
+ the previous session's matrix (`rifaterdemsahin_canva-mcp/4_Formula/llm_thinking_log.md`, 2026-07-12 SPEC-016 entry:
+ "Re-pulled the live tool schemas … rather than trusting the SPEC-015 matrix from memory").
 2. **Write the spec and surface the gap to the user with 2–3 options** before any write call
-   (`rifaterdemsahin_canva-mcp/4_Formula/architecture_course_mcp_spec.md`, "Resolution — Chosen Approach").
+ (`rifaterdemsahin_canva-mcp/4_Formula/architecture_course_mcp_spec.md`, "Resolution — Chosen Approach").
 3. **Outline → generate → screen candidates.** `request-outline-review` (user approves in a
-   widget) → `generate-design-structured` (4 candidates) → `create-design-from-candidate`.
+ widget) → `generate-design-structured` (4 candidates) → `create-design-from-candidate`.
 4. **Select the candidate by page count**, not by vibe: "candidate 1 was selected as it
-   matched the 5-slide spec exactly (other candidates had 6 thumbnails, implying an extra
-   AI-inserted slide)" (`rifaterdemsahin_canva-mcp/4_Formula/architecture_course_mcp_spec.md`, Delivery Notes).
+ matched the 5-slide spec exactly (other candidates had 6 thumbnails, implying an extra
+ AI-inserted slide)" (`rifaterdemsahin_canva-mcp/4_Formula/architecture_course_mcp_spec.md`, Delivery Notes).
 5. **Open a transaction, locate elements by text content, batch the formatting ops, commit.**
 6. **Verify persistence with `updated_at` > `created_at`** and render every page thumbnail to
-   the user (`rifaterdemsahin_canva-mcp/7_Testing_Known/architecture_course_shape_deck_flow.md`, Step 7).
+ the user (`rifaterdemsahin_canva-mcp/7_Testing_Known/architecture_course_shape_deck_flow.md`, Step 7).
 7. **Screen candidate *content*, not thumbnails**, before showing options — call
-   `get-design-content` on each converted candidate and look for duplicates, garbling and
-   wrong templates (`rifaterdemsahin_canva-mcp/7_Testing_Known/glossary_grid_flow.md`, Attempt 3 screening table).
+ `get-design-content` on each converted candidate and look for duplicates, garbling and
+ wrong templates (`rifaterdemsahin_canva-mcp/7_Testing_Known/glossary_grid_flow.md`, Attempt 3 screening table).
 8. **Fix one bad label in place** rather than regenerating: `start-editing-transaction` →
-   `replace_text` on the specific `element_id` from `richtexts` → show draft link → user
-   approves → `commit-editing-transaction` (`rifaterdemsahin_canva-mcp/7_Testing_Known/glossary_grid_flow.md`, "Fix").
+ `replace_text` on the specific `element_id` from `richtexts` → show draft link → user
+ approves → `commit-editing-transaction` (`rifaterdemsahin_canva-mcp/7_Testing_Known/glossary_grid_flow.md`, "Fix").
 9. **Match canvas before merging:** `resize-design {type: custom, width: 1920, height: 1080}`
-   then `merge-designs {type: modify_existing_design, operations: [{type: insert_pages,
-   after_page_number: N}]}` (`rifaterdemsahin_canva-mcp/4_Formula/specs.md` SPEC-019 Key Behaviors).
+ then `merge-designs {type: modify_existing_design, operations: [{type: insert_pages,
+ after_page_number: N}]}` (`rifaterdemsahin_canva-mcp/4_Formula/specs.md` SPEC-019 Key Behaviors).
 10. **Record the run** (prompt, tool chain, coordinates, verdict) in `prompts.md`,
-    `llm_thinking_log.md`, `logic.md`, and a flow doc under `rifaterdemsahin_canva-mcp/7_Testing_Known/`.
+ `llm_thinking_log.md`, `logic.md`, and a flow doc under `rifaterdemsahin_canva-mcp/7_Testing_Known/`.
 
 ### Concrete rules and thresholds (with sources)
 - **Lower-third formula on a 1920×1080 page:** `width = pageWidth × 0.6` → **1152**;
-  `left = (pageWidth − width)/2` → **384**; `top = pageHeight − 150` → **930**
-  (`rifaterdemsahin_canva-mcp/4_Formula/lower_third_mcp_spec.md`, "Lower-third formula (1920×1080 page)").
+ `left = (pageWidth − width)/2` → **384**; `top = pageHeight − 150` → **930**
+ (`rifaterdemsahin_canva-mcp/4_Formula/lower_third_mcp_spec.md`, "Lower-third formula (1920×1080 page)").
 - **Header size used in a real 1920×1080 deck:** 28 px bold, per-slide accent hex
-  (`rifaterdemsahin_canva-mcp/4_Formula/architecture_course_mcp_spec.md`, Target Slide Map). *Note: this is the one
-  number in the cluster that conflicts with our classroom-legibility finding — see
-  Contradictions #3.*
+ (`rifaterdemsahin_canva-mcp/4_Formula/architecture_course_mcp_spec.md`, Target Slide Map). *Note: this is the one
+ number in the cluster that conflicts with our classroom-legibility finding — see
+ Contradictions #3.*
 - **Generation latency grows with slide count:** the 8-slide "balanced" generation timed
-  out on the first call and succeeded on retry; the tool itself warns that extra slides add
-  latency (`rifaterdemsahin_canva-mcp/7_Testing_Known/coordinator_subagents_comic_flow.md`, tool chain).
+ out on the first call and succeeded on retry; the tool itself warns that extra slides add
+ latency (`rifaterdemsahin_canva-mcp/7_Testing_Known/coordinator_subagents_comic_flow.md`, tool chain).
 - **Batch, then verify counts:** one `perform-editing-operations` call carrying 4–5 ops
-  returned `status: success` for all of them; results are in `edit_operation_results`
-  (`rifaterdemsahin_canva-mcp/4_Formula/lower_third_mcp_spec.md`, test table).
+ returned `status: success` for all of them; results are in `edit_operation_results`
+ (`rifaterdemsahin_canva-mcp/4_Formula/lower_third_mcp_spec.md`, test table).
 - **Apps-SDK shape limits** (the only true native-shape path, not used by the deck itself):
-  1–30 paths per shape, combined path data ≤ 2 KB, ≤ 6 unique fill colours, every path must
-  begin with a single `M`, `Q` commands not allowed
-  (`rifaterdemsahin_canva-mcp/2_Environment/canva_capability_research.md`, section 2).
+ 1–30 paths per shape, combined path data ≤ 2 KB, ≤ 6 unique fill colours, every path must
+ begin with a single `M`, `Q` commands not allowed
+ (`rifaterdemsahin_canva-mcp/2_Environment/canva_capability_research.md`, section 2).
 - **One raster per object when you need things to move together:** PPTX `p:grpSp` groups are
-  flattened on import, so the retry baked circle+numeral into one PNG per badge and imported
-  100 pictures (`rifaterdemsahin_canva-mcp/6_Semblance/workarounds.md` #1; `rifaterdemsahin_canva-mcp/7_Testing_Known/numbers_1_100_grouped_flow.md`).
+ flattened on import, so the retry baked circle+numeral into one PNG per badge and imported
+ 100 pictures (`rifaterdemsahin_canva-mcp/6_Semblance/workarounds.md` #1; `rifaterdemsahin_canva-mcp/7_Testing_Known/numbers_1_100_grouped_flow.md`).
 
 ### Unique ideas not found elsewhere
 - **Capability boundaries are per-surface *and* per-session** — the same task that failed on
-  the REST API + Apps SDK succeeded later on the MCP connector, so re-derive the matrix rather
-  than declaring impossibility (`rifaterdemsahin_canva-mcp/6_Semblance/lessons_learned.md`, lower-third retrospective).
+ the REST API + Apps SDK succeeded later on the MCP connector, so re-derive the matrix rather
+ than declaring impossibility (`rifaterdemsahin_canva-mcp/6_Semblance/lessons_learned.md`, lower-third retrospective).
 - **Don't fight the generated grid.** "AI-generated layouts commit to their own
-  left-text/right-graphic grid; fighting that grid with `position_element` … risks overlapping
-  the artwork … Text alignment is the safer lever" (`rifaterdemsahin_canva-mcp/6_Semblance/lessons_learned.md`).
+ left-text/right-graphic grid; fighting that grid with `position_element` … risks overlapping
+ the artwork … Text alignment is the safer lever" (`rifaterdemsahin_canva-mcp/6_Semblance/lessons_learned.md`).
 - **Page names do not exist.** "Canva pages have no MCP-settable 'name'/'label' field — only
-  index + thumbnail", so slide names live in project docs
-  (`rifaterdemsahin_canva-mcp/6_Semblance/lessons_learned.md`; `rifaterdemsahin_canva-mcp/4_Formula/canva_pages_table_recipe.md` Step 4).
+ index + thumbnail", so slide names live in project docs
+ (`rifaterdemsahin_canva-mcp/6_Semblance/lessons_learned.md`; `rifaterdemsahin_canva-mcp/4_Formula/canva_pages_table_recipe.md` Step 4).
 - **A candidate URL opened in a browser materialises as a real design** in the account
-  (`rifaterdemsahin_canva-mcp/7_Testing_Known/canva_design_DAHPLiS4suo_steps.md`, Step 5) — useful to know, and a trap
-  if you open candidates casually.
+ (`rifaterdemsahin_canva-mcp/7_Testing_Known/canva_design_DAHPLiS4suo_steps.md`, Step 5) — useful to know, and a trap
+ if you open candidates casually.
 - **AI artwork provenance is testable:** compare `created_at` against the generation window,
-  opaque batch filenames, `smart_tags`, and asset owner via `get-assets`
-  (`rifaterdemsahin_canva-mcp/7_Testing_Known/coordinator_subagents_comic_flow.md`, evidence table).
+ opaque batch filenames, `smart_tags`, and asset owner via `get-assets`
+ (`rifaterdemsahin_canva-mcp/7_Testing_Known/coordinator_subagents_comic_flow.md`, evidence table).
 
 ### Pitfalls and failure modes it warns about
 - `design_generation_error` when the prompt is over-constrained with negative constraints
-  (`rifaterdemsahin_canva-mcp/7_Testing_Known/glossary_grid_flow.md`, Attempt 2).
+ (`rifaterdemsahin_canva-mcp/7_Testing_Known/glossary_grid_flow.md`, Attempt 2).
 - `infographic` as a design type has a "strong template prior toward narrative/stats layouts"
-  and will invent fake statistics rather than render your literal list (same file, Attempt 1).
+ and will invent fake statistics rather than render your literal list (same file, Attempt 1).
 - `poster` works for literal grids but is "ambiguous with event-poster templates" — one of four
-  candidates came back as a registration poster (same file, Attempt 3).
+ candidates came back as a registration poster (same file, Attempt 3).
 - Opening candidates casually creates designs you didn't intend to keep
-  (`rifaterdemsahin_canva-mcp/7_Testing_Known/canva_design_DAHPLiS4suo_steps.md`).
+ (`rifaterdemsahin_canva-mcp/7_Testing_Known/canva_design_DAHPLiS4suo_steps.md`).
 - A write-only token makes success look like failure: creation returns 200 while listing
-  returns 403 `missing_scope` (`rifaterdemsahin_canva-mcp/6_Semblance/canva_document_visibility.md`, root causes 1–3).
+ returns 403 `missing_scope` (`rifaterdemsahin_canva-mcp/6_Semblance/canva_document_visibility.md`, root causes 1–3).
 - API-created designs do not appear in the Canva home "Recents" rail; they live under Projects
-  (same file, cause #1).
+ (same file, cause #1).
 
 ### Outdated / wrong / impossible against our MCP
 - Tool names throughout are the **older connector generation**:
-  `request-outline-review`, `generate-design-structured`, `create-design-from-candidate`,
-  `create-design-from-brand-template`. Our server exposes `create-design` +
-  `get-create-design-async-job` instead; `request-outline-review` **does not exist**, so the
-  outline-approval widget must be replaced by an in-chat confirmation gate.
+ `request-outline-review`, `generate-design-structured`, `create-design-from-candidate`,
+ `create-design-from-brand-template`. Our server exposes `create-design` +
+ `get-create-design-async-job` instead; `request-outline-review` **does not exist**, so the
+ outline-approval widget must be replaced by an in-chat confirmation gate.
 - `upload-asset-from-url` / `insert_fill` are used as image plumbing; our account can still do
-  this, but note their own finding that `insert_fill` accepts media only, never shapes
-  (`rifaterdemsahin_canva-mcp/4_Formula/architecture_course_mcp_spec.md`, Capability Scan).
+ this, but note their own finding that `insert_fill` accepts media only, never shapes
+ (`rifaterdemsahin_canva-mcp/4_Formula/architecture_course_mcp_spec.md`, Capability Scan).
 - The whole Apps-SDK/Developer-Portal branch (`rifaterdemsahin_canva-mcp/5_Symbols/lower-third-text/`,
-  `rifaterdemsahin_canva-mcp/4_Formula/architecture_components_app_spec.md`) is out of scope for a pure-MCP skill: it
-  requires a human to run a dev server and click buttons inside the editor.
+ `rifaterdemsahin_canva-mcp/4_Formula/architecture_components_app_spec.md`) is out of scope for a pure-MCP skill: it
+ requires a human to run a dev server and click buttons inside the editor.
 - `create_design` via `POST /rest/v1/designs` creates a blank design only — it has no
-  outline/AI content (`rifaterdemsahin_canva-mcp/4_Formula/voiceover_presentation_api_spec.md`, Capability Scan).
+ outline/AI content (`rifaterdemsahin_canva-mcp/4_Formula/voiceover_presentation_api_spec.md`, Capability Scan).
 
 ---
 
@@ -147,34 +147,34 @@ Everything is authored in Vietnamese; English is reserved for search keywords.
 
 ### Prescribed process
 1. **Challenge vague requests before acting** (`SKILL.md`, "Khi yêu cầu chưa đủ cụ thể"):
-   mandatory criteria are *môn · lớp · bài/chủ đề · số slide · thời lượng tiết · phong cách*;
-   missing **2 or more** → must push back with a pre-filled sample prompt; missing **exactly 1**
-   → pick a sensible default, continue, and state it.
+ mandatory criteria are *môn · lớp · bài/chủ đề · số slide · thời lượng tiết · phong cách*;
+ missing **2 or more** → must push back with a pre-filled sample prompt; missing **exactly 1**
+ → pick a sensible default, continue, and state it.
 2. **Choose a design system** from eight (Editorial Minimalist … EduTechND Earth Dark);
-   default to Academic Editorial (university/THPT) or EduTechND Earth (THCS KHTN).
+ default to Academic Editorial (university/THPT) or EduTechND Earth (THCS KHTN).
 3. **Derive slide count from class time** (`SKILL.md:105-107`): 20–30 min → 6–8 slides;
-   35–45 min → 8–12; 60 min+ → 12–18.
+ 35–45 min → 8–12; 60 min+ → 12–18.
 4. **Fix the pedagogical spine** (`SKILL.md`, step 3): opener → learning objectives → prior
-   knowledge → content group → example/practice → summary → closing/assignment.
+ knowledge → content group → example/practice → summary → closing/assignment.
 5. **Write each slide through an 8-field contract** (`SKILL.md`, step 4 and
-   `references/slide-output-contract.md` PART B): slide purpose · main content · proposed
-   layout · image keywords · video suggestion · colour & font · interaction · teacher notes.
+ `references/slide-output-contract.md` PART B): slide purpose · main content · proposed
+ layout · image keywords · video suggestion · colour & font · interaction · teacher notes.
 6. **Resolve content against a lesson map, not from the model's memory**
-   (`references/maps/README.md`): find Chương → Bài in `MAP_<MÔN><LỚP>.md`, take `Đơn vị KT`
-   as the content outline, `Trọng tâm` for emphasis, `Liên hệ` for the opener, `Visual` for
-   keywords, `Accent` for the subject colour.
+ (`references/maps/README.md`): find Chương → Bài in `MAP_<MÔN><LỚP>.md`, take `Đơn vị KT`
+ as the content outline, `Trọng tâm` for emphasis, `Liên hệ` for the opener, `Visual` for
+ keywords, `Accent` for the subject colour.
 7. **Build in Canva in this order** (`references/canva-workflow.md` §1–6):
-   `list-brand-kits` → `search-brand-templates` / `create-design-from-brand-template`
-   **or** `request-outline-review` → `generate-design-structured` (with `brand_kit_id`,
-   `asset_ids`) → `upload-asset-from-url` for user images →
-   `start-editing-transaction` → `perform-editing-operations` → `commit-editing-transaction`
-   → `get-export-formats` → `export-design` (pptx/pdf) → hand the download URL to the user.
+ `list-brand-kits` → `search-brand-templates` / `create-design-from-brand-template`
+ **or** `request-outline-review` → `generate-design-structured` (with `brand_kit_id`,
+ `asset_ids`) → `upload-asset-from-url` for user images →
+ `start-editing-transaction` → `perform-editing-operations` → `commit-editing-transaction`
+ → `get-export-formats` → `export-design` (pptx/pdf) → hand the download URL to the user.
 8. **QA against the checklist before delivery** (`references/slide-design-framework.md` §7):
-   background hex, cream text, correct font set, accent < 10 %, one knowledge unit per slide,
-   no overflow, one icon per slide, Vietnamese diacritics rendered, file produced only by
-   `export-design`.
+ background hex, cream text, correct font set, accent < 10 %, one knowledge unit per slide,
+ no overflow, one icon per slide, Vietnamese diacritics rendered, file produced only by
+ `export-design`.
 9. **Export, never synthesise.** "TUYỆT ĐỐI KHÔNG dựng .pptx bằng python-pptx hay bất kỳ code
-   nào" — the .pptx is only ever a Canva export (`references/canva-workflow.md` §0, §7).
+ nào" — the .pptx is only ever a Canva export (`references/canva-workflow.md` §0, §7).
 
 ### Concrete rules and thresholds
 | Rule | Value | Source |
@@ -198,47 +198,47 @@ Everything is authored in Vietnamese; English is reserved for search keywords.
 
 ### Unique ideas not found elsewhere
 - **Brand kit as the only font-delivery mechanism.** Because MCP cannot set a font family, the
-  skill makes the 9Slide font set a *precondition inside the Brand Kit / Brand Template*
-  (`references/canva-workflow.md:14`, `:78`). This is the correct architectural answer for a
-  font-family-less API, and no other source states it as a hard rule.
+ skill makes the 9Slide font set a *precondition inside the Brand Kit / Brand Template*
+ (`references/canva-workflow.md:14`, `:78`). This is the correct architectural answer for a
+ font-family-less API, and no other source states it as a hard rule.
 - **A local lesson map with a stable schema** (`references/lesson-map-format.md`): per-Bài
-  blocks of `Đơn vị KT / Trọng tâm / Liên hệ / Visual / Accent / Slide gợi ý`, plus a rule that
-  the map is a living document the agent extends when it finds a missing unit (§5). This is the
-  cheapest hallucination control I saw in the whole cluster for school content.
+ blocks of `Đơn vị KT / Trọng tâm / Liên hệ / Visual / Accent / Slide gợi ý`, plus a rule that
+ the map is a living document the agent extends when it finds a missing unit (§5). This is the
+ cheapest hallucination control I saw in the whole cluster for school content.
 - **A machine-readable per-slide contract** with fixed Vietnamese labels so output can be
-  parsed and re-checked (`references/slide-output-contract.md`), plus a PART C acceptance
-  checklist including "each slide's main content must be traceable to a `Đơn vị KT`".
+ parsed and re-checked (`references/slide-output-contract.md`), plus a PART C acceptance
+ checklist including "each slide's main content must be traceable to a `Đơn vị KT`".
 - **Anti-pattern catalogue written for a specific design system**, including the honest
-  admission that an accent rule line under every title is "the single most recognisable sign
-  of an AI slide" (`references/anti-patterns.md`, Category 1).
+ admission that an accent rule line under every title is "the single most recognisable sign
+ of an AI slide" (`references/anti-patterns.md`, Category 1).
 - **Component-level typography doctrine**: "sans cứng → serif trang nghiêm → sans mềm → sans
-  nhẹ" as a four-tier personality ladder, with the rule that bolding all body text means
-  nothing is emphasised (style file §2–§3).
+ nhẹ" as a four-tier personality ladder, with the rule that bolding all body text means
+ nothing is emphasised (style file §2–§3).
 
 ### Pitfalls it warns about
 - Reporting "done" before `commit-editing-transaction`: "Chưa commit là CHƯA lưu — không báo
-  'đã xong' trước khi commit thành công" (`references/canva-workflow.md` §4).
+ 'đã xong' trước khi commit thành công" (`references/canva-workflow.md` §4).
 - Promising a font change via API (`§7`).
 - Building .pptx with code (§7).
 - Calling generation before outline approval (§7).
 - Light background when the system demands dark; replacing 9Slide with Calibri/Cambria/Arial;
-  accent flooding > 10 % (`references/anti-patterns.md`, "LOI 1–5b").
+ accent flooding > 10 % (`references/anti-patterns.md`, "LOI 1–5b").
 - Text overflow: fix by −2 pt, splitting the slide, or widening the box — "never publish with
-  overflow" (`references/anti-patterns.md`, Category 5).
+ overflow" (`references/anti-patterns.md`, Category 5).
 
 ### Outdated / impossible against our MCP
 - `request-outline-review`, `generate-design-structured` and `create-design-from-candidate` do
-  not exist on our server (same substitution as above); the equivalent is `create-design` with
-  `outline.sections[]` + polling.
+ not exist on our server (same substitution as above); the equivalent is `create-design` with
+ `outline.sections[]` + polling.
 - The skill assumes a **brand kit already exists** (`brand_kit_id_hint: kAHLq3RErqs` in
-  `assets/brand-standard.json`) and a Canva **Pro** plan for custom fonts. Our account has zero
-  brand kits and zero brand templates, so the whole "brand kit delivers the font" mechanism is
-  unavailable until a kit is created — the skill has no fallback for that case (see Gaps).
+ `assets/brand-standard.json`) and a Canva **Pro** plan for custom fonts. Our account has zero
+ brand kits and zero brand templates, so the whole "brand kit delivers the font" mechanism is
+ unavailable until a kit is created — the skill has no fallback for that case (see Gaps).
 - `assets/palettes.json` still contains python-pptx `RGBColor` instructions and per-system
-  `title_size_pt`/`body_size_pt` fields — leftovers of the removed python-pptx generator.
+ `title_size_pt`/`body_size_pt` fields — leftovers of the removed python-pptx generator.
 - `references/styles/edutechnd-earth-dark.md` is full of `python-pptx` snippets
-  (`Inches`, `MSO_SHAPE`, `add_shape`) that contradict the skill's own "no code" rule; treat
-  them as geometry/colour reference only.
+ (`Inches`, `MSO_SHAPE`, `add_shape`) that contradict the skill's own "no code" rule; treat
+ them as geometry/colour reference only.
 
 ---
 
@@ -251,41 +251,41 @@ Media prompts — no MCP calls, no file output beyond an answer shaped by a fixe
 ### Process
 1. Classify the request: `template` / `element` / `magic-media` / `design-advice` / `all`.
 2. Identify subject (Physics/Chemistry/Biology/KHTN), grade band (6–12) and slide purpose
-   (lecture, revision, experiment, assessment, observed/open lesson).
+ (lecture, revision, experiment, assessment, observed/open lesson).
 3. Recommend one of 4 font combos, one of 6 layout patterns, and a subject palette.
 4. Produce keywords in three tiers (general → styled → specific) for templates, and by asset
-   type (illustrations, diagrams, icons, backgrounds, frames, stickers, charts) for elements.
+ type (illustrations, diagrams, icons, backgrounds, frames, stickers, charts) for elements.
 5. Produce 3–4 Magic Media prompt variants using
-   `[style], [subject doing action], [environment], [lighting], [colour scheme], [mood], [composition]`.
+ `[style], [subject doing action], [environment], [lighting], [colour scheme], [mood], [composition]`.
 6. Output in a fixed Vietnamese guide format with sizes, palette, fonts, layouts, keywords,
-   prompts and tips.
+ prompts and tips.
 
 ### Concrete rules and thresholds
 - **"Quy tắc 1-6-6":** 1 main idea per slide, **max 6 lines**, **max 6 words per line**.
 - Font sizes: heading 36–44 pt bold; subheading 24–28 pt semibold; body 18–22 pt regular —
-  "KHÔNG nhỏ hơn 18pt trên slide"; caption 12–14 pt; **max 2 font families per slide**.
+ "KHÔNG nhỏ hơn 18pt trên slide"; caption 12–14 pt; **max 2 font families per slide**.
 - Vietnamese-safe font families: Montserrat, Open Sans, Roboto, Nunito, Inter.
 - Margins 10–15 % per side; element gap ≥ 20 px; 3–4 colours maximum.
 - Sizes table: lecture slide 1920×1080 (16:9); legacy projector 1024×768; A4 worksheet;
-  infographic 800×2000; A2 poster; Google Classroom banner 1000×250.
+ infographic 800×2000; A2 poster; Google Classroom banner 1000×250.
 - Magic Media prompt: 15–40 English words, no negations, add `isolated on white background` or
-  `seamless pattern` when needed.
+ `seamless pattern` when needed.
 - Subject palettes are fully enumerated (e.g. Physics `#1E40AF / #06B6D4 / #F59E0B / #64748B`).
 
 ### Unique / pitfalls
 - The **challenge-before-acting** contract is shared across this author's whole skill family
-  (also `stem-lesson-creator/SKILL.md`, `ke-hoach-day-hoc/SKILL.md`): missing ≥ 2 mandatory
-  criteria ⇒ push back with a filled-in template; missing exactly 1 ⇒ choose and state. This is
-  the cleanest anti-guessing interaction pattern in the cluster and is directly reusable.
+ (also `stem-lesson-creator/SKILL.md`, `ke-hoach-day-hoc/SKILL.md`): missing ≥ 2 mandatory
+ criteria ⇒ push back with a filled-in template; missing exactly 1 ⇒ choose and state. This is
+ the cleanest anti-guessing interaction pattern in the cluster and is directly reusable.
 - Warns that a "beautiful slide" request must be converted into subject/lesson/grade/purpose
-  before doing anything.
+ before doing anything.
 - No pitfalls about MCP at all — it never touches the API.
 
 ### Outdated / wrong / impossible
 - It advises Magic Media/Magic Resize/Magic Animate as if they were agent-callable; they are
-  editor-only. Also assumes Canva Pro features.
+ editor-only. Also assumes Canva Pro features.
 - Font advice is unusable through MCP (no font-family operation), so it must be reframed as
-  "choose once in the template/brand kit, then never change via API".
+ "choose once in the template/brand kit, then never change via API".
 
 ---
 
@@ -298,34 +298,34 @@ minimal operating contract. Three paragraphs of skill; the reconnaissance is in 
 ### Process
 1. Verify the endpoint is `https://mcp.canva.com/mcp` (streamable HTTP, OAuth 2.0).
 2. Read tools only when the live schema lists them — "Call a tool only when the live schema
-   lists it" (`skills/canva-workspace/SKILL.md`).
+ lists it" (`skills/canva-workspace/SKILL.md`).
 3. Treat every write (`generate-design`, `create-design`, … `export-design`) as requiring an
-   explicit user request plus host approval; "Search or read before proposing a change."
+ explicit user request plus host approval; "Search or read before proposing a change."
 4. Include the design link whenever a tool returns one.
 5. Report provider errors honestly; never claim a write succeeded without a successful result.
 
 ### Verified auth facts (the real value)
 - Unauthenticated `initialize` → **401**, and `WWW-Authenticate` names protected-resource
-  metadata `https://mcp.canva.com/.well-known/oauth-protected-resource/mcp`
-  (`README.md`, "Connector setup", checked 2026-10-10).
+ metadata `https://mcp.canva.com/.well-known/oauth-protected-resource/mcp`
+ (`README.md`, "Connector setup", checked 2026-10-10).
 - `/.well-known/oauth-authorization-server/mcp` returns **404**; use the issuer document
-  `https://mcp.canva.com/.well-known/oauth-authorization-server`.
+ `https://mcp.canva.com/.well-known/oauth-authorization-server`.
 - PKCE **S256** advertised; token-endpoint auth methods `none`, `client_secret_basic`,
-  `client_secret_post`; registration endpoint `https://mcp.canva.com/register`.
+ `client_secret_post`; registration endpoint `https://mcp.canva.com/register`.
 - `scopes_supported` list (no smaller required subset is published): `profile:read`,
-  `design:meta:read`, `design:content:write`, `design:content:read`, `folder:read`,
-  `folder:write`, `brandtemplate:content:read`, `brandtemplate:meta:read`,
-  `brandtemplate:content:write`, `comment:write`, `comment:read`, `asset:read`, `asset:write`,
-  `brandkit:read`, `help:answers:read`, `help:answers:write`.
+ `design:meta:read`, `design:content:write`, `design:content:read`, `folder:read`,
+ `folder:write`, `brandtemplate:content:read`, `brandtemplate:meta:read`,
+ `brandtemplate:content:write`, `comment:write`, `comment:read`, `asset:read`, `asset:write`,
+ `brandkit:read`, `help:answers:read`, `help:answers:write`.
 - "Do not add scopes outside that list"; "The redirect URI must be the … callback. This package
-  does not invent that URI."
+ does not invent that URI."
 
 ### Pitfalls / impossible
 - The package explicitly cannot verify anything live without a completed OAuth grant, and it
-  refuses to write a client id/secret/token into the repo or chat — the right posture for a
-  skill that ships in a repo.
+ refuses to write a client id/secret/token into the repo or chat — the right posture for a
+ skill that ships in a repo.
 - Not useful beyond auth: it lists a legacy tool-name set (`generate-design`,
-  `create-design-from-candidate`) and has no workflow.
+ `create-design-from-candidate`) and has no workflow.
 
 ---
 
@@ -336,17 +336,17 @@ and a 6-step MCP workflow.
 
 ### Rules worth taking
 - Contrast: "titolo 3-4x più grande del body"; accent colour for the key element only; bold for
-  titles, regular for body.
+ titles, regular for body.
 - Alignment: 12-column grid, margins ≥ 5 % of the edge, Gestalt proximity.
 - Repetition and proximity, and "spazio bianco: respiro = lusso — più spazio = più premium".
 - Brand kit structure: **max 5–6 colours** (primary, secondary, accent, light, dark, white) and
-  **2–3 fonts** (heading, body, optional accent), with 5 logo variants.
+ **2–3 fonts** (heading, body, optional accent), with 5 logo variants.
 - Carousel architecture: slide 1 hook → one point per slide → summary → CTA, with an edge arrow
-  pushing the swipe.
+ pushing the swipe.
 - Export matrix: web PNG/JPG/WebP under 500 KB (< 200 KB social); print PDF 300 DPI CMYK with
-  3 mm bleed; video MP4 / GIF < 5 s.
+ 3 mm bleed; video MP4 / GIF < 5 s.
 - Workflow (legacy): `search-designs` → `get-design-content` → `start-editing-transaction` →
-  `perform-editing-operations` → `commit-editing-transaction` → `export-design`.
+ `perform-editing-operations` → `commit-editing-transaction` → `export-design`.
 
 ### Why it is C-grade
 Zero tool schemas, zero failure modes, no note that font-family/background/new-text are
@@ -362,22 +362,22 @@ One line: **thin wrapper** — an auto-generated parameter dump of 22 Canva MCP 
 
 ### What it uniquely records
 - `user_intent` appears on every tool as "Mandatory description … This should always be
-  provided by LLM clients … 255 characters or less recommended" (`SKILL.md`, any tool section).
+ provided by LLM clients … 255 characters or less recommended" (`SKILL.md`, any tool section).
 - `upload-asset-from-url`'s own instruction: if the API returns `Missing scopes: [asset:write]`,
-  "ask the user to disconnect and reconnect their connector. This will generate a new access
-  token with the required scope."
+ "ask the user to disconnect and reconnect their connector. This will generate a new access
+ token with the required scope."
 - `search-designs` carries a strongly worded guardrail that any template intent must go to
-  `search-brand-templates` instead, and that `search-designs` "ONLY searches existing designs …
-  DOES NOT find templates and MUST NOT be used as a fallback".
+ `search-brand-templates` instead, and that `search-designs` "ONLY searches existing designs …
+ DOES NOT find templates and MUST NOT be used as a fallback".
 - Continuation-token rule stated three times: only send a token that came back in a previous
-  response; "NEVER EVER fabricate a token"; omit rather than send null/empty.
+ response; "NEVER EVER fabricate a token"; omit rather than send null/empty.
 - `import-design-from-url` refuses local paths and explains the pattern check
-  (`/`, `C:\`, `file://`, "Downloads/Documents/Desktop"); requires a public HTTPS URL.
+ (`/`, `C:\`, `file://`, "Downloads/Documents/Desktop"); requires a public HTTPS URL.
 - `merge-designs` requires explicit confirmation for every call, and for `delete_pages` the
-  user must type **"I approve the deletion"**; "Operations are applied sequentially. Page
-  numbers are 1-based and evaluated at the time each operation runs."
+ user must type **"I approve the deletion"**; "Operations are applied sequentially. Page
+ numbers are 1-based and evaluated at the time each operation runs."
 - `get-design-content` supports only `content_types: ["richtexts"]` and says to use
-  `start-editing-transaction` when editing is the goal.
+ `start-editing-transaction` when editing is the goal.
 - `export-design` guidance: call `get-export-formats` first and always show the download URL.
 - `create-folder` / `move-item-to-folder` accept the literal `'root'` as the parent id.
 
@@ -397,14 +397,14 @@ rules, then optionally route "graphic" slides through Canva (`generate-design` �
 ### Process
 1. Phase 0 — detect mode: new deck / PPT conversion / enhancement.
 2. Phase 1 — one bundled question set: audience, industry, structure (YC / Sequoia / a16z /
-   custom), content readiness, output mode, generation path, graphics source.
+ custom), content readiness, output mode, generation path, graphics source.
 3. Phase 2 — style discovery: mood multi-select, then generate **three single-slide HTML
-   previews** (safe preset + bold + wildcard) and let the user pick.
+ previews** (safe preset + bold + wildcard) and let the user pick.
 4. Phase 3 — generate: read slide archetypes, VC structure, CSS base, data-viz, audience guide,
-   MCP graphics guide; then the 5-check generation gate.
+ MCP graphics guide; then the 5-check generation gate.
 5. Phase 4 — PPTX conversion via `scripts/extract-pptx.py`, then re-style.
 6. Phase 5 — delivery: open in browser, export PDF via print (`@page landscape, margin 0`),
-   run the pre-send checklist.
+ run the pre-send checklist.
 
 ### Concrete rules and thresholds
 | Rule | Value | Source |
@@ -423,26 +423,26 @@ rules, then optionally route "graphic" slides through Canva (`generate-design` �
 
 ### The Canva part (what actually matters to us)
 - `MCP_GRAPHICS_GUIDE.md` "Canva MCP Integration" describes the two deployment shapes:
-  1. **Graphics-only pipeline** — `generate-design(infographic|poster|report)` → present
-     candidates → `create-design-from-candidate` → `export-design {type: png, width: 1920}` →
-     download → embed as `<img>`.
-  2. **Canva-native deck** — outline from `VC_STRUCTURES.md` → `request-outline-review` (user
-     approves in the widget) → `generate-design-structured` → user edits in Canva →
-     `export-design {type: pdf}`.
+ 1. **Graphics-only pipeline** — `generate-design(infographic|poster|report)` → present
+ candidates → `create-design-from-candidate` → `export-design {type: png, width: 1920}` →
+ download → embed as `<img>`.
+ 2. **Canva-native deck** — outline from `VC_STRUCTURES.md` → `request-outline-review` (user
+ approves in the widget) → `generate-design-structured` → user edits in Canva →
+ `export-design {type: pdf}`.
 - Prompting tips that transfer to `create-design` briefs: put brand hexes in the query, state
-  the data literally ("TAM $50B, SAM $8B, SOM $1.2B as concentric circles"), and demand style
-  ("Modern, minimal infographic style, no clip art").
+ the data literally ("TAM $50B, SAM $8B, SOM $1.2B as concentric circles"), and demand style
+ ("Modern, minimal infographic style, no clip art").
 - Tool-selection table: Canva for infographics/charts, CSS/SVG for diagrams (no external
-  dependency), FLUX/Nano-Banana for photographic hero art.
+ dependency), FLUX/Nano-Banana for photographic hero art.
 
 ### Pitfalls it documents
 - AI image generators produce "AI-slop" stock imagery; the guardrails forbid photorealistic team
-  photos outright (instant credibility loss with investors).
+ photos outright (instant credibility loss with investors).
 - The deck reviewer's **first automatic check** is a font-size scan: any `font-size` below 20 px
-  is an automatic Critical issue, with `-2.0` per critical, `-1.0` per warning, `-0.25` per
-  suggestion, scored from 10.0 (`agents/deck-reviewer.md`, "FIRST CHECK" and "Scoring Rubric").
+ is an automatic Critical issue, with `-2.0` per critical, `-1.0` per warning, `-0.25` per
+ suggestion, scored from 10.0 (`agents/deck-reviewer.md`, "FIRST CHECK" and "Scoring Rubric").
 - Narrative-arc checks: strongest metric early enough to hook; final slide must be a CTA, never
-  "Thank You"/"Questions?".
+ "Thank You"/"Questions?".
 
 ### Outdated / impossible against our MCP
 `generate-design`, `generate-design-structured`, `request-outline-review`,
@@ -462,21 +462,21 @@ output preference.
 
 ### Process (five approval-gated stages)
 1. **Pre-flight** — confirm brief, Canva tier (Pro/Teams manual template selection vs Enterprise
-   autofill), HubSpot tier, brand assets (read product list from the connected storefront,
-   read-only), and a **generation budget** shown to the owner.
+ autofill), HubSpot tier, brand assets (read product list from the connected storefront,
+ read-only), and a **generation budget** shown to the owner.
 2. **Stage 1 — posting calendar** with a `Path` column routing every row to `Canva (social)` or
-   `Text-only`; cap 30 days; **Checkpoint 1** = explicit calendar approval before any API call.
+ `Text-only`; cap 30 days; **Checkpoint 1** = explicit calendar approval before any API call.
 3. **Stage 2 — asset inventory, slot by slot** (Enterprise: `dataset[].label` from the brand
-   template; Pro/Teams: count every distinct image rectangle), then a **gap table** with one row
-   per slot, resolve mismatches with the owner, upload missing photos, and capture a **verified
-   `asset.id`**.
+ template; Pro/Teams: count every distinct image rectangle), then a **gap table** with one row
+ per slot, resolve mismatches with the owner, upload missing photos, and capture a **verified
+ `asset.id`**.
 4. **Stage 3 — generation, one calendar row at a time**, N candidates per row fired in parallel,
-   verify job status, export to a **permanent PNG**, **visually verify each export**, retry only
-   the failed candidate, present the row, then **pause 30 s**.
+ verify job status, export to a **permanent PNG**, **visually verify each export**, retry only
+ the failed candidate, present the row, then **pause 30 s**.
 5. **Stage 4 — copy** per channel with length caps (IG ≤ 2,200 chars; FB ≤ 500 recommended;
-   X ≤ 280; email subject ≤ 50, preheader ≤ 90, body 100–250 words, one CTA).
+ X ≤ 280; email subject ≤ 50, preheader ≤ 90, body 100–250 words, one CTA).
 6. **Stage 5 — HubSpot staging** with `status: SCHEDULED` (never `PUBLISHED`), confirm the
-   queue, surface email copy inline.
+ queue, surface email copy inline.
 
 ### Concrete rules and thresholds
 | Rule | Value | Source |
@@ -497,15 +497,15 @@ Each is written as ✗ Bad / ✓ Good, and each maps to something an agent will 
 2. Generating without a budget plan → hitting quota mid-campaign with no recovery path.
 3. Skipping the calendar checkpoint → most expensive wasted work.
 4. Template has more image slots than the brief has photos → unfilled slots silently render
-   Canva's default landscape.
+ Canva's default landscape.
 5. Trusting `status: success` without exporting and looking → a success job can still contain
-   placeholder or wrong assets.
+ placeholder or wrong assets.
 6. One design in a batch fails → presenting a partial batch destroys trust in the good ones.
 7. Generating without confirming every autofill field has a value.
 8. **Passing invalid values to image autofill fields** — empty string, file path, URL or a stale
-   `asset.id` does not error; it silently renders the default placeholder.
+ `asset.id` does not error; it silently renders the default placeholder.
 9. **Embedding `design.canva.ai` thumbnail URLs** — short-lived authenticated CDN URLs that
-   expire within minutes.
+ expire within minutes.
 10. Listing designs one-by-one instead of one grouped batch (carousel rendering).
 11. Generating sequentially instead of parallel within a batch.
 12. Auto-selecting a brand template for Pro/Teams users.
@@ -514,13 +514,13 @@ Each is written as ✗ Bad / ✓ Good, and each maps to something an agent will 
 
 ### Unique ideas
 - **Slot-by-slot inventory with a gap table** before any generation — the only source that
-  treats "template has 3 image slots, brief has 1 photo" as a first-class decision.
+ treats "template has 3 image slots, brief has 1 photo" as a first-class decision.
 - **Visual verification of the exported PNG is mandatory** because job success ≠ correct render.
 - **Two delivery URLs, only one of which is safe**: `design.canva.ai` (expires) vs
-  `export-download.canva.com` (permanent).
+ `export-download.canva.com` (permanent).
 - `brand-style`'s capture contract: never ask for hex codes or uploads — take a website link or
-  a plain-words description, translate it yourself, **preview on real components**, then save
-  with approval; and "Do not restyle old deliverables."
+ a plain-words description, translate it yourself, **preview on real components**, then save
+ with approval; and "Do not restyle old deliverables."
 
 > Sibling note: `small-business/skills/social-content-engine/reference/canva-api.md` is
 > byte-identical to the `canva-creator` one (verified with `diff`, no output), so the
@@ -529,12 +529,12 @@ Each is written as ✗ Bad / ✓ Good, and each maps to something an agent will 
 
 ### Outdated / impossible against our MCP
 - Built on the **Connect REST API** (`POST /v1/autofills`, `POST /v1/exports`,
-  `POST /v1/asset-uploads`) with MCP only as an aside; our toolset is MCP-only. The MCP
-  equivalents it maps are `export-design`, `get-design-thumbnail`, `get-design`,
-  `upload-asset-from-url` (`reference/canva-api.md`, "Canva MCP equivalents").
+ `POST /v1/asset-uploads`) with MCP only as an aside; our toolset is MCP-only. The MCP
+ equivalents it maps are `export-design`, `get-design-thumbnail`, `get-design`,
+ `upload-asset-from-url` (`reference/canva-api.md`, "Canva MCP equivalents").
 - Its autofill/brand-template stage is Enterprise-gated — on our account (0 brand templates) this
-  whole branch is dead, and the `Pro/Teams` fallback ("create a blank design, then describe the
-  edits the user makes by hand") is exactly the manual work a skill should avoid.
+ whole branch is dead, and the `Pro/Teams` fallback ("create a blank design, then describe the
+ edits the user makes by hand") is exactly the manual work a skill should avoid.
 - HubSpot staging is out of scope for us.
 
 ---
@@ -548,49 +548,49 @@ generation, and a caption step at the end.
 
 ### Process
 1. Load the framework: read all 8 reference PNGs so the layout, two-tone headline, highlight
-   colour, glow frame and CAPS-word body are internalised.
+ colour, glow frame and CAPS-word body are internalised.
 2. Interview: topic → 4–6 pillars (each one job), CTA keyword + deliverable, pillar count.
 3. Generate **3–4 cover options** in one parallel batch; user picks one; that pick becomes the
-   **theme anchor** (`media_id` held for all later generations).
+ **theme anchor** (`media_id` held for all later generations).
 4. Draft the markdown with **live character counts** per line and get explicit approval
-   (no image credits spent before this gate).
+ (no image credits spent before this gate).
 5. Generate all pillar images in one batch, each passing the cover as a reference image with the
-   instruction to match palette/lighting/style and change only the subject.
+ instruction to match palette/lighting/style and change only the subject.
 6. **Assemble:** `copy-design` (with `page_numbers` to trim a pillar) → `start-editing-transaction`
-   → `replace_text` for whole-element copy, `find_and_replace_text` span-by-span for headlines
-   that must keep one coloured word → `upload-asset-from-url` → `update_fill` on existing image
-   elements → preview → approval → `commit-editing-transaction`.
+ → `replace_text` for whole-element copy, `find_and_replace_text` span-by-span for headlines
+ that must keep one coloured word → `upload-asset-from-url` → `update_fill` on existing image
+ elements → preview → approval → `commit-editing-transaction`.
 7. Capture `edit_url` / `view_url` via `get-design`; write a link file.
 8. Write the caption with a fixed shape (CTA first line, 5 hashtags, ≤ 500 chars, no em dashes).
 
 ### Concrete rules and thresholds (measured from the live template)
 - Pillar headline: **45–58 characters** total, exactly **one** highlighted span (renders in the
-  accent colour).
+ accent colour).
 - Pillar body: **65–80 characters**, ending in **one ALL-CAPS word**.
 - Cover headline: **≤ ~22 characters**; cover subtext 3–4 short italic lines.
 - Reason given: "The Canva text boxes are sized for these lengths. Go over and the text reflows,
-  the slide no longer matches the deck, and the carousel breaks visual unity."
+ the slide no longer matches the deck, and the carousel breaks visual unity."
 - Caption hard caps: exactly **5 hashtags**, **≤ 500 characters total**, no em dashes, no
-  markdown, body ≤ 80 words, CTA on line 1.
+ markdown, body ≤ 80 words, CTA on line 1.
 
 ### Unique ideas — the best edit mechanics in the cluster
 - **`find_and_replace_text` preserves per-run formatting; `replace_text` flattens it.**
-  "`format_text` colors an ENTIRE element, so you cannot recolor a single word; whole-element
-  `replace_text` would flatten the existing orange run" (`commands/carousel.md:131`). This is the
-  practical answer to our V16 (text stored as multiple regions/runs): edit *inside* the runs.
+ "`format_text` colors an ENTIRE element, so you cannot recolor a single word; whole-element
+ `replace_text` would flatten the existing orange run" (`commands/carousel.md:131`). This is the
+ practical answer to our V16 (text stored as multiple regions/runs): edit *inside* the runs.
 - **`update_fill` swaps the asset inside the existing element and therefore preserves frame
-  effects** (glow/shadow); "Do NOT delete + re-insert the image (that loses the glow)"
-  (`commands/carousel.md:136`). The complementary hazard to our V3 (inserted fills sit above):
-  prefer `update_fill` over delete+insert+insert_fill whenever a styled frame exists.
+ effects** (glow/shadow); "Do NOT delete + re-insert the image (that loses the glow)"
+ (`commands/carousel.md:136`). The complementary hazard to our V3 (inserted fills sit above):
+ prefer `update_fill` over delete+insert+insert_fill whenever a styled frame exists.
 - **`copy-design` with `page_numbers` to fit a different pillar count**, plus the honest note
-  that duplicating a page *inside* a transaction may be unsupported, in which case degrade and
-  say so (`commands/carousel.md`, Step 5.1).
+ that duplicating a page *inside* a transaction may be unsupported, in which case degrade and
+ say so (`commands/carousel.md`, Step 5.1).
 - **Character budgets derived from the template, not chosen by taste** — a transferable
-  discipline for our deck: measure the existing text boxes, then write to size.
+ discipline for our deck: measure the existing text boxes, then write to size.
 - **Drafts are permanently lost if not committed** — the approval gate is not politeness, it is
-  the only recovery point (`commands/carousel.md:138`; `README.md:160`).
+ the only recovery point (`commands/carousel.md:138`; `README.md:160`).
 - Responsive pages accept only `update_title, replace_text, update_fill, delete_element,
-  find_and_replace_text` — an independent confirmation of our V10.
+ find_and_replace_text` — an independent confirmation of our V10.
 
 ### Pitfalls it warns about
 - Over-budget text reflows and breaks deck unity.
@@ -603,7 +603,7 @@ generation, and a caption step at the end.
 
 ### Outdated / impossible against our MCP
 - Depends on a second MCP (Higgsfield) for images; our only generation tool is
-  `generate-image` (which is credit-limited) plus `upload-asset-from-url` for user assets.
+ `generate-image` (which is credit-limited) plus `upload-asset-from-url` for user assets.
 - No page-duplication operation exists, as it admits.
 - Placeholder template id must be substituted before anything runs.
 
@@ -622,20 +622,20 @@ brand-compliance-reviewer) → accessibility check → export (asset-export) →
 
 ### Rules worth keeping
 - **Truth-telling** (`rules/truth-telling.md`): "Never claim a visual exists if it wasn't
-  generated/exported… No invented asset URLs, file paths, dimensions, or token values… mark it
-  `[verify]`… A mockup description is not a delivered asset; a spec is not an export."
+ generated/exported… No invented asset URLs, file paths, dimensions, or token values… mark it
+ `[verify]`… A mockup description is not a delivered asset; a spec is not an export."
 - **Design quality / anti-template** (`rules/design-quality.md`): pick a named direction; avoid
-  "clean minimal" as a non-decision and avoid auto-defaulting to dark; "type is 90% of most
-  graphic design"; iterate on generations, don't ship the first raw output; "would this look
-  believable in a real brand's portfolio?"
+ "clean minimal" as a non-decision and avoid auto-defaulting to dark; "type is 90% of most
+ graphic design"; iterate on generations, don't ship the first raw output; "would this look
+ believable in a real brand's portfolio?"
 - **Accessibility** (`rules/accessibility.md`): WCAG AA 4.5:1 normal / 3:1 large-bold ≥ 24 px;
-  don't rely on colour alone; alt text for meaningful imagery; respect `prefers-reduced-motion`.
+ don't rely on colour alone; alt text for meaningful imagery; respect `prefers-reduced-motion`.
 - **Asset hygiene**: kebab-case names, right format per job, sRGB vs CMYK, don't commit binaries.
 - **Licensing** (`rules/licensing-attribution.md`): record source + licence per asset; fonts have
-  licences; disclose AI where required; keep an asset manifest.
+ licences; disclose AI where required; keep an asset manifest.
 - **Critic output format** (`agents/design-critic.md`): findings grouped **Must-fix /
-  Should-fix / Polish**, each with element + concrete fix, verdict **SHIP / REVISE**; "You can't
-  see pixels you weren't given — say what needs a real visual check."
+ Should-fix / Polish**, each with element + concrete fix, verdict **SHIP / REVISE**; "You can't
+ see pixels you weren't given — say what needs a real visual check."
 
 ### Why it is B-grade
 `skills/canva-design/SKILL.md` is five steps with no schemas and no failure modes; the value is
@@ -653,39 +653,39 @@ optionally import from / export to Canva.
 
 ### Process (Canva-relevant subset)
 1. Probe Canva availability with `search-designs` **before** any Canva operation; on auth failure
-   explain OAuth and keep the local deck.
+ explain OAuth and keep the local deck.
 2. **Import from Canva:** resolve design id → `get-design` → inspect `get-export-formats` →
-   `export-design` (PPTX) → download → import locally.
+ `export-design` (PPTX) → download → import locally.
 3. **Export to Canva:** produce local PPTX → if `import-design-from-url` exists, use an
-   *authorised reachable URL*; if only local files exist, "deliver the PPTX for manual Canva
-   import… Do not publish the file or enable public sharing merely to satisfy the remote tool's
-   URL requirement."
+ *authorised reachable URL*; if only local files exist, "deliver the PPTX for manual Canva
+ import… Do not publish the file or enable public sharing merely to satisfy the remote tool's
+ URL requirement."
 4. Report the Canva design URL only after the **complete** deck imported: "A missing or failed
-   page makes the transfer incomplete; report it rather than silently skipping slides."
+ page makes the transfer incomplete; report it rather than silently skipping slides."
 
 ### Concrete rules and numbers
 - Stage exactly **1920×1080**; safe margins **80 px** left/right, **60 px** top/bottom;
-  **8 px grid**; z-index layers 0/10/100/200.
+ **8 px grid**; z-index layers 0/10/100/200.
 - Body **28–36 px** doctrine floor, headings **64–120 px**; the validator hard-fails only below
-  **18 px** — "18–27 px passes the gate but is reserved for captions/labels".
+ **18 px** — "18–27 px passes the gate but is reserved for captions/labels".
 - Density modes: `sparse` (headline 64–120 px, body 0–3 lines at 32–48 px, no bullets, visuals
-  ≥ 40 % of canvas, 1 slide per 1–2 min) vs `dense` (headline 48–72 px, body 28–36 px, max 8
-  lines, ≤ 6 bullets of ≤ 20 words).
+ ≥ 40 % of canvas, 1 slide per 1–2 min) vs `dense` (headline 48–72 px, body 28–36 px, max 8
+ lines, ≤ 6 bullets of ≤ 20 words).
 - WCAG AA: 4.5:1 normal (< 24 px), 3:1 large (≥ 24 px).
 - Slide-count guidance table by purpose and density (pitch 5 min: 6–10 sparse / 8–14 dense;
-  conference 30 min: 20–35 sparse / 30–50 dense).
+ conference 30 min: 20–35 sparse / 30–50 dense).
 - Forbidden display typefaces: Inter, Roboto, Arial/Helvetica unmodified, Open Sans, Lato — fine
-  as body/fallback, not as display.
+ as body/fallback, not as display.
 
 ### Unique ideas
 - **"Incomplete transfer is a failure"** — the strongest statement in the cluster about partial
-  merges/imports.
+ merges/imports.
 - **Explicitly refuses to invent tools**: "Do not invent a presentation-creation call that maps
-  an asset-ID array to pages, or pass a local filepath to a URL-upload tool."
+ an asset-ID array to pages, or pass a local filepath to a URL-upload tool."
 - **PPTX from HTML is raster-backed** ("each slide is a PNG, so importing it does not make text
-  editable") — matches rifater's finding from the other direction.
+ editable") — matches rifater's finding from the other direction.
 - The atmospheric-intention / "committed aesthetic" framing (palette with named roles, one
-  accent, typographic commitment) is the best-written version of anti-AI-slop in the cluster.
+ accent, typographic commitment) is the best-written version of anti-AI-slop in the cluster.
 
 ### Outdated / impossible
 - Its Canva channel is intentionally bare; no `create-design`, no transactions, no thumbnails.
@@ -854,63 +854,63 @@ contract · **V16** text stored as multiple runs, naive joining invents typos ·
 ## Contradictions
 
 1. **Canvas size.** oma-slide fixes the stage at 1920×1080 px
-   (`resources/fixed-stage.md` §1); pitchdeck-pro the same (`SLIDE_TYPES.md:6`); rifater's real
-   pages measured 1920×1080. The lesson-designer sets a default of `13.333" × 7.5"` and an
-   EduTechND variant of `20" × 11.25"` (`SKILL.md`, "Slide canvas").
-   **Recommendation:** treat 1920×1080 px as the single truth for Canva presentations (it is also
-   our V11). The inch values are the same 16:9 ratio at a different authoring scale; when reading
-   the lesson-designer's pt numbers, convert rather than copy.
+ (`resources/fixed-stage.md` §1); pitchdeck-pro the same (`SLIDE_TYPES.md:6`); rifater's real
+ pages measured 1920×1080. The lesson-designer sets a default of `13.333" × 7.5"` and an
+ EduTechND variant of `20" × 11.25"` (`SKILL.md`, "Slide canvas").
+ **Recommendation:** treat 1920×1080 px as the single truth for Canva presentations (it is also
+ our V11). The inch values are the same 16:9 ratio at a different authoring scale; when reading
+ the lesson-designer's pt numbers, convert rather than copy.
 
 2. **Font sizes across sources are not comparable without the canvas.** pitchdeck-pro says body
-   32 px and "nothing below 20 px" on a 1920×1080 canvas; oma-slide says body 28–36 px with a
-   validator floor of 18 px; the lesson-designer says body 36 pt on a 20-inch canvas but 14–18 pt
-   on a 13.3-inch one; `assets/brand-standard.json` says `body: 17` and `caption: 11`.
-   **Recommendation:** never carry a number between sources without its canvas. For our deck:
-   title ≈ 52–60 px, section ≈ 40 px, body ≥ 32 px, caption ≥ 24 px — and treat our own
-   classroom finding (V12: under ~30 px reads badly from the back) as the tie-breaker, which
-   makes pitchdeck's numbers the closest fit and the lesson-designer's `body: 17` unusable.
+ 32 px and "nothing below 20 px" on a 1920×1080 canvas; oma-slide says body 28–36 px with a
+ validator floor of 18 px; the lesson-designer says body 36 pt on a 20-inch canvas but 14–18 pt
+ on a 13.3-inch one; `assets/brand-standard.json` says `body: 17` and `caption: 11`.
+ **Recommendation:** never carry a number between sources without its canvas. For our deck:
+ title ≈ 52–60 px, section ≈ 40 px, body ≥ 32 px, caption ≥ 24 px — and treat our own
+ classroom finding (V12: under ~30 px reads badly from the back) as the tie-breaker, which
+ makes pitchdeck's numbers the closest fit and the lesson-designer's `body: 17` unusable.
 
 3. **`body: 17` inside the lesson-designer.** `assets/brand-standard.json` `sizes_pt` (title 36,
-   section 24, body 17, caption 11) directly contradicts the same skill's own style file
-   (title 44–72, body 36, caption 24–28) and its hard rule "minimum 24 pt when projected"
-   (`SKILL.md:159`). **Recommendation:** the `sizes_pt` block is a stale artefact of the removed
-   python-pptx generator; discard it, keep the style-file scale.
+ section 24, body 17, caption 11) directly contradicts the same skill's own style file
+ (title 44–72, body 36, caption 24–28) and its hard rule "minimum 24 pt when projected"
+ (`SKILL.md:159`). **Recommendation:** the `sizes_pt` block is a stale artefact of the removed
+ python-pptx generator; discard it, keep the style-file scale.
 
 4. **Two EduTechND palettes.** `references/slide-design-framework.md` and
-   `assets/brand-standard.json` use `#4B2E2B / #8C5A3C / #FFF8F0` + subject accents;
-   `references/styles/edutechnd-earth-dark.md` uses `#3F2313 / #D7A550 / #D28119 / #FCFBF9`.
-   **Recommendation:** pick one. The `brand-standard.json` set is the one the workflow and the
-   output contract both reference, and it carries the subject-accent map; the ANKENE set looks
-   like an earlier screenshot-derived palette. Use the former and note the latter as legacy.
+ `assets/brand-standard.json` use `#4B2E2B / #8C5A3C / #FFF8F0` + subject accents;
+ `references/styles/edutechnd-earth-dark.md` uses `#3F2313 / #D7A550 / #D28119 / #FCFBF9`.
+ **Recommendation:** pick one. The `brand-standard.json` set is the one the workflow and the
+ output contract both reference, and it carries the subject-accent map; the ANKENE set looks
+ like an earlier screenshot-derived palette. Use the former and note the latter as legacy.
 
 5. **Generation strategy: brief-to-design vs template duplication.** rifater/pitchdeck/
-   lesson-designer generate from an outline; carousel-builder/design-pack duplicate a template.
-   **Recommendation:** template-first when a usable template exists (deterministic layout, real
-   character budgets, formatting you can preserve); otherwise `create-design`. Never mix within
-   one deck — a generated page next to a duplicated page never matches.
+ lesson-designer generate from an outline; carousel-builder/design-pack duplicate a template.
+ **Recommendation:** template-first when a usable template exists (deterministic layout, real
+ character budgets, formatting you can preserve); otherwise `create-design`. Never mix within
+ one deck — a generated page next to a duplicated page never matches.
 
 6. **How to preview work.** canva-creator forbids embedding `design.canva.ai` URLs and mandates
-   exporting a PNG; rifater and the lesson-designer use `get-design-pages` /
-   `get-design-thumbnail` inside a transaction. **Recommendation:** both, for different jobs —
-   in-transaction per-page thumbnails for fast iteration and whole-deck review (cheap, current),
-   and an exported PNG for anything the user keeps, embeds or compares later (permanent).
+ exporting a PNG; rifater and the lesson-designer use `get-design-pages` /
+ `get-design-thumbnail` inside a transaction. **Recommendation:** both, for different jobs —
+ in-transaction per-page thumbnails for fast iteration and whole-deck review (cheap, current),
+ and an exported PNG for anything the user keeps, embeds or compares later (permanent).
 
 7. **Whether to "fix in place" or "regenerate".** rifater's cheap-fix rule (replace one bad
-   label) vs canva-creator's per-candidate regeneration rule when the *asset* is wrong.
-   **Recommendation:** text defects → fix in place with `find_and_replace_text`; image/asset
-   defects → regenerate that one candidate (an `update_fill` with a wrong asset cannot be
-   "edited" into the right one).
+ label) vs canva-creator's per-candidate regeneration rule when the *asset* is wrong.
+ **Recommendation:** text defects → fix in place with `find_and_replace_text`; image/asset
+ defects → regenerate that one candidate (an `update_fill` with a wrong asset cannot be
+ "edited" into the right one).
 
 8. **Slide-count guidance.** lesson-designer: 6–8 slides for 20–30 min. oma-slide: one slide per
-   1–2 minutes of talk time (i.e. 15–30 slides for 30 min, sparse). pitchdeck: 10–12 for a full
-   investor pitch. **Recommendation:** for a university coursework presentation with a strict
-   time limit, use the lesson-designer's density (a slide is a teaching unit, not a beat) but cap
-   at ~1.5 min per slide; a 15-minute talk lands at 10–12 slides.
+ 1–2 minutes of talk time (i.e. 15–30 slides for 30 min, sparse). pitchdeck: 10–12 for a full
+ investor pitch. **Recommendation:** for a university coursework presentation with a strict
+ time limit, use the lesson-designer's density (a slide is a teaching unit, not a beat) but cap
+ at ~1.5 min per slide; a 15-minute talk lands at 10–12 slides.
 
 9. **Animation.** canva-master and canva-prompt-creator imply the agent can add animation
-   (Magic Animate); rifater verified via Canva's Help tool that animation is editor-only.
-   **Recommendation:** rifater wins — it is the only one with official confirmation. Never list
-   animation as a deliverable; hand over the editor steps.
+ (Magic Animate); rifater verified via Canva's Help tool that animation is editor-only.
+ **Recommendation:** rifater wins — it is the only one with official confirmation. Never list
+ animation as a deliverable; hand over the editor steps.
 
 ---
 
@@ -919,54 +919,54 @@ contract · **V16** text stored as multiple runs, naive joining invents typos ·
 What a complete, Canva-native slide workflow needs that none of these ten sources covers:
 
 1. **The `create-design` + async-job contract.** Every source uses the legacy
-   `request-outline-review` → `generate-design-structured` → `create-design-from-candidate`
-   chain. Our server's actual contract (`create-design` with `outline.sections[]` returning
-   `job_id` + `continuation_token` + `wait_seconds`, and `get-create-design-async-job` whose
-   terminal status is `completed`) is documented nowhere in this cluster. The skill must carry
-   the real contract, including that the token is reused un-rotated and that status strings are
-   not `success`.
+ `request-outline-review` → `generate-design-structured` → `create-design-from-candidate`
+ chain. Our server's actual contract (`create-design` with `outline.sections[]` returning
+ `job_id` + `continuation_token` + `wait_seconds`, and `get-create-design-async-job` whose
+ terminal status is `completed`) is documented nowhere in this cluster. The skill must carry
+ the real contract, including that the token is reused un-rotated and that status strings are
+ not `success`.
 2. **A substitute for the outline-approval widget.** Four sources make "user approves the outline
-   in the widget" a hard gate; we have no widget. A prompt-level approval gate with an explicit
-   "confirm these N sections before I spend a generation" statement is needed, plus a rule for
-   what happens when the user edits the outline.
+ in the widget" a hard gate; we have no widget. A prompt-level approval gate with an explicit
+ "confirm these N sections before I spend a generation" statement is needed, plus a rule for
+ what happens when the user edits the outline.
 3. **Diagram construction with no shape primitives.** Sources either punt to the Apps SDK
-   (unavailable), to manual line-drawing, or to raster icons. Nobody documents a repeatable
-   in-MCP diagram recipe (draw PNG/!SVG locally → `create-upload-url` → `upload-asset-from-url`
-   → `insert_fill` at computed coordinates → verify). That is the single biggest visual gap for
-   a philosophy/coursework deck.
+ (unavailable), to manual line-drawing, or to raster icons. Nobody documents a repeatable
+ in-MCP diagram recipe (draw PNG/!SVG locally → `create-upload-url` → `upload-asset-from-url`
+ → `insert_fill` at computed coordinates → verify). That is the single biggest visual gap for
+ a philosophy/coursework deck.
 4. **A "no brand kit, no template" branch.** The lesson-designer assumes a kit exists; the
-   carousel-builder assumes a template exists. Neither says what to do on an account with zero of
-   each (our V13) — i.e. how to enforce a palette and a type system when the only levers are
-   hex values inside the generation brief and the restricted `format_text` op set.
+ carousel-builder assumes a template exists. Neither says what to do on an account with zero of
+ each (our V13) — i.e. how to enforce a palette and a type system when the only levers are
+ hex values inside the generation brief and the restricted `format_text` op set.
 5. **Presenter notes.** Nothing in the cluster writes them, and rifater/canva-2 only read them.
-   For a coursework presentation the speaker notes are half the deliverable; the skill needs an
-   explicit "notes live outside Canva" plan (a sidecar file keyed by page number) and should say
-   so up front rather than at delivery.
+ For a coursework presentation the speaker notes are half the deliverable; the skill needs an
+ explicit "notes live outside Canva" plan (a sidecar file keyed by page number) and should say
+ so up front rather than at delivery.
 6. **Whole-deck typography normalisation.** All sources either set type at generation time or
-   format element by element. Nobody documents a repeatable pass that walks every text element on
-   every page in one transaction and applies a size/weight/alignment ladder — which is exactly
-   what "consistent fonts" means when you cannot choose a font family (V5).
+ format element by element. Nobody documents a repeatable pass that walks every text element on
+ every page in one transaction and applies a size/weight/alignment ladder — which is exactly
+ what "consistent fonts" means when you cannot choose a font family (V5).
 7. **Post-commit rollback.** Every source says "commit or lose the draft", none addresses the
-   inverse: a bad commit. With no version history and no delete-design (V9), the only recovery is
-   `copy-design` before editing, or re-generation. A skill should make a safety copy explicit for
-   risky edit passes.
+ inverse: a bad commit. With no version history and no delete-design (V9), the only recovery is
+ `copy-design` before editing, or re-generation. A skill should make a safety copy explicit for
+ risky edit passes.
 8. **Vietnamese typography in practice.** The lesson-designer names its own 9Slide fonts and Noto
-   families that must be uploaded; canva-prompt-creator names Google families. Neither tells you
-   which *template-available* families actually render Vietnamese diacritics correctly at display
-   sizes in Canva, nor how to QA diacritic clipping on a thumbnail.
+ families that must be uploaded; canva-prompt-creator names Google families. Neither tells you
+ which *template-available* families actually render Vietnamese diacritics correctly at display
+ sizes in Canva, nor how to QA diacritic clipping on a thumbnail.
 9. **Cost/quota budgeting for `create-design`.** canva-creator's budget model is for autofill and
-   export calls. Nothing tells you how many `create-design` generations a deck of N slides should
-   cost, or how to degrade when `generate-image` returns `credit_quota_exceeded` (V14) — the
-   documented fallback of "generate an icon image and `insert_fill` it" is unavailable when image
-   generation itself is out of credits.
+ export calls. Nothing tells you how many `create-design` generations a deck of N slides should
+ cost, or how to degrade when `generate-image` returns `credit_quota_exceeded` (V14) — the
+ documented fallback of "generate an icon image and `insert_fill` it" is unavailable when image
+ generation itself is out of credits.
 10. **Accessibility inside Canva.** design-pack and oma-slide give WCAG ratios for CSS; none
-    addresses alt text or reading order in a Canva design, and no MCP tool in our set exposes
-    alt text. The skill should state the limit rather than imply compliance.
+ addresses alt text or reading order in a Canva design, and no MCP tool in our set exposes
+ alt text. The skill should state the limit rather than imply compliance.
 11. **A verification checklist that reads the committed design back.** Only rifater screens content
-    (`get-design-content`), and only for candidates. Nobody documents a final pass that reads every
-    page's text, compares it against the approved outline, checks page count, checks diacritics,
-    and only then exports.
+ (`get-design-content`), and only for candidates. Nobody documents a final pass that reads every
+ page's text, compares it against the approved outline, checks page count, checks diacritics,
+ and only then exports.
 12. **Text-box measurement.** carousel-builder's character budgets came from a hand-measured
-    template. For a generated deck nobody explains how to measure the actual box width a run of
-    text occupies (the transaction gives `top/left/width/height`, so it is possible) in order to
-    predict reflow before committing a longer string.
+ template. For a generated deck nobody explains how to measure the actual box width a run of
+ text occupies (the transaction gives `top/left/width/height`, so it is possible) in order to
+ predict reflow before committing a longer string.

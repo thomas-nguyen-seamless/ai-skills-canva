@@ -4,9 +4,9 @@ Run this **before** phase 0 on a new machine, and any time a script fails with "
 missing module. `scripts/bootstrap.sh` is idempotent and prints a readiness table.
 
 ```sh
-scripts/bootstrap.sh            # asks once per missing tool
-scripts/bootstrap.sh --yes      # install unattended (CI, throwaway container)
-scripts/bootstrap.sh --no-install   # report only
+scripts/bootstrap.sh # asks once per missing tool
+scripts/bootstrap.sh --yes # install unattended (CI, throwaway container)
+scripts/bootstrap.sh --no-install # report only
 ```
 
 Exit `0` = ready for the MCP workflow; `1` = something still needs a human (see the `[missing]` lines).
@@ -31,32 +31,32 @@ The hosted connector (`https://mcp.canva.com/mcp`) supports dynamic client regis
 service; this skill targets the **Developer MCP** mount used in testing:
 
 1. Canva Developer Portal -> create an integration -> add the scopes the MCP asks for -> add the redirect URL
-   `http://127.0.0.1:3333/callback`.
+ `http://127.0.0.1:3333/callback`.
 2. Copy `clientId` / `clientSecret` into `templates/mcp-canva.snippet.json` and merge that object into your
-   client's MCP config (`~/.omp/agent/mcp.json` for omp, under `mcpServers`).
+ client's MCP config (`~/.omp/agent/mcp.json` for omp, under `mcpServers`).
 3. Restart the agent; the tool surface should list `create-design`, `get-design`, `export-design`,
-   `start-editing-transaction`, `merge-designs`, …
+ `start-editing-transaction`, `merge-designs`, …
 4. If a tool answers `Missing scopes`, disconnect and reconnect the integration (new token), do not edit scopes
-   in the token by hand.
+ in the token by hand.
 
 ## Account and identity facts worth knowing
 
 - `canva api users me` returns `team_user.user_id` / `team_id`, which are a **different id namespace** from the
-  ids MCP tools report for the same design. The design still shows up in both — do not treat a mismatch as a
-  wrong account. Confirm with a read: `canva api designs get <id>` and MCP `get-design <id>`.
+ ids MCP tools report for the same design. The design still shows up in both — do not treat a mismatch as a
+ wrong account. Confirm with a read: `canva api designs get <id>` and MCP `get-design <id>`.
 - The AI allowance is per account, not per machine: a Free account gets roughly 20 AI uses a month, resetting
-  at 00:00 UTC on the 1st. `create-design` and `generate-image` spend it (`quota_exceeded`, synchronous).
+ at 00:00 UTC on the 1st. `create-design` and `generate-image` spend it (`quota_exceeded`, synchronous).
 - `canva login` stores the token locally; `canva logout` removes it. Multiple logins are supported with
-  `--profile <name>` (e.g. a personal and a work account).
+ `--profile <name>` (e.g. a personal and a work account).
 
 ## Offline / locked-down machines
 
 - `npx` needs the registry once; run `npx -y @canva/cli@latest --version` while online, then it is cached.
 - Without `uv`, install with `pip3 install --user pillow numpy scipy python-pptx lxml pymupdf pypdf` and run the
-  scripts with plain `python3` instead of `uv run --with …` (the scripts import only those packages).
+ scripts with plain `python3` instead of `uv run --with …` (the scripts import only those packages).
 - Without Homebrew: install Node from nodejs.org (>= 22) or use `nvm`; install uv from its installer script.
 - No PowerPoint and no LibreOffice? Then `render.sh` cannot produce a fidelity render; either install one or
-  accept that the only visual proof comes from Canva's own export (`canva api exports create --format png`).
+ accept that the only visual proof comes from Canva's own export (`canva api exports create --format png`).
 
 ## Fonts
 

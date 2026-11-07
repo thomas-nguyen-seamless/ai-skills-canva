@@ -29,16 +29,14 @@
 
 ## 能力
 
-| | 能力 |
-|---|---|
-| 🎯 | **先规划后动笔** —— 主线、模式（演讲者 / 讲授 / 文档）、每页行动式标题、字数上限、案例覆盖；生成前由 linter 拦截错误结构。 |
-| 🧠 | **忠于来源** —— 教科书 / PDF 场景附"幻灯片 ↔ 页码"对照表；来源之外的例子会在页面上标明。 |
-| 🎨 | **视觉系统而非感觉** —— 1920×1080 的 px 字号阶梯、单一强调色、统一网格与边距、明确的"反 AI 味"禁用清单、原生图示。 |
-| 👀 | **给证据不给承诺** —— 文字 diff、逐页渲染、联系表、可测量的版式审计（错位、溢出、重叠、安全区）。 |
-| 🔁 | **链接永不变** —— 通过 `POST /v1/merges` 做页面级替换；设计 id、链接与公开分享设置在更新后保持不变。 |
-| 🧩 | **原生可编辑** —— Canva 中是真实文本框与矢量图形，绝不是整页图片。 |
-| 🛟 | **按能力降级** —— MCP → CLI/REST → 本地 PPTX，取决于当前哪条路可用。 |
-| 🌐 | **越南语优先** —— 完整声调符号、换行预测、教室字号、课程 / 答辩剧本。 |
+- **先规划后动笔** —— 主线、模式（演讲者 / 讲授 / 文档）、每页行动式标题、字数上限、案例覆盖；生成前由 linter 拦截错误结构。
+- **忠于来源** —— 教科书 / PDF 场景附"幻灯片 ↔ 页码"对照表；来源之外的例子会在页面上标明。
+- **视觉系统而非感觉** —— 1920×1080 的 px 字号阶梯、单一强调色、统一网格与边距、明确的"反 AI 味"禁用清单、原生图示。
+- **给证据不给承诺** —— 文字 diff、逐页渲染、联系表、可测量的版式审计（错位、溢出、重叠、安全区）。
+- **链接永不变** —— 通过 `POST /v1/merges` 做页面级替换；设计 id、链接与公开分享设置在更新后保持不变。
+- **原生可编辑** —— Canva 中是真实文本框与矢量图形，绝不是整页图片。
+- **按能力降级** —— MCP → CLI/REST → 本地 PPTX，取决于当前哪条路可用。
+- **越南语优先** —— 完整声调符号、换行预测、教室字号、课程 / 答辩剧本。
 
 ## 安装
 
@@ -54,7 +52,7 @@ cp -R ai-skills-canva/skills/canva-slides <你的技能目录>/
 随后让技能准备环境：
 
 ```bash
-skills/canva-slides/scripts/bootstrap.sh         # 缺什么问一次
+skills/canva-slides/scripts/bootstrap.sh # 缺什么问一次
 skills/canva-slides/scripts/bootstrap.sh --check # 只报告，不安装
 ```
 
@@ -73,7 +71,7 @@ skills/canva-slides/scripts/bootstrap.sh --check # 只报告，不安装
 **新建演示文稿**
 
 ```text
-/skill:canva-slides  依据 @triethocmaclenin.pdf 做 20 页"否定之否定规律"，
+/skill:canva-slides 依据 @triethocmaclenin.pdf 做 20 页"否定之否定规律"，
 15 分钟，越南语，教室大字号
 ```
 
@@ -86,14 +84,14 @@ scripts/update_canva_deck.sh DAHaPZNNOhs deck.pptx "tmp import" --pages "5,9"
 **只评审，不改动**
 
 ```text
-/skill:canva-slides  评审这个 Canva 稿件：https://canva.link/…  —— 打分并列出缺陷
+/skill:canva-slides 评审这个 Canva 稿件：https://canva.link/… —— 打分并列出缺陷
 ```
 
 ## 一套稿子怎么建成
 
 <div align="center"><img src="assets/workflow.svg" alt="规划、构建、校验、发布、导出" width="100%"></div>
 
-| # | 阶段 | 推进门槛 |
+- 阶段 | 推进门槛
 |---|---|---|
 | 1 | **规划** —— 需求、来源对照表、术语、逐页记录、案例 | `plan_check.py --ghost` 报告 **0 错误** |
 | 2 | **构建** —— Canva AI（`create-design`）*或* 原生 PPTX（Arial，实测文字高度） | 页数与计划一致 |
@@ -106,9 +104,9 @@ scripts/update_canva_deck.sh DAHaPZNNOhs deck.pptx "tmp import" --pages "5,9"
 默认**按页**替换，因为稿件通常由多人共同编辑：
 
 ```bash
-scripts/update_canva_deck.sh <ID> deck.pptx "tmp" --pages "5,7,12-14"   # 只改这些页
-scripts/update_canva_deck.sh <ID> deck.pptx "tmp" --all                # 全部（仅限单人稿件）
-scripts/update_canva_deck.sh <ID> deck.pptx "tmp"                      # 拒绝执行
+scripts/update_canva_deck.sh <ID> deck.pptx "tmp" --pages "5,7,12-14" # 只改这些页
+scripts/update_canva_deck.sh <ID> deck.pptx "tmp" --all # 全部（仅限单人稿件）
+scripts/update_canva_deck.sh <ID> deck.pptx "tmp" # 拒绝执行
 ```
 
 每页两次 merge 任务（插入 + 删除），总页数保持不变，页码不会中途错位。已在 20 页稿件上验证：替换第 5 页只改变**第 5 页**（1,266 像素），其余 19 页逐像素一致，设计 id、短链接与 `Can view` 权限均不变。
@@ -135,16 +133,16 @@ scripts/update_canva_deck.sh <ID> deck.pptx "tmp"                      # 拒绝�
 
 ```text
 ai-skills-canva/
-├── assets/                     封面与流程图
-├── README.md                  六语 README（EN · VI · ZH · RU · FR · ES）
-└── skills/canva-slides/        一个技能，但很深入
-    ├── SKILL.md                路由：规则、阶段、快捷指令、工具、脚本
-    ├── SOURCES.md              来源、取舍决策、按日期的验证日志
-    ├── references/00…12        每个阶段一个文件
-    ├── scripts/                上述 10 个脚本
-    ├── templates/              plan.json、brief-vi、deck-rules、speaker-notes、
-    │                           mcp-canva.snippet.json、pptx-fallback/
-    └── research/               调研笔记（标注来源）
+├── assets/ 封面与流程图
+├── README.md 六语 README（EN · VI · ZH · RU · FR · ES）
+└── skills/canva-slides/ 一个技能，但很深入
+ ├── SKILL.md 路由：规则、阶段、快捷指令、工具、脚本
+ ├── SOURCES.md 来源、取舍决策、按日期的验证日志
+ ├── references/00…12 每个阶段一个文件
+ ├── scripts/ 上述 10 个脚本
+ ├── templates/ plan.json、brief-vi、deck-rules、speaker-notes、
+ │ mcp-canva.snippet.json、pptx-fallback/
+ └── research/ 调研笔记（标注来源）
 ```
 
 ## 技能内置的现实限制

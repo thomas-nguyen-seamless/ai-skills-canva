@@ -11,7 +11,7 @@ official `branded-presentation` / `generate-deck` / `classroom-helper` (brief sc
 Mandatory criteria: **(1) subject + source material, (2) audience and setting (course, lecturer, seminar, defence), (3) talk length in minutes, (4) language, (5) deliverables (slides / + notes / + Q&A), (6) visual direction or a reference image the user likes.**
 
 - Missing **>= 2**: do not guess. Push back **once** with a pre-filled sample the user can answer in one line:
-  `Chủ đề: ...; môn/lớp: ...; thời lượng: ... phút; số slide mong muốn: ...; phong cách: học thuật, nền sáng, chữ lớn; có ví dụ minh hoạ: ...`
+ `Chủ đề: ...; môn/lớp: ...; thời lượng: ... phút; số slide mong muốn: ...; phong cách: học thuật, nền sáng, chữ lớn; có ví dụ minh hoạ: ...`
 - Missing **exactly 1**: pick a sensible default, say it in one line, continue.
 - Never ask for what a tool or file already tells you; never open with "paste the plan or describe the topic" (official `classroom-helper`).
 - If the user gives a plan, **respect its sequence and vocabulary**; flag each addition ("thêm ví dụ X").
@@ -81,7 +81,7 @@ Rules of thumb (pick the model by deck type; do not mix models in one estimate):
 | Academic / argumentative (academic-pptx) | <= 1 content slide per minute | 8-10 | 12-14 | 15-18 | 30-40 |
 | Lecture / teaching (lesson-designer, vstorm) | ~1 per 1.5-2 min | 6-7 | 8-10 | 10-13 | 22-30 |
 | Defence (each slide carries an argument) | ~1 per 2-3 min | 4-5 | 6-8 | 8-10 | 15-22 |
-| Fast demo / lightning (minorun) | 16-30 s per body slide; cover and crossheads 8 s | ~35 total at 10 min | | | |
+| Fast demo / lightning (minorun) | 16-30 s per body slide; cover and crossheads 8 s | ~35 total at 10 min | |
 
 Time planning facts:
 

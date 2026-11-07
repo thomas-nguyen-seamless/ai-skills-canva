@@ -289,13 +289,13 @@ Relevance is to *one detailed Canva-MCP slide skill for a Vietnamese university 
 **Concrete rules and thresholds** (`references/layouts.md`)
 
 - **16 layouts**, each with typed slots: cover, toc, section-divider, text-only, text-left-image-right, image-left-text-right, formula, table, full-image, conclusion-box, transition, list, thanks, statement, stats, hypothesis. Each slot carries a **word/char budget**:
-  - text-only: 2–3 paragraphs of **80–120 characters**, total **≤300**;
-  - text-left-image-right: left text **120–180** characters; image column 50 %;
-  - image-left-text-right: image **40–62 %** width, text **100–150** characters;
-  - formula: intro 50–80 chars, explanation 80–120 chars, **≤2 equations per page**;
-  - table: **3–8 rows × 3–6 columns**, highlight the row for this work;
-  - list: **3–5 items**, each with a short explanation, not a bare title list;
-  - conclusion-box: body 100–150 chars + keybox 50–80 chars.
+ - text-only: 2–3 paragraphs of **80–120 characters**, total **≤300**;
+ - text-left-image-right: left text **120–180** characters; image column 50 %;
+ - image-left-text-right: image **40–62 %** width, text **100–150** characters;
+ - formula: intro 50–80 chars, explanation 80–120 chars, **≤2 equations per page**;
+ - table: **3–8 rows × 3–6 columns**, highlight the row for this work;
+ - list: **3–5 items**, each with a short explanation, not a bare title list;
+ - conclusion-box: body 100–150 chars + keybox 50–80 chars.
 - **Rhythm rule** (`references/writing-style.md:166-173`): adjacent pages must use different composition patterns — "Bad: P4 paragraph, P5 paragraph, P6 paragraph" vs "Good: P4 paragraph+keybox, P5 text+image, P6 paragraph+formula, P7 paragraph+table+conclusion".
 - **Anti-AI title test** (`references/writing-style.md:7-27`): rewrite "深入探讨…/全面分析…/…的重要性/方法论/结果与讨论" into specific, informative titles; rewrite "值得注意的是…/综上所述/不难发现/显而易见"; "read every title and ask: does this read like a student defending, or like AI?"
 - **Filler-word ban** and "use the paper's own terminology, no translationese".

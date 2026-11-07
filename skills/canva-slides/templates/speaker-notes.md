@@ -10,13 +10,13 @@ Each slide has three layers: **MAIN** (fits the time), **+ IF TIME** (optional e
 
 ---
 
-## Slide 1 - <title>  (<s> s)
+## Slide 1 - <title> (<s> s)
 **MAIN:** <2-5 short lines; bold the key word>
 **+ IF TIME:** <one extension>
 **FALLBACK:** <one line>
 **→ transition:** <sentence that leads into slide 2>
 
-## Slide 2 - <title>  (<s> s)
+## Slide 2 - <title> (<s> s)
 ...
 
 ---

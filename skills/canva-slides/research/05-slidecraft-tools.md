@@ -126,13 +126,13 @@ Method: read every `SKILL.md`, every `references/*.md`, every `tokens.json`/`*.j
 - **McKinsey page anatomy** (`docs/specs/2026-06-11-mckinsey-anatomy.md` §1–§3): kicker naming the current section (sentence case, grey, no counter dressing); an **action title that is a full sentence with a verb, max 2 lines**, and all titles read in sequence must reproduce the storyline without any exhibit; every content page carries a SOURCE line with assumptions in a "Note:" above it; numbered footnotes with superscript markers; exhibits are **boxed** with a header band plus a unit line ("$ billions"); default content page is two-panel, exhibit 60–65% plus a boxed drivers panel; annotation callouts with leader lines; values on the data (above bars, inside stacked segments, at line ends); no gridline forests; legends as compact swatch rows; closing pages state requirements, not "thank you".
 - **Measured density targets** (`docs/specs/2026-06-11-mckinsey-anatomy.md` §Counted reference density spec) — counted with `pdftotext`, not estimated:
 
-  | metric | median content page | standard exhibit | dense exhibit (1–3 per deck) |
-  |---|---|---|---|
-  | tokens | ~100 | 80–160 | 150–195 |
-  | text lines | ~35 | 30–60 | 60–90 |
-  | numerals | ~20 | 15–45 | 70–112 |
+ | metric | median content page | standard exhibit | dense exhibit (1–3 per deck) |
+ |---|---|---|---|
+ | tokens | ~100 | 80–160 | 150–195 |
+ | text lines | ~35 | 30–60 | 60–90 |
+ | numerals | ~20 | 15–45 | 70–112 |
 
-  Hard floors: data slides ≥80 tokens and ≥20 numerals; deck median across content pages ≥90 tokens. Structural sources of that density: **6–18 y-axis tick labels per chart**, x labels on every period (14 labels, no thinning below ~16), a value on every bar (10–14), multi-panel pages (3 exhibits side by side or 2 stacked), in-chart series labels with CAGR notes, dashed reference line with a right-edge marker value, an actual/forecast divider with zone labels, annotation callouts, an embedded mini-table beside the chart, and a matrix with a value in every cell plus badge summary rows (49 cells + 14 badges).
+ Hard floors: data slides ≥80 tokens and ≥20 numerals; deck median across content pages ≥90 tokens. Structural sources of that density: **6–18 y-axis tick labels per chart**, x labels on every period (14 labels, no thinning below ~16), a value on every bar (10–14), multi-panel pages (3 exhibits side by side or 2 stacked), in-chart series labels with CAGR notes, dashed reference line with a right-edge marker value, an actual/forecast divider with zone labels, annotation callouts, an embedded mini-table beside the chart, and a matrix with a value in every cell plus badge summary rows (49 cells + 14 badges).
 - **Rubric** (`skills/consulting/SKILL.md` §Density, §Visual System): one main claim per content slide supported by 3–5 evidence bullets; "no slide is half-empty"; the signal colour may be used only for callout strips, the title-slide bar, and the underline beneath section numbers; rules are 1px `#D4D0CB`; big numbers 96–128px serif at weight 600; **no icons** — use a number or a rule.
 
 ### Unique ideas
@@ -293,18 +293,18 @@ Method: read every `SKILL.md`, every `references/*.md`, every `tokens.json`/`*.j
 
 - **Eight typographic roles with hard minimums** (`references/presentation-layout-rules.md` §Typography Scale):
 
-  | Role | EN min | CN min |
-  |---|---|---|
-  | Display title / hero number | 44px | 40px |
-  | Section heading | 28px | 28px |
-  | Body | 22px | 24px |
-  | Table header | 20px | 22px |
-  | Table cell | 18px | 20px |
-  | Support copy | 18px | 20px |
-  | Label / caption | 16px | 18px |
-  | Page number (chrome only) | 14px | 14px |
+ | Role | EN min | CN min |
+ |---|---|---|
+ | Display title / hero number | 44px | 40px |
+ | Section heading | 28px | 28px |
+ | Body | 22px | 24px |
+ | Table header | 20px | 22px |
+ | Table cell | 18px | 20px |
+ | Support copy | 18px | 20px |
+ | Label / caption | 16px | 18px |
+ | Page number (chrome only) | 14px | 14px |
 
-  CJK is **+2px** for body through label because stroke density reduces apparent size at projection distance; the display title CN floor is *lower* (40 vs 44) because Chinese titles are shorter and each glyph is wider (`§Chinese offset`).
+ CJK is **+2px** for body through label because stroke density reduces apparent size at projection distance; the display title CN floor is *lower* (40 vs 44) because Chinese titles are shorter and each glyph is wider (`§Chinese offset`).
 - **Safe zone** (`references/safe-zone.md` §Safe Zone Geometry): canvas 1600×900; top reserved 0–96px; content 108–804px (height **696px**); bottom reserved 804–900px; side edges via `--edge`, usually **92–108px**. If content overflows, do not enlarge the frame — cut content, split the slide, or rebuild hierarchy.
 - **Chrome modes**: `bookend` (labels on cover and closing only — default), `all`, `none`; chrome is 14px uppercase at `letter-spacing: 0.18em`, top 28px / bottom 24px (`SKILL.md` §Chrome Labels; `references/safe-zone.md` §Chrome Modes).
 - **Layout diversity** (`references/layout-prototypes.md` §Diversity Rules): no prototype twice in a row; **a 10-slide deck uses ≥5 distinct prototypes**; when content is ambiguous, prefer the family not recently used.
@@ -408,10 +408,10 @@ Method: read every `SKILL.md`, every `references/*.md`, every `tokens.json`/`*.j
 - **Dark/light sandwich**: dark backgrounds for title and conclusion, light for content — or commit to dark throughout.
 - **Fonts** (`§Typography`): safe list that renders true-to-width in QA *and* ships with Office — Arial, Calibri, Cambria, Times New Roman, Courier New, Bookman Old Style, Century Schoolbook. QA-unreliable (substitute has different metrics): Georgia, Trebuchet, Impact, Arial Black, Garamond, Consolas, Palatino. **Never default to Aptos.** If the user asks for an unreliable font, add ~10% slack and don't trust the preview's fit.
 - **Hard "avoid" list** (`§Avoid`):
-  - **NEVER use accent lines under titles** — "a hallmark of AI-generated slides".
-  - **NEVER add decorative colour bars or accent stripes** — header/footer bars, vertical sidebar stripes, thin stripes along a card edge, single-side borders. "If you want to set a card apart, use a subtle background tint, a drop shadow, or an icon."
-  - Don't repeat the same layout; don't centre body text; don't skimp on size contrast (title 36pt+ vs body 14–16pt); don't default to blue; don't mix spacing randomly; don't style one slide and leave the rest plain; don't create text-only slides; don't forget text-box padding (`margin: 0` when aligning to a shape); don't use low-contrast elements.
-  - **Don't default to cream/beige backgrounds** when none is specified — name-and-shame list: `F5F5DC`, `FAF0E6`, `FAEBD7`, `FFF8E1`.
+ - **NEVER use accent lines under titles** — "a hallmark of AI-generated slides".
+ - **NEVER add decorative colour bars or accent stripes** — header/footer bars, vertical sidebar stripes, thin stripes along a card edge, single-side borders. "If you want to set a card apart, use a subtle background tint, a drop shadow, or an icon."
+ - Don't repeat the same layout; don't centre body text; don't skimp on size contrast (title 36pt+ vs body 14–16pt); don't default to blue; don't mix spacing randomly; don't style one slide and leave the rest plain; don't create text-only slides; don't forget text-box padding (`margin: 0` when aligning to a shape); don't use low-contrast elements.
+ - **Don't default to cream/beige backgrounds** when none is specified — name-and-shame list: `F5F5DC`, `FAF0E6`, `FAEBD7`, `FFF8E1`.
 - **QA defects, in priority order** (`§Visual QA`): text overflow or cut-off **first**; then overlapping elements; footers colliding with content; gaps <0.3in; uneven gaps; margins <0.5in; misaligned columns; low-contrast text; template decoration mispositioned after text replacement; low-contrast icons; text boxes too narrow; leftover placeholders.
 
 ### Unique ideas
@@ -655,8 +655,8 @@ All numbers below are as stated by the source, then normalised to a **1920×1080
 **2.1 The token architecture that survived review** (SlideSpeak `skills/*/tokens.json`):
 
 ```
-ground:  page (warm off-white / white), card, ink (near-black, never #000)
-signal:  primary, subtle (the accent and its darker sibling)
+ground: page (warm off-white / white), card, ink (near-black, never #000)
+signal: primary, subtle (the accent and its darker sibling)
 support: muted (body-secondary grey), rule (hairline divider)
 ```
 
