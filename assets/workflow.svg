@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 240" width="1160" height="240" role="img" aria-label="Workflow: plan, build, verify, publish, export">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#5B6B7B"/>
+    </marker>
+  </defs>
+  <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif">
+    <!-- step 1: plan -->
+    <g>
+      <rect x="10" y="40" width="200" height="160" rx="14" fill="#F7F8FA" stroke="#C9D3DE" stroke-width="2"/>
+      <rect x="46" y="70" width="128" height="88" rx="6" fill="#FFFFFF" stroke="#1F5FA8" stroke-width="2"/>
+      <line x1="60" y1="90" x2="150" y2="90" stroke="#1F5FA8" stroke-width="6"/>
+      <line x1="60" y1="108" x2="160" y2="108" stroke="#C9D3DE" stroke-width="4"/>
+      <line x1="60" y1="122" x2="140" y2="122" stroke="#C9D3DE" stroke-width="4"/>
+      <line x1="60" y1="136" x2="152" y2="136" stroke="#C9D3DE" stroke-width="4"/>
+      <circle cx="110" cy="182" r="14" fill="#1F5FA8"/>
+      <text x="110" y="187" font-size="15" font-weight="700" fill="#FFFFFF" text-anchor="middle">1</text>
+    </g>
+    <line x1="216" y1="120" x2="256" y2="120" stroke="#5B6B7B" stroke-width="3" marker-end="url(#ar)"/>
+    <!-- step 2: build -->
+    <g>
+      <rect x="262" y="40" width="200" height="160" rx="14" fill="#F7F8FA" stroke="#C9D3DE" stroke-width="2"/>
+      <g>
+        <rect x="314" y="84" width="82" height="58" rx="5" fill="#FFFFFF" stroke="#1F5FA8" stroke-width="2" opacity="0.55"/>
+        <rect x="330" y="96" width="82" height="58" rx="5" fill="#FFFFFF" stroke="#1F5FA8" stroke-width="2"/>
+        <line x1="342" y1="112" x2="398" y2="112" stroke="#1F5FA8" stroke-width="5"/>
+        <line x1="342" y1="126" x2="386" y2="126" stroke="#C9D3DE" stroke-width="4"/>
+        <line x1="342" y1="138" x2="392" y2="138" stroke="#C9D3DE" stroke-width="4"/>
+        <path d="M374 74 v20 M364 84 h20" stroke="#7BE0C3" stroke-width="5" stroke-linecap="round"/>
+      </g>
+      <circle cx="362" cy="182" r="14" fill="#1F5FA8"/>
+      <text x="362" y="187" font-size="15" font-weight="700" fill="#FFFFFF" text-anchor="middle">2</text>
+    </g>
+    <line x1="468" y1="120" x2="508" y2="120" stroke="#5B6B7B" stroke-width="3" marker-end="url(#ar)"/>
+    <!-- step 3: verify -->
+    <g>
+      <rect x="514" y="40" width="200" height="160" rx="14" fill="#F7F8FA" stroke="#C9D3DE" stroke-width="2"/>
+      <circle cx="590" cy="106" r="34" fill="none" stroke="#1F5FA8" stroke-width="4"/>
+      <line x1="615" y1="131" x2="644" y2="160" stroke="#1F5FA8" stroke-width="8" stroke-linecap="round"/>
+      <path d="M576 106 l10 10 l18 -22" fill="none" stroke="#7BE0C3" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="614" cy="182" r="14" fill="#1F5FA8"/>
+      <text x="614" y="187" font-size="15" font-weight="700" fill="#FFFFFF" text-anchor="middle">3</text>
+    </g>
+    <line x1="720" y1="120" x2="760" y2="120" stroke="#5B6B7B" stroke-width="3" marker-end="url(#ar)"/>
+    <!-- step 4: publish -->
+    <g>
+      <rect x="766" y="40" width="200" height="160" rx="14" fill="#F7F8FA" stroke="#C9D3DE" stroke-width="2"/>
+      <g>
+        <rect x="806" y="96" width="120" height="60" rx="6" fill="#FFFFFF" stroke="#1F5FA8" stroke-width="2"/>
+        <line x1="818" y1="112" x2="896" y2="112" stroke="#1F5FA8" stroke-width="5"/>
+        <line x1="818" y1="126" x2="880" y2="126" stroke="#C9D3DE" stroke-width="4"/>
+        <line x1="818" y1="138" x2="890" y2="138" stroke="#C9D3DE" stroke-width="4"/>
+        <path d="M866 76 v-16 M850 76 h32" stroke="#7BE0C3" stroke-width="5" stroke-linecap="round"/>
+        <path d="M858 60 l8 -10 l8 10" fill="#7BE0C3"/>
+      </g>
+      <circle cx="866" cy="182" r="14" fill="#1F5FA8"/>
+      <text x="866" y="187" font-size="15" font-weight="700" fill="#FFFFFF" text-anchor="middle">4</text>
+    </g>
+    <line x1="972" y1="120" x2="1012" y2="120" stroke="#5B6B7B" stroke-width="3" marker-end="url(#ar)"/>
+    <!-- step 5: export -->
+    <g>
+      <rect x="1018" y="40" width="132" height="160" rx="14" fill="#F7F8FA" stroke="#C9D3DE" stroke-width="2"/>
+      <g stroke="#1F5FA8" stroke-width="3" fill="none">
+        <path d="M1064 86 h40 v34 h-40 z"/>
+        <path d="M1084 120 v34"/>
+        <path d="M1074 142 l10 12 l10 -12" stroke-linecap="round"/>
+      </g>
+      <circle cx="1084" cy="182" r="14" fill="#1F5FA8"/>
+      <text x="1084" y="187" font-size="15" font-weight="700" fill="#FFFFFF" text-anchor="middle">5</text>
+    </g>
+  </g>
+</svg>

@@ -7,12 +7,14 @@
 #
 # Usage: scripts/bootstrap.sh [--yes] [--no-install]
 #   --yes         do the installs without asking (default asks once per missing tool)
-#   --no-install  report only; never install anything
+#   --no-install  / --check   report only; never install anything
+# Nothing that is already present is ever reinstalled: present tools print "[ok] ... (already installed, skipped)"
+# and the script only checks what it cannot do for the user (Canva CLI login, MCP mount).
 #
 # Exit: 0 = ready for the MCP workflow; 1 = something still needs a human (login / MCP mount).
 set -uo pipefail
 YES=0; NOINSTALL=0
-for a in "$@"; do case "$a" in --yes|-y) YES=1;; --no-install) NOINSTALL=1;; esac; done
+for a in "$@"; do case "$a" in --yes|-y) YES=1;; --no-install|--check) NOINSTALL=1;; esac; done
 
 ok=0; warn=0; act=0
 say() { printf '%-14s %s\n' "$1" "$2"; }
@@ -40,7 +42,7 @@ uname -s -m
 say "shell" "$SHELL"
 
 # --- uv (runs every python script here with --with deps, nothing global) -------------------------
-if have uv; then OK "uv $(uv --version 2>/dev/null | awk '{print $2}')"; else
+if have uv; then OK "uv $(uv --version 2>/dev/null | awk '{print $2}') (already installed, skipped)"; else
   MISS "uv"
   if ask "Install uv?"; then
     if have brew; then brew install uv && OK "uv"; else
@@ -54,27 +56,34 @@ fi
 if have python3; then OK "python3 $(python3 -V 2>&1 | awk '{print $2}')"; else MISS "python3 (install Xcode CLT: xcode-select --install)"; fi
 
 # --- git ----------------------------------------------------------------------------------------
-have git && OK "git $(git --version | awk '{print $3}')" || MISS "git"
+have git && OK "git $(git --version | awk '{print $3}') (already installed, skipped)" || MISS "git"
 
 # --- Node + npx (Canva CLI is run through npx, no global install required) ----------------------
 NODE_MAJ=0; have node && NODE_MAJ=$(node -v | sed 's/^v//' | cut -d. -f1)
-if have node && [ "$NODE_MAJ" -ge 22 ]; then OK "node $(node -v)"; else
+if have node && [ "$NODE_MAJ" -ge 22 ]; then OK "node $(node -v) (already installed, skipped)"; else
   MISS "node >= 22 (found: $(have node && node -v || echo none))"
   if ask "Install Node with Homebrew?"; then brew install node && have node && OK "node $(node -v)" || MISS "node"; fi
 fi
-have npx && OK "npx $(npx --version 2>/dev/null)" || MISS "npx (comes with npm/node)"
+have npx && OK "npx $(npx --version 2>/dev/null) (already installed, skipped)" || MISS "npx (comes with npm/node)"
 
 # --- Canva CLI ----------------------------------------------------------------------------------
-if have npx; then
-  VER=$(npx -y @canva/cli@latest --version 2>/dev/null | tail -1)
-  [ -n "$VER" ] && OK "Canva CLI $VER (via npx, cached)" || NOTE "Canva CLI could not be fetched (network/proxy?)"
+if command -v canva >/dev/null 2>&1; then
+  OK "Canva CLI $(canva --version 2>/dev/null | tail -1) (global install, already present, skipped)"
+elif have npx; then
+  CLI_CACHE=$(npm config get cache 2>/dev/null)/_npx
+  if ls -d "$CLI_CACHE"/*/node_modules/@canva/cli >/dev/null 2>&1; then
+    OK "Canva CLI (npx cache, already present, skipped)"
+  else
+    VER=$(npx -y @canva/cli@latest --version 2>/dev/null | tail -1)
+    [ -n "$VER" ] && OK "Canva CLI $VER (fetched once into npx cache)" || NOTE "Canva CLI could not be fetched (network/proxy?)"
+  fi
 fi
 
 # --- Python libs used by the scripts (pre-warm the uv cache) ------------------------------------
 if have uv; then
   if uv run --quiet --with pillow --with numpy --with scipy --with python-pptx --with lxml --with pymupdf --with pypdf \
        python -c "import PIL, numpy, scipy, pptx, lxml, pymupdf, pypdf" >/dev/null 2>&1; then
-    OK "python libs (pillow, numpy, scipy, python-pptx, lxml, pymupdf, pypdf) cached"
+    OK "python libs cached (pillow, numpy, scipy, python-pptx, lxml, pymupdf, pypdf) - already present, skipped"
   else
     MISS "python libs"
     if ask "Fetch them now with uv (cached, no global install)?"; then

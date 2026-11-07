@@ -1,88 +1,177 @@
-# ai-skills-canva
+<div align="center">
 
-Agent skills for building and maintaining **Canva** presentations, verified against the live Canva MCP server (`https://api.canva.com/connect/v1/mcp`) and the Canva Connect REST APIs.
+<img src="assets/hero.svg" alt="canva-slides — agent skill for Canva presentations" width="100%">
 
-| Skill | What it does |
-|---|---|
-| [`skills/canva-slides`](skills/canva-slides/SKILL.md) | End-to-end deck workflow: intake → narrative plan → generate (Canva AI) or build natively → verify text against the plan → look at every rendered page → repair typography/alignment → diagrams → export → import/update in Canva. Vietnamese coursework, lectures, thesis defence and team decks are first-class. |
+### Build Canva decks that survive real Canva limits
+
+**Plan · Build · Verify · Publish** — source-faithful, fully editable, one link that never changes.
+
+[![License: MIT](https://img.shields.io/badge/license-MIT-1F5FA8)](LICENSE)
+[![Version](https://img.shields.io/badge/version-1.1.0-1F5FA8)](skills/canva-slides/SKILL.md)
+[![Skill](https://img.shields.io/badge/skills-1-1F5FA8)](#repo-layout)
+[![Canva MCP + CLI](https://img.shields.io/badge/Canva-MCP%20%2B%20CLI-1F5FA8)](skills/canva-slides/references/00-preflight-and-environment.md)
+[![Checked against live API](https://img.shields.io/badge/verified-live%20API-7BE0C3)](skills/canva-slides/SOURCES.md)
+
+**English** · [中文](README.zh.md) · [Tiếng Việt](README.vi.md) · [Русский](README.ru.md) · [Français](README.fr.md) · [Español](README.es.md)
+
+</div>
+
+---
+
+## Contents
+
+- [Why this exists](#why-this-exists)
+- [What you get](#what-you-get)
+- [Install](#install)
+- [Quick start](#quick-start)
+- [How a deck is built](#how-a-deck-is-built)
+- [Updating a shared deck](#updating-a-shared-deck)
+- [Scripts](#scripts)
+- [Repo layout](#repo-layout)
+- [Limits this skill encodes](#limits-this-skill-encodes)
+- [License](#license)
 
 ## Why this exists
 
-Most "make me a deck" skills assume the generation call works and that the returned deck can be fixed afterwards. Both assumptions fail in practice: the AI-credit allowance runs out, `start-editing-transaction` can return 503 for hours, and a generated deck cannot be repaired structurally (no operation inserts a text box). This skill encodes the limits it actually hit, keeps a slide-to-source ledger for textbook-faithful decks, and has a fallback that does not depend on Canva AI at all: build a native editable PPTX locally and import it with the official CLI/REST import.
+Most "make me a deck" skills assume two things that are routinely false:
+
+1. **The AI generation call works.** It does not when the account's monthly AI allowance is spent — `create-design` then fails synchronously with `quota_exceeded`, and no amount of retrying helps.
+2. **A generated deck can be fixed afterwards.** It cannot be repaired structurally: no Canva editing operation inserts a text box, and the editing service itself can return `503` for hours.
+
+This skill encodes what actually held up under live testing: a plan gate before any pixel is drawn, a text diff against the source, a look at **every** rendered page, and a fallback that needs no Canva AI at all — build a native, editable PPTX locally and import it through the official Canva REST import.
+
+## What you get
+
+| | Capability |
+|---|---|
+| 🎯 | **Narrative plan first** — spine, mode (presenter / talk / document), per-slide action titles, word budgets, example coverage; a linter blocks a bad structure before generation. |
+| 🧠 | **Source-faithful decks** — a slide-to-page ledger (`nguon-doi-chieu.md`) for textbook or PDF-based work; examples outside the source are labelled on the slide. |
+| 🎨 | **Visual system, not vibes** — px type scale for 1920×1080, one accent, grid and margins, an explicit anti-slop veto list, native diagrams. |
+| 👀 | **Proof, not promises** — text diff against the plan, per-page render, contact sheet, measured layout audit (drift, overflow, overlap, safe zones). |
+| 🔁 | **Same link forever** — page-level replacement through `POST /v1/merges`; design id, link and public sharing survive updates. |
+| 🧩 | **Native, editable output** — real text boxes and vector shapes in Canva, never slide-sized images. |
+| 🛟 | **Graceful degradation** — MCP → CLI/REST → local PPTX, chosen by what actually works right now. |
+| 🌐 | **Vietnamese-first** — diacritics, wrap prediction, classroom type sizes, coursework playbooks. |
 
 ## Install
 
-**omp** (managed skill):
-
-```sh
+```bash
+# omp managed skills
 cp -R skills/canva-slides ~/.omp/agent/managed-skills/canva-slides
+
+# any agent that reads SKILL.md (Claude Code, Codex, …)
+git clone https://github.com/thomas-nguyen-seamless/ai-skills-canva
+cp -R ai-skills-canva/skills/canva-slides <your-skills-dir>/
 ```
 
-**Any other agent that reads `SKILL.md`** (Claude Code, Codex, etc.): copy `skills/canva-slides` into that agent's skills directory. `SKILL.md` is the router; `references/` holds one file per phase and is loaded on demand.
+Then let the skill prepare the machine:
 
-## Setup (installs what is missing)
-
-```sh
-skills/canva-slides/scripts/bootstrap.sh          # asks once per missing tool
-skills/canva-slides/scripts/bootstrap.sh --yes    # unattended
-skills/canva-slides/scripts/bootstrap.sh --no-install   # report only
+```bash
+skills/canva-slides/scripts/bootstrap.sh      # asks once per missing tool
+skills/canva-slides/scripts/bootstrap.sh --check   # report only, install nothing
 ```
 
-It installs `uv`, Node >= 22, the Canva CLI (through npx, no global install) and the Python libraries used by
-the scripts (`pillow`, `numpy`, `scipy`, `python-pptx`, `lxml`, `pymupdf`, `pypdf`), then verifies Canva CLI
-login and the MCP mount, and prints a readiness table. Exit `0` means the MCP workflow is ready; `1` lists what
-still needs a human. Details: [`skills/canva-slides/references/12-setup-and-bootstrap.md`](skills/canva-slides/references/12-setup-and-bootstrap.md).
+`bootstrap.sh` **only installs what is missing** — present tools are reported as `[ok] … (already installed, skipped)` and are never reinstalled. It then checks the two things it cannot do for you: the Canva CLI login and the MCP mount.
 
-## Requirements
-
-- A Canva account. Two access paths, either is enough to start:
-  - **MCP** — a Canva Developer app mounted as `canva` in your MCP client (`https://api.canva.com/connect/v1/mcp`, static OAuth).
-  - **Canva CLI** — `npx -y @canva/cli@latest` with Node ≥ 24, then `canva login` (needed for local-file import, export and in-place updates).
-- Python 3 with `pillow` (art/diagram/QA scripts), optionally `python-pptx`, `pymupdf`, `numpy`, `scipy` for the PPTX fallback — `bootstrap.sh` installs these into the uv cache for you.
-- macOS + Microsoft PowerPoint only for the `templates/pptx-fallback/render.sh` fidelity render; the MCP workflow is platform independent.
+| Checked | If already present | If missing |
+|---|---|---|
+| `uv`, `python3`, `git`, `node ≥ 22`, `npx` | reported, untouched | installed via Homebrew (or the official installer for `uv`) |
+| Canva CLI | reported, not re-fetched | fetched once through `npx` (cached, no global install) |
+| Python libs (`pillow`, `numpy`, `scipy`, `python-pptx`, `lxml`, `pymupdf`, `pypdf`) | import test passes → skipped | pre-warmed into the uv cache |
+| Canva CLI login | account name printed | `canva login`, **you approve in the browser** |
+| MCP `canva` mount | confirmed in `mcp.json` | snippet printed; config never overwritten |
 
 ## Quick start
 
-```sh
-# 1. plan (fails the lint until the deck is coherent)
-python3 scripts/plan_check.py plan.json --ghost
+**New deck**
 
-# 2. generate with Canva AI (needs credits) …
-#    or build a native editable PPTX and import it (no credits)
-npx -y @canva/cli@latest api design-imports create --file deck.pptx --title "My deck" \
-  --mime-type application/vnd.openxmlformats-officedocument.presentationml.presentation
-
-# 3. later updates keep the same design id, link and sharing settings
-scripts/update_canva_deck.sh <TARGET_ID> deck.pptx "tmp import" --pages "5,7,12"
+```text
+/skill:canva-slides  make a 20-slide deck on "law of the negation of the negation"
+from @triethocmaclenin.pdf — 15 minutes, Vietnamese, large type for a lecture hall
 ```
 
-`--pages` is the default because decks are usually shared: only the pages you list are replaced, and any manual edit on the other pages survives. `--all` exists for decks nobody else touches.
+**Edit an existing deck, keep the link**
 
-## Hard-won facts encoded here
+```bash
+scripts/update_canva_deck.sh DAHaPZNNOhs deck.pptx "tmp import" --pages "5,9"
+```
 
-- `create-design` and `generate-image` spend the account's monthly **AI allowance** (Premium AI tools); on Free ≈ 20 uses/month, reset 00:00 UTC on the 1st. The failure is synchronous `quota_exceeded`, not a rate limit.
-- `start-editing-transaction` can 503 for hours while reads, `copy-design`, `merge-designs`, `export-design`, uploads and the CLI all keep working. Degrade by capability, not all-or-nothing.
-- Canva's PPTX importer drops shape text insets and paragraph spacing and flattens freeform strokes. Build with one text box per paragraph, plain shapes plus separate text, and filled polygons for curves.
-- `POST /v1/merges` with `modify_existing_design` edits pages **in place**: design id, link and public sharing survive; one operation per request by default.
-- No API can share a design publicly or delete a design; both are UI-only.
+**Review only, change nothing**
 
-Full verification log, per-item sources and the decision log: [`skills/canva-slides/SOURCES.md`](skills/canva-slides/SOURCES.md).
+```text
+/skill:canva-slides  review this Canva deck: https://canva.link/…  — score it, list defects
+```
+
+## How a deck is built
+
+<div align="center"><img src="assets/workflow.svg" alt="Plan, build, verify, publish, export" width="100%"></div>
+
+| # | Phase | Gate before moving on |
+|---|---|---|
+| 1 | **Plan** — intake, source ledger, terminology, per-slide record, examples | `plan_check.py --ghost` reports **0 errors** |
+| 2 | **Build** — Canva AI (`create-design`) *or* native PPTX in Arial, measured text | page count equals the plan |
+| 3 | **Verify** — text diff, per-page render, layout audit, contrast | every planned string present, no hard fail open |
+| 4 | **Publish** — import once, then page-level updates on the same design | page count matches, link and sharing intact |
+| 5 | **Export** — PDF/PPTX, page count verified, notes as a sidecar file | definition of done ticked |
+
+## Updating a shared deck
+
+The default is **per page**, because decks usually have more than one author:
+
+```bash
+scripts/update_canva_deck.sh <ID> deck.pptx "tmp" --pages "5,7,12-14"   # only these pages change
+scripts/update_canva_deck.sh <ID> deck.pptx "tmp" --all                # every page (solo decks only)
+scripts/update_canva_deck.sh <ID> deck.pptx "tmp"                      # refuses to run
+```
+
+Two merge jobs per page (insert + delete) keep the page count constant, so numbering never drifts while you work. Verified on a 20-page design: replacing page 5 changed **only** page 5 (1,266 px), the other 19 pages exported pixel-identical, and the design id, short link and `Can view` sharing all stayed the same.
+
+> A replaced page is a fresh page from your local build, so manual Canva edits **on that page** are lost. Every other page is untouched.
+
+## Scripts
+
+| Script | Purpose |
+|---|---|
+| `bootstrap.sh` | install missing prerequisites; verify login and MCP mount |
+| `plan_check.py` | plan linter: budgets, titles, duplicates, pace, agenda, examples, ghost-deck |
+| `text_diff.py` | planned strings vs generated/imported text |
+| `deck_audit.py` | measured layout audit: title drift, safe zone, overflow, overlap, accent-rule tells |
+| `fit_check.py` | predict Vietnamese line wrapping and height before an edit |
+| `contrast.py` | WCAG contrast for projection |
+| `diagrams.py` | 8 diagram kinds rendered at final slide size |
+| `contact_sheet.py` | one image of every page, labelled |
+| `post_upload.sh` | single-use asset upload helper |
+| `update_canva_deck.sh` | push a PPTX into an existing design, keeping id, link and sharing |
+| `templates/pptx-fallback/` | native builder (`build_deck.py`), ink-only art prep, PowerPoint render, rendered-text verifier |
 
 ## Repo layout
 
+```text
+ai-skills-canva/
+├── assets/                     hero + workflow diagrams
+├── README.md                   this file (EN · VI · ZH · RU · FR · ES)
+└── skills/canva-slides/        the skill (one, deep)
+    ├── SKILL.md                router: rules, phases, shortcuts, tools, scripts
+    ├── SOURCES.md              provenance, conflict decisions, dated verification log
+    ├── references/00…12        one file per phase
+    ├── scripts/                the 10 scripts above
+    ├── templates/              plan.json, brief-vi, deck-rules, speaker-notes,
+    │                           mcp-canva.snippet.json, pptx-fallback/
+    └── research/               reading notes on the skills surveyed (sources cited)
 ```
-skills/canva-slides/
-  SKILL.md              router: 10 rules, phases, shortcuts, tool list, script index
-  SOURCES.md            provenance, conflict decisions, dated verification log
-  references/00..12     one file per phase (plan, generation, visual system, QA, editing,
-                        structure/assets, delivery, brand, education playbooks, quirks, PPTX)
-  scripts/              bootstrap, plan_check, text_diff, deck_audit, fit_check, contrast,
-                        diagrams, contact_sheet, post_upload, update_canva_deck
-  templates/            plan.json, brief-vi.md, deck-rules.md, speaker-notes.md,
-                        mcp-canva.snippet.json, pptx-fallback/ (builder, art prep, render, text verify)
-  research/             reading notes on the skills surveyed (summaries, sources cited)
-```
+
+## Limits this skill encodes
+
+| Reality | What the skill does |
+|---|---|
+| `create-design` / `generate-image` spend the monthly **AI allowance** (`quota_exceeded`, synchronous) | stops immediately, switches to the no-credit path, reports the reset date |
+| `start-editing-transaction` can return `503` for hours | degrades to reads + export + page-level merges; never claims an edit landed |
+| Canva's PPTX importer drops shape insets, paragraph spacing, freeform strokes | builds one text box per paragraph, plain shapes + separate text, filled polygons for curves |
+| No API shares a design publicly or deletes it | UI steps documented; never invented |
+| Generated decks paraphrase and can swap doctrinal terms | text diff against the plan; fix in place, never regenerate to fix text |
+
+Full evidence, dates and sources: [`skills/canva-slides/SOURCES.md`](skills/canva-slides/SOURCES.md).
 
 ## License
 
-MIT for this repository's own text and code. See [LICENSE](LICENSE) and [NOTICE.md](NOTICE.md) for third-party attribution.
+MIT — see [LICENSE](LICENSE). Third-party attribution in [NOTICE.md](NOTICE.md). Canva is a trademark of Canva Pty Ltd; this project is not affiliated with or endorsed by Canva.
