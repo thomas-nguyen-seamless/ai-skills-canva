@@ -7,6 +7,8 @@ description: "End-to-end Canva slide-deck workflow: intake, narrative plan, crea
 
 # Canva Slides
 
+Published skill: https://github.com/thomas-nguyen-seamless/ai-skills-canva (`skills/canva-slides`).
+
 One workflow for making slides in Canva through the **mounted Canva MCP** (`https://api.canva.com/connect/v1/mcp`) and, when the MCP cannot generate or edit, through a **native PPTX imported with the official Canva CLI/REST import**. Built from ~60 GitHub skills plus live testing; every limit below was verified on this mount (see `SOURCES.md`). This file is the router and the non-negotiables. **Read the reference for the phase you are in** (index at the bottom); do not load them all.
 
 Skill directory (this folder): `references/`, `scripts/`, `templates/`, `research/`. In omp it installs to `~/.omp/agent/managed-skills/canva-slides/`; elsewhere use the folder you copied. All script paths below are relative to it.

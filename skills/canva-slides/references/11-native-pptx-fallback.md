@@ -72,9 +72,10 @@ canva api merges create --type modify_existing_design --design-id <TARGET> \
 canva api merges get <jobId>   # poll each job
 ```
 
-Two modes (`scripts/update_canva_deck.sh`):
-- `<TARGET_ID> deck.pptx "title"` - replaces **every** page (only for decks the agent owns end to end).
-- `<TARGET_ID> deck.pptx "title" --pages "5,7,12-14"` - replaces **only those 1-based pages**, one insert+delete pair per page. Page count stays constant, so page numbers do not drift while working through the list.
+One mode by default (`scripts/update_canva_deck.sh`) - per page, because decks are usually shared:
+- `<TARGET_ID> deck.pptx "title" --pages "5,7,12-14"` - replaces **only those 1-based pages**, one insert+delete pair per page. Page count stays constant, so numbering does not drift.
+- `<TARGET_ID> deck.pptx "title" --all` - replaces **every** page; only for a deck nobody else edits (wipes manual edits).
+- No flag -> the script **refuses to run** (`exit 2`). Never default to an all-pages replace on a shared design.
 
 **Shared-deck rule (collaboration).** If other people edit the same Canva design, never run the all-pages mode: it replaces pages wholesale and destroys their manual edits on every page. Default to `--pages` with only the slides you actually rebuilt, and confirm the page numbers with the user first (they shift when someone adds or deletes a page). A replaced page loses any manual edit made on that page in Canva, so either leave those pages alone or pull the current state back into the build first (export the design as PPTX, rebuild locally from it, then replace only your pages).
 
