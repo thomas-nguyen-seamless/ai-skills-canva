@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json.schemastore.org/mcp.json",
+  "mcpServers": {
+    "canva": {
+      "type": "http",
+      "url": "https://api.canva.com/connect/v1/mcp",
+      "oauth": {
+        "clientId": "<CANVA_CLIENT_ID>",
+        "clientSecret": "<CANVA_CLIENT_SECRET>",
+        "redirectUri": "http://127.0.0.1:3333/callback"
+      }
+    }
+  }
+}

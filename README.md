@@ -20,12 +20,25 @@ cp -R skills/canva-slides ~/.omp/agent/managed-skills/canva-slides
 
 **Any other agent that reads `SKILL.md`** (Claude Code, Codex, etc.): copy `skills/canva-slides` into that agent's skills directory. `SKILL.md` is the router; `references/` holds one file per phase and is loaded on demand.
 
+## Setup (installs what is missing)
+
+```sh
+skills/canva-slides/scripts/bootstrap.sh          # asks once per missing tool
+skills/canva-slides/scripts/bootstrap.sh --yes    # unattended
+skills/canva-slides/scripts/bootstrap.sh --no-install   # report only
+```
+
+It installs `uv`, Node >= 22, the Canva CLI (through npx, no global install) and the Python libraries used by
+the scripts (`pillow`, `numpy`, `scipy`, `python-pptx`, `lxml`, `pymupdf`, `pypdf`), then verifies Canva CLI
+login and the MCP mount, and prints a readiness table. Exit `0` means the MCP workflow is ready; `1` lists what
+still needs a human. Details: [`skills/canva-slides/references/12-setup-and-bootstrap.md`](skills/canva-slides/references/12-setup-and-bootstrap.md).
+
 ## Requirements
 
 - A Canva account. Two access paths, either is enough to start:
   - **MCP** — a Canva Developer app mounted as `canva` in your MCP client (`https://api.canva.com/connect/v1/mcp`, static OAuth).
   - **Canva CLI** — `npx -y @canva/cli@latest` with Node ≥ 24, then `canva login` (needed for local-file import, export and in-place updates).
-- Python 3 with `pillow` (art/diagram/QA scripts), optionally `python-pptx`, `pymupdf`, `numpy`, `scipy` for the PPTX fallback.
+- Python 3 with `pillow` (art/diagram/QA scripts), optionally `python-pptx`, `pymupdf`, `numpy`, `scipy` for the PPTX fallback — `bootstrap.sh` installs these into the uv cache for you.
 - macOS + Microsoft PowerPoint only for the `templates/pptx-fallback/render.sh` fidelity render; the MCP workflow is platform independent.
 
 ## Quick start
@@ -61,12 +74,12 @@ Full verification log, per-item sources and the decision log: [`skills/canva-sli
 skills/canva-slides/
   SKILL.md              router: 10 rules, phases, shortcuts, tool list, script index
   SOURCES.md            provenance, conflict decisions, dated verification log
-  references/00..11     one file per phase (plan, generation, visual system, QA, editing,
+  references/00..12     one file per phase (plan, generation, visual system, QA, editing,
                         structure/assets, delivery, brand, education playbooks, quirks, PPTX)
-  scripts/              plan_check, text_diff, deck_audit, fit_check, contrast, diagrams,
-                        contact_sheet, post_upload, update_canva_deck
+  scripts/              bootstrap, plan_check, text_diff, deck_audit, fit_check, contrast,
+                        diagrams, contact_sheet, post_upload, update_canva_deck
   templates/            plan.json, brief-vi.md, deck-rules.md, speaker-notes.md,
-                        pptx-fallback/ (native builder, art prep, render, text verify)
+                        mcp-canva.snippet.json, pptx-fallback/ (builder, art prep, render, text verify)
   research/             reading notes on the skills surveyed (summaries, sources cited)
 ```
 

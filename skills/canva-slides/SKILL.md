@@ -13,7 +13,9 @@ One workflow for making slides in Canva through the **mounted Canva MCP** (`http
 
 Skill directory (this folder): `references/`, `scripts/`, `templates/`, `research/`. In omp it installs to `~/.omp/agent/managed-skills/canva-slides/`; elsewhere use the folder you copied. All script paths below are relative to it.
 
-## The ten rules that matter most
+## The rules that matter most (setup + ten)
+
+0. **Make the machine ready first.** New machine or a `command not found`: run `scripts/bootstrap.sh` (it installs uv, Node, the Canva CLI through npx, and the Python libs, then verifies login and the MCP mount). Never hand a "cannot run" answer back before that check.
 
 1. **Plan before paint.** The plan (spine, mode, per-slide record, examples, terminology) exists on screen and passes `scripts/plan_check.py` before any `create-design`. Structure cannot be repaired afterwards. **Credits are finite**: `create-design` and `generate-image` are Canva AI generations ("Generate a design with Canva AI" = Premium AI tool) and draw on the account's monthly AI allowance (Free ~20 uses/month, resets 00:00 UTC on the 1st; observed `quota_exceeded` synchronously, no job id, reset 2026-12-01). Then: no-credit mode (`02` s.8), or native PPTX + CLI import (`11`).
 2. **`format:"Presentation (16:9)"` + a full `outline`** (one section = one slide) on every deck. Put **every string you will ever need** in the outline: no operation inserts a text box.
@@ -30,6 +32,7 @@ Skill directory (this folder): `references/`, `scripts/`, `templates/`, `researc
 
 | Phase | Do | Gate before moving on | Read |
 |---|---|---|---|
+| **0 Setup** | `scripts/bootstrap.sh` — installs uv/node/Canva CLI/python libs if missing, checks login + MCP mount; report-only with `--no-install` | readiness line printed; `exit 0` before promising anything | `references/12-setup-and-bootstrap.md` |
 | **0 Pre-flight** | pick the mode; `get-logged-in-account-details`; probe credits (first `create-design` response) and the transaction service (`start-editing-transaction` + cancel); `list-brand-kits` (empty = normal); read `deck-rules.md`; decide original vs copy | mode named; account stated; capability limits stated before promising | `references/00-preflight-and-environment.md` |
 | **1 Plan** | challenge-before-acting intake; source + terminology sheet; **mode token** presenter/talk/document; spine sentence; slide count from minutes; per-slide record; 3-4 examples; design stance; ghost-deck test | `plan_check.py plan.json --ghost` = 0 errors; user confirms if > 10 slides or graded | `01-discovery-and-narrative.md`, `09-education-playbooks.md`, `templates/plan.json` |
 | **2 Generate** | brief from `templates/brief-vi.md` + outline = plan; `create-design`; poll `get-create-design-async-job` (>= 15 s, status `completed`); max 2 generations. **If `quota_exceeded` or transactions 503: go to `11`** | `design_id`, edit link, slide count == plan | `02-outline-and-generation.md` |
@@ -82,6 +85,7 @@ Quirks: grouped-child `delete_element` is a silent no-op (use `pageId-groupId`);
 | `diagrams.py spec.json out.png` (`--example KIND`) | PNG diagrams (labels baked: use only when not editable-critical) |
 | `contact_sheet.py thumbs.tsv sheet.png [cols cell]` | one image of all pages; labels bottom-right |
 | `post_upload.sh "<uploadUrl>" file.png` | single-use upload -> `{"mediaId"}` |
+| `bootstrap.sh [--yes\|--no-install]` | installs missing uv/node/Canva CLI/python libs, checks Canva CLI login and MCP mount |
 | `templates/pptx-fallback/` | `build_deck.py` (native PPTX builder with measured text), `prep_assets.py` (ink-only art), `render.sh` (PowerPoint render), `verify_text.py` (rendered/Canva PDF text vs plan) |
 
 ## Honesty and output discipline
@@ -107,6 +111,7 @@ Quirks: grouped-child `delete_element` is a silent no-op (use `pageId-groupId`);
 | `references/08-templates-and-brand.md` | brand kit, templates, bulk runs, terminology guard |
 | `references/09-education-playbooks.md` | Vietnamese coursework, concept lecture, defence, rubric |
 | `references/10-troubleshooting-and-quirks.md` | any error or odd behaviour |
+| `references/12-setup-and-bootstrap.md` | new machine, missing CLI/library/module, MCP mount, login, fonts, offline machines |
 | `references/11-native-pptx-fallback.md` | native PPTX -> Canva CLI import route, importer behaviour (what is kept/dropped), limits |
 | `templates/` | `plan.json`, `brief-vi.md`, `deck-rules.md`, `speaker-notes.md`, `pptx-fallback/` |
 | `SOURCES.md`, `research/` | provenance, decision log, verification dates, full evidence |
