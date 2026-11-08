@@ -16,10 +16,13 @@ Exit code 1 when any ERROR is reported.
 import argparse
 import collections
 import json
+import re
 import sys
 from pathlib import Path
 
 W, H = 1920, 1080
+EMOJI = re.compile("[\U0001F000-\U0001FAFF\u2600-\u27BF\u2B00-\u2BFF\uFE0F\u200D]")
+
 BUDGET = {"presenter": 25, "talk": 40, "document": 75}
 
 
@@ -112,6 +115,10 @@ def main():
                 if o > 0.12:
                     errs.append(f"slide {p}: text boxes overlap {o:.0%}: '{text_of(bs[i][0])[:24]}' / '{text_of(bs[j][0])[:24]}'")
     budget = BUDGET[a.mode]
+    for p, els in pages.items():
+        for e in els:
+            if EMOJI.search(text_of(e)):
+                errs.append(f"slide {p}: emoji/pictograph in text {text_of(e)[:40]!r} (banned in slides)")
     for p in content:
         words = sum(len(text_of(e).split()) for e in pages[p] if e is not titles[p])
         if words > budget * 1.5:

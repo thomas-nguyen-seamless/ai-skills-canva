@@ -24,7 +24,7 @@ Skill directory (this folder): `references/`, `scripts/`, `templates/`, `researc
 5. **Never claim what the tools did not confirm**: saved (before `commit` returned), verified, exported, a font change, a notes write, an animation. No `font-family`, no new text boxes, no background change, no presenter-notes write, no delete-design tool.
 6. **Classroom type, px on 1920x1080**: body **34-38** (floor 32), support 30-34 (floor 28), tag floor 24, slide title 52-60. <= 2 font families, 1 accent, <= 4 sizes per slide. Never shrink type to fit: cut, split, widen.
 7. **Alignment is the cheapest quality signal**: left margin 130, title top 76, identical cards and line counts, 8-px spacing; audit with `scripts/deck_audit.py`.
-8. **Real diagrams, many examples, all text editable**: a diagram for every mechanism; never bake labels into a PNG (the user must be able to edit in Canva). Use native shapes/filled polygons; pictures only for pure artwork. 3-4 sourced worked examples, one idea per slide, action titles.
+8. **Real diagrams, many examples, all text editable**: a diagram for every mechanism; never bake labels into a PNG (the user must be able to edit in Canva). Use native shapes/filled polygons; pictures only for pure artwork. 3-4 sourced worked examples, one idea per slide, action titles. **No emoji or pictographic symbols anywhere** - titles, points, labels, captions, diagram art, notes; `plan_check.py` and `deck_audit.py` reject them.
 9. **Never touch the user's original.** "Làm lại" = build a new design and hand back the new link. Multi-page edits get a `copy-design` backup first (no undo, no delete tool).
 10. **Learn and record**: read `deck-rules.md` first; append every user correction (`templates/deck-rules.md`).
 

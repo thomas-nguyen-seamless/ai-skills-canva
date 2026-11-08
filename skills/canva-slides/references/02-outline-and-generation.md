@@ -48,7 +48,7 @@ Then, in this order (each 1-3 lines):
 1. **Subject, audience, purpose, language**: "Triết học Mác - Lênin, quy luật phủ định của phủ định; khán giả: giảng viên và sinh viên; mục tiêu: giải thích khái niệm, nội dung, ý nghĩa, kèm ví dụ; tiếng Việt có dấu đầy đủ, thuật ngữ nhất quán".
 2. **Mode and narrative stance**: "chế độ talk (<= 40 từ/slide, <= 4 gạch đầu dòng), tiết lộ dần, kết bằng slide takeaway".
 3. **Design stance** (5 lines): ground colour, ONE accent, type character, image language, density register.
-4. **Avoid list** (the merged anti-slop veto list, section 6 of `03`): "không 3D, không gradient, không đổ bóng, không clip-art, không ảnh stock, không emoji, không gạch chân/vạch màu dưới tiêu đề, không viền một cạnh, không căn giữa toàn bộ, không chữ in hoa trừ tiêu đề bìa".
+4. **Avoid list (emoji is a hard ban: no emoji anywhere, in any field)** (the merged anti-slop veto list, section 6 of `03`): "không 3D, không gradient, không đổ bóng, không clip-art, không ảnh stock, tuyệt đối không emoji hay biểu tượng pictograph, không gạch chân/vạch màu dưới tiêu đề, không viền một cạnh, không căn giữa toàn bộ, không chữ in hoa trừ tiêu đề bìa".
 5. **Type and layout hints**: "chữ lớn, tiêu đề ngắn một dòng, tối đa 3 ý mỗi slide, lề rộng, mọi slide cùng lưới, tiêu đề cùng vị trí".
 6. **Visual vocabulary per slide type**: the sentence that tells the generator to draw chains, tables, cards **natively** where possible and to leave a large empty area where you will insert a custom diagram.
 7. **Terminology**: the approved terms, spelled exactly.

@@ -5,6 +5,8 @@ Keep it next to the deck (default `./deck-rules.md` in the deck folder).
 
 ## Standing rules (seeded from observed feedback, 2026-11)
 
+- No emoji, emoticons or pictographic symbols anywhere in the deck: titles, points, labels, captions, diagram labels, alt text, presenter notes. Use words and layout for emphasis. (hard rule, 2026-11-08)
+
 - Language: Vietnamese with full diacritics; academic register; canonical course terminology.
 - Type: body 34-38 px, support 30-34, titles 52-60 on 1920x1080; never below 32 px for anything to be read. ("font bự hơn" is the recurring complaint: obey from the first draft.)
 - Consistency: one font system, one accent, same title position, same left margin on every slide; sibling cards/rows have identical line counts.
@@ -21,3 +23,4 @@ Keep it next to the deck (default `./deck-rules.md` in the deck folder).
 | 2026-11-06 | "format ko lệch" | one grid: left 130, title top 76, equal cards | audit alignment before delivery |
 | 2026-11-06 | "more visually, more examples" | added examples 3 and 4; diagram slides | plan >= 3-4 examples; diagram per mechanism |
 | 2026-11-07 | "15-20 slides ... trực quan, chi tiết, hình ảnh cụ thể, ví dụ đầy đủ, chuẩn 100% không sai lệch" (from the Giáo trình PDF) | 20 slides; every claim mapped to a textbook page; examples outside the textbook labelled inside the slide; extra property "phổ biến" removed | with a source PDF the textbook wording wins; keep a slide-to-page ledger |
+| 2026-11-08 | "không emoji at all trong slides" | plan_check + deck_audit now reject emoji/pictographs | zero emoji anywhere in slide content |

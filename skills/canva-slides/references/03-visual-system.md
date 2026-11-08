@@ -144,7 +144,7 @@ Fail the slide when you see any of these. Many are generator defaults you can de
 6. **Gradients, drop shadows, 3D, glassy cards, blobs, Memphis confetti, corner swooshes, generic network meshes** used as filler. At most one elevation level per deck and only if the theme has it.
 7. **Same soft-shadow rounded card repeated** with no relationship between cards ("SaaS card kit"); "three big numbers" with no relation.
 8. **Cream/beige default ground + serif + terracotta** or **near-black + acid accent** chosen by default (acceptable only when derived from the subject and argued).
-9. **Stock clichés**: handshakes, headsets, lightbulbs, magnifying glass, gears, smiling-at-camera, clip-art, emoji as icons (professional/academic decks ban emoji and decorative icons).
+9. **Stock clichés**: handshakes, headsets, lightbulbs, magnifying glass, gears, smiling-at-camera, clip-art, emoji as icons. **Hard rule for this user: no emoji or pictographic symbol anywhere in the deck** - not in titles, points, labels, captions, diagram labels, alt text or notes; `plan_check.py` and `deck_audit.py` reject them.
 10. **Decorative icons** on academic slides; **decorative images** that carry no information (the honesty test: remove the image; if nothing is lost it was decoration).
 11. **Template chrome on every slide**: logo or footer repeated on interior slides (cover and closing only unless the institution requires it).
 12. **"Questions?" / bare "Thank you" / "Let's dive in" / agenda as filler** openers and closers in a talk that is not required to have one.

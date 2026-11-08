@@ -16,6 +16,7 @@ Mode budgets (per content slide): presenter <= 3 points / 25 words; talk <= 4 / 
 Other thresholds (see references/01-discovery-and-narrative.md and 03-visual-system.md):
   title <= 65 chars, unique, a claim not a bare topic label
   each point <= 12 words (warn >12, error >18)
+  no emoji or pictographic symbols anywhere (title, points, description, labels): hard error
   pace: flag decks outside 0.7-3 min per content slide
   a deck > 6 slides wants an agenda; >= 8 slides wants >= 2 examples; always a closing slide
   at most 2 consecutive slides of the same role (rhythm); crossheads <= 2 in a row
@@ -28,6 +29,16 @@ import unicodedata
 from pathlib import Path
 
 errs, warns, infos = [], [], []
+
+
+# Emoji and pictographs are banned in slide content: they render as vendor-dependent colour
+# glyphs, break an academic register, and cannot be restyled. Arrows, +, -, x and maths signs are fine.
+EMOJI = re.compile("[\U0001F000-\U0001FAFF\u2600-\u27BF\u2B00-\u2BFF\uFE0F\u200D]")
+
+
+def emoji_hits(text):
+    t = (text or "").replace("\u2713", "").replace("\u2717", "").replace("\u2605", "")
+    return [m.group(0) for m in EMOJI.finditer(t)]
 
 
 def words(s):
@@ -66,6 +77,18 @@ def main():
         t = s["title"].strip()
         pts = s.get("points", [])
         tag = f"slide {i} [{t[:40]}]"
+        for field, val in (("title", t), ("description", s.get("description", ""))):
+            hits = emoji_hits(val)
+            if hits:
+                errs.append(f"{tag}: {field} has emoji/pictograph {''.join(hits)!r} (banned in slides)")
+        for p_ in pts:
+            hits = emoji_hits(p_)
+            if hits:
+                errs.append(f"{tag}: point has emoji/pictograph {''.join(hits)!r} (banned in slides)")
+        for lb in s.get("labels", []):
+            hits = emoji_hits(lb)
+            if hits:
+                errs.append(f"{tag}: label has emoji/pictograph {''.join(hits)!r} (banned in slides)")
         if len(t) > 65:
             errs.append(f"{tag}: title is {len(t)} chars (max 65)")
         key = norm(t)

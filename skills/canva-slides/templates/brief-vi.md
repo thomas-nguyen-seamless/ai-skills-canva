@@ -11,7 +11,7 @@ Chế độ talk: tối đa 4 gạch đầu dòng và khoảng 40 từ mỗi sli
 
 Phong cách thiết kế: nền <sáng/tối: mã màu>, MỘT màu nhấn <mã màu>, chữ sans-serif hỗ trợ tiếng Việt, hình ảnh <phẳng, vector, tối giản / tranh khắc theo ảnh người dùng>, mật độ cân bằng, lề rộng, mọi slide dùng cùng một lưới, tiêu đề cùng vị trí.
 
-Tránh: 3D, gradient, đổ bóng, clip-art, ảnh stock, emoji, gạch hoặc vạch màu dưới tiêu đề, viền một cạnh, căn giữa toàn bộ, chữ in hoa (trừ tiêu đề bìa), số thứ tự 01/02/03 khi các mục không theo trình tự.
+Tránh: 3D, gradient, đổ bóng, clip-art, ảnh stock, TUYỆT ĐỐI không emoji hay pictograph (kể cả icon trong tiêu đề, nhãn sơ đồ, dòng nguồn), không gạch hoặc vạch màu dưới tiêu đề, viền một cạnh, căn giữa toàn bộ, chữ in hoa (trừ tiêu đề bìa), số thứ tự 01/02/03 khi các mục không theo trình tự.
 
 Chữ lớn dễ đọc ở cuối lớp: tiêu đề ngắn, nội dung ngắn gọn, nhiều khoảng trắng có chủ đích. Slide sơ đồ chỉ có tiêu đề và một vùng trống lớn bên dưới, không vẽ minh hoạ. Slide ví dụ vẽ chuỗi ba khối bằng nhau nối bằng mũi tên, chú thích ngắn dưới mỗi khối.
 
