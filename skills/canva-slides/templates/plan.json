@@ -4,6 +4,17 @@
   "mode": "talk",
   "minutes": 15,
   "audience": "giảng viên và sinh viên, môn Triết học Mác – Lênin",
+  "design": {
+    "theme": "light #F7F8FA, one accent #1F5FA8, ink #0F2A43",
+    "density": "talk",
+    "visual_language": "native diagrams + one engraving band",
+    "imagery": "user/AI engravings only, no stock, no emoji",
+    "typography": "Arial, body 34-38 px, titles 52-60 px",
+    "examples": "3-4 across nature / society / thought",
+    "citations": "verbatim + page numbers",
+    "special_slides": "agenda, summary, review questions, thanks",
+    "constraints": "16:9, PDF alongside"
+  },
   "spine": "Phát triển không đi theo đường thẳng mà theo đường xoáy ốc: mỗi lần phủ định biện chứng giữ lại cái hợp lý và nâng sự vật lên trình độ cao hơn.",
   "terminology": {
     "ba tính chất": [

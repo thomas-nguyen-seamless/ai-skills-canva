@@ -42,6 +42,7 @@ This skill encodes what actually held up under live testing: a plan gate before 
 
 ## What you get
 
+- **Design intake first** — before building, a tailored questionnaire generated from the topic (theme, density, visual language, imagery, citations, special slides); the answers are recorded in the plan and the linter blocks the build until they exist.
 - **Narrative plan first** — spine, mode (presenter / talk / document), per-slide action titles, word budgets, example coverage; a linter blocks a bad structure before generation.
 - **Source-faithful decks** — a slide-to-page ledger (`nguon-doi-chieu.md`) for textbook or PDF-based work; examples outside the source are labelled on the slide.
 - **Visual system, not vibes** — px type scale for 1920×1080, one accent, grid and margins, an explicit anti-slop veto list, native diagrams.
@@ -104,7 +105,7 @@ scripts/update_canva_deck.sh DAHaPZNNOhs deck.pptx "tmp import" --pages "5,9"
 
 <div align="center"><img src="assets/workflow.svg" alt="Plan, build, verify, publish, export" width="100%"></div>
 
-- Phase | Gate before moving on
+| # | Phase | Gate before moving on |
 |---|---|---|
 | 1 | **Plan** — intake, source ledger, terminology, per-slide record, examples | `plan_check.py --ghost` reports **0 errors** |
 | 2 | **Build** — Canva AI (`create-design`) *or* native PPTX in Arial, measured text | page count equals the plan |
@@ -131,6 +132,7 @@ Two merge jobs per page (insert + delete) keep the page count constant, so numbe
 | Script | Purpose |
 |---|---|
 | `bootstrap.sh` | install missing prerequisites; verify login and MCP mount |
+| `intake_prompt.py` | tailored pre-build questionnaire derived from the topic |
 | `plan_check.py` | plan linter: budgets, titles, duplicates, pace, agenda, examples, ghost-deck |
 | `text_diff.py` | planned strings vs generated/imported text |
 | `deck_audit.py` | measured layout audit: title drift, safe zone, overflow, overlap, accent-rule tells |

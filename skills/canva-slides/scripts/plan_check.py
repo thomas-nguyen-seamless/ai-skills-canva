@@ -20,6 +20,8 @@ Other thresholds (see references/01-discovery-and-narrative.md and 03-visual-sys
   pace: flag decks outside 0.7-3 min per content slide
   a deck > 6 slides wants an agenda; >= 8 slides wants >= 2 examples; always a closing slide
   at most 2 consecutive slides of the same role (rhythm); crossheads <= 2 in a row
+  a "design" block (theme, density, visual_language) is required: ask the intake questions first
+  (templates/intake-questions.md, scripts/intake_prompt.py) - missing it blocks the first build
 --ghost prints the titles in order: read them alone, they must tell the argument (ghost-deck test)
 """
 import json
@@ -67,6 +69,10 @@ def main():
     minutes = plan.get("minutes")
     if not plan.get("spine"):
         warns.append("no spine sentence: if you cannot state the deck's one-sentence argument it is not ready")
+    design = plan.get("design") or {}
+    missing = [k for k in ("theme", "density", "visual_language") if not str(design.get(k, "")).strip()]
+    if missing:
+        warns.append("design stance incomplete (" + ", ".join(missing) + "): run scripts/intake_prompt.py with the topic, ask the user, then record the answers under 'design'")
     seen = {}
     content = 0
     examples = 0

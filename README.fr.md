@@ -29,6 +29,7 @@ Cette compétence consigne ce qui a tenu en conditions réelles : un contrôle d
 
 ## Ce que vous obtenez
 
+- **Entretien de design d'abord** — avant de construire, un questionnaire adapté au sujet (thème, densité, langage visuel, images, citations, diapositives spéciales) ; les réponses vont dans le plan et le linter bloque tant qu'elles manquent.
 - **Le plan d'abord** — fil conducteur, mode (orateur / exposé / document), titres affirmatifs par page, limites de mots, couverture des exemples ; un linter bloque une structure fautive avant génération.
 - **Fidèle à la source** — tableau de correspondance page de slide ↔ page du document pour un support de cours ou un PDF ; les exemples hors source sont signalés sur la diapositive.
 - **Un système visuel, pas des impressions** — échelle typographique en px pour 1920×1080, un seul accent, grille et marges, liste d'interdits « anti-effet IA », schémas natifs.
@@ -91,7 +92,7 @@ scripts/update_canva_deck.sh DAHaPZNNOhs deck.pptx "tmp import" --pages "5,9"
 
 <div align="center"><img src="assets/workflow.svg" alt="Planifier, construire, vérifier, publier, exporter" width="100%"></div>
 
-- Étape | Condition pour avancer
+| # | Étape | Condition pour avancer |
 |---|---|---|
 | 1 | **Plan** — brief, tableau des sources, terminologie, fiche par diapo, exemples | `plan_check.py --ghost` renvoie **0 erreur** |
 | 2 | **Construction** — IA Canva (`create-design`) *ou* PPTX natif (Arial, hauteur mesurée) | nombre de pages = plan |
@@ -118,6 +119,7 @@ Deux tâches merge par page (insertion + suppression) gardent le nombre de pages
 | Script | Rôle |
 |---|---|
 | `bootstrap.sh` | installe ce qui manque ; vérifie connexion et montage MCP |
+| `intake_prompt.py` | questionnaire de design généré à partir du sujet |
 | `plan_check.py` | linter du plan : budgets de mots, titres, doublons, rythme, sommaire, exemples |
 | `text_diff.py` | chaînes prévues vs texte réel |
 | `deck_audit.py` | audit mesuré : décalages, zones de sécurité, débordement, chevauchement |

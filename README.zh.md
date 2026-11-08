@@ -29,6 +29,7 @@
 
 ## 能力
 
+- **先做设计访谈** —— 动工前先问清主题、密度、视觉语言、图片、引用与特殊页；问题按主题生成，答案写入 plan，缺失时 linter 阻止开工。
 - **先规划后动笔** —— 主线、模式（演讲者 / 讲授 / 文档）、每页行动式标题、字数上限、案例覆盖；生成前由 linter 拦截错误结构。
 - **忠于来源** —— 教科书 / PDF 场景附"幻灯片 ↔ 页码"对照表；来源之外的例子会在页面上标明。
 - **视觉系统而非感觉** —— 1920×1080 的 px 字号阶梯、单一强调色、统一网格与边距、明确的"反 AI 味"禁用清单、原生图示。
@@ -91,7 +92,7 @@ scripts/update_canva_deck.sh DAHaPZNNOhs deck.pptx "tmp import" --pages "5,9"
 
 <div align="center"><img src="assets/workflow.svg" alt="规划、构建、校验、发布、导出" width="100%"></div>
 
-- 阶段 | 推进门槛
+| # | 阶段 | 推进门槛 |
 |---|---|---|
 | 1 | **规划** —— 需求、来源对照表、术语、逐页记录、案例 | `plan_check.py --ghost` 报告 **0 错误** |
 | 2 | **构建** —— Canva AI（`create-design`）*或* 原生 PPTX（Arial，实测文字高度） | 页数与计划一致 |
@@ -118,6 +119,7 @@ scripts/update_canva_deck.sh <ID> deck.pptx "tmp" # 拒绝执行
 | 脚本 | 用途 |
 |---|---|
 | `bootstrap.sh` | 安装缺失依赖；检查登录与 MCP 挂载 |
+| `intake_prompt.py` | 依主题生成开工前的设计问卷 |
 | `plan_check.py` | 计划 lint：字数、标题、重复、节奏、目录、案例、ghost-deck |
 | `text_diff.py` | 计划文字与实际文字比对 |
 | `deck_audit.py` | 可测量版式审计：标题错位、安全区、溢出、重叠、AI 味痕迹 |

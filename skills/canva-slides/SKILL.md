@@ -34,7 +34,7 @@ Skill directory (this folder): `references/`, `scripts/`, `templates/`, `researc
 |---|---|---|---|
 | **0 Setup** | `scripts/bootstrap.sh` — installs uv/node/Canva CLI/python libs if missing, checks login + MCP mount; report-only with `--no-install` | readiness line printed; `exit 0` before promising anything | `references/12-setup-and-bootstrap.md` |
 | **0 Pre-flight** | pick the mode; `get-logged-in-account-details`; probe credits (first `create-design` response) and the transaction service (`start-editing-transaction` + cancel); `list-brand-kits` (empty = normal); read `deck-rules.md`; decide original vs copy | mode named; account stated; capability limits stated before promising | `references/00-preflight-and-environment.md` |
-| **1 Plan** | challenge-before-acting intake; source + terminology sheet; **mode token** presenter/talk/document; spine sentence; slide count from minutes; per-slide record; 3-4 examples; design stance; ghost-deck test | `plan_check.py plan.json --ghost` = 0 errors; user confirms if > 10 slides or graded | `01-discovery-and-narrative.md`, `09-education-playbooks.md`, `templates/plan.json` |
+| **1 Plan** | **design intake** (`intake_prompt.py`: theme, density, visual language, imagery, citations, special slides - ask 4-6 at a time with defaults); challenge-before-acting intake; source + terminology sheet; **mode token** presenter/talk/document; spine sentence; slide count from minutes; per-slide record; 3-4 examples; design stance; ghost-deck test | `plan_check.py plan.json --ghost` = 0 errors; user confirms if > 10 slides or graded | `01-discovery-and-narrative.md`, `09-education-playbooks.md`, `templates/plan.json` |
 | **2 Generate** | brief from `templates/brief-vi.md` + outline = plan; `create-design`; poll `get-create-design-async-job` (>= 15 s, status `completed`); max 2 generations. **If `quota_exceeded` or transactions 503: go to `11`** | `design_id`, edit link, slide count == plan | `02-outline-and-generation.md` |
 | **3 Verify** | `get-design` page count; `get-design-content` -> `text_diff.py`; transaction inspect; thumbnails per page; contact sheet | no hard fail left unlisted | `04-review-and-qa.md` s.2-3 |
 | **4 Repair** | backup if > 3 pages; declared passes: terminology -> typography -> alignment -> delete AI-tell shapes; one batched transaction; commit | all touched pages re-rendered and looked at | `05-editing-operations.md`, `03-visual-system.md` |
@@ -48,7 +48,7 @@ Skill directory (this folder): `references/`, `scripts/`, `templates/`, `researc
 
 | User says | Do |
 |---|---|
-| "làm slide về X" | Phase 0 -> 1 -> 2 -> 3 -> 6 -> 7. Ask only the missing mandatory intake items. With a source PDF: read it, build the ledger first. |
+| "làm slide về X" | Phase 0 -> 1 -> 2 -> 3 -> 6 -> 7. Run `intake_prompt.py --topic "X"` and ask the 4-6 style questions (theme, density, visual language, imagery, citations) with defaults before building. With a source PDF: read it, build the ledger first. |
 | "làm lại slide này" + link | read original, keep it untouched, build a **new** design from a plan that keeps every source fact, then review. |
 | "font bự hơn / nhỏ quá" | declared **typography pass** (`05` s.7), render **all** pages, append to `deck-rules.md`. |
 | "lệch / không đều" | `deck_audit.py` + alignment edit (`05` s.8). |
@@ -85,6 +85,7 @@ Quirks: grouped-child `delete_element` is a silent no-op (use `pageId-groupId`);
 | `diagrams.py spec.json out.png` (`--example KIND`) | PNG diagrams (labels baked: use only when not editable-critical) |
 | `contact_sheet.py thumbs.tsv sheet.png [cols cell]` | one image of all pages; labels bottom-right |
 | `post_upload.sh "<uploadUrl>" file.png` | single-use upload -> `{"mediaId"}` |
+| `intake_prompt.py --topic "..." [--lang vi\|en]` | tailored pre-build questionnaire (style, theme, density, imagery, examples, citations) derived from the topic |
 | `bootstrap.sh [--yes\|--no-install]` | installs missing uv/node/Canva CLI/python libs, checks Canva CLI login and MCP mount |
 | `templates/pptx-fallback/` | `build_deck.py` (native PPTX builder with measured text), `prep_assets.py` (ink-only art), `render.sh` (PowerPoint render), `verify_text.py` (rendered/Canva PDF text vs plan) |
 

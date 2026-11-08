@@ -26,6 +26,23 @@ The highest-leverage mechanism found (lecture-slides' 151 solved complaints; aca
 3. Whenever the user says "bigger", "misaligned", "too empty", "more examples", "use my picture", append one dated line: the complaint, the measured fix, the rule.
 4. Seeded rules for this user (observed 2026-11): Vietnamese; body 34-38 px and titles ~52 px on 1920x1080; consistent fonts and aligned format; real diagrams, not decorative art; many worked examples; rebuild as a new deck and keep the original; use the user's own engraving band on cover and closing; never idle-pad with AI stock imagery.
 
+### Design intake (ask before any build step)
+
+The look is a decision, not a default. Before the plan is frozen, confirm with the user: **theme**
+(light/dark, brand colours), **density** (presenter / talk / document), **visual language** (engraving,
+flat vector, photography, diagrams only, minimal), **type** (sans vs serif, lecture-hall sizes),
+**imagery source** (own photos / AI art / public domain / none), **examples** (how many, which domains),
+**citation fidelity** (verbatim vs paraphrase, page numbers), **special slides** (agenda, review questions,
+thanks, name and date), **constraints** (slide count, 16:9, print, PDF) and **hard bans** (what must never
+be wrong).
+
+Ask 4-6 questions at a time, each with a default, and derive them from the topic: a law needs a
+chain/cycle/spiral decision, history a timeline, a comparison a column count, numbers their real source,
+a life cycle a closed-loop decision. Never ask what the source or the brief already answers. Generate the
+tailored set with `scripts/intake_prompt.py --topic "..." [--lang vi|en]`; the full bank and the
+topic-to-question matrix are in `templates/intake-questions.md`. Record the answers in `plan.json` under
+`design` - `plan_check.py` warns and the first build waits while it is missing.
+
 ## 2. Source material and content integrity
 
 Doctrinal and factual accuracy is the highest-severity failure mode (the generator once swapped "phổ biến" for "phát triển").

@@ -29,6 +29,7 @@ Este skill documenta lo que sí resistió las pruebas reales: control del plan a
 
 ## Qué obtienes
 
+- **Entrevista de diseño primero** — antes de construir, un cuestionario adaptado al tema (tema visual, densidad, lenguaje visual, imágenes, citas, diapositivas especiales); las respuestas se guardan en el plan y el linter bloquea hasta que existan.
 - **Primero el plan** — hilo argumental, modo (ponente / charla / documento), títulos de acción por página, límites de palabras, cobertura de ejemplos; un linter bloquea una estructura defectuosa antes de generar.
 - **Fiel a la fuente** — tabla diapositiva ↔ página para trabajos basados en un manual o PDF; los ejemplos ajenos a la fuente se etiquetan en la propia diapositiva.
 - **Sistema visual, no intuiciones** — escala tipográfica en px para 1920×1080, un solo color de acento, rejilla y márgenes, lista de vetos «anti-IA», diagramas nativos.
@@ -91,7 +92,7 @@ scripts/update_canva_deck.sh DAHaPZNNOhs deck.pptx "tmp import" --pages "5,9"
 
 <div align="center"><img src="assets/workflow.svg" alt="Planificar, construir, verificar, publicar, exportar" width="100%"></div>
 
-- Fase | Condición para avanzar
+| # | Fase | Condición para avanzar |
 |---|---|---|
 | 1 | **Plan** — briefing, tabla de fuentes, terminología, ficha por diapositiva, ejemplos | `plan_check.py --ghost` devuelve **0 errores** |
 | 2 | **Construcción** — IA de Canva (`create-design`) *o* PPTX nativo (Arial, altura medida) | número de páginas = plan |
@@ -118,6 +119,7 @@ Cada página son dos trabajos merge (insertar + borrar), así que el total de p�
 | Script | Función |
 |---|---|
 | `bootstrap.sh` | instala lo que falta; verifica inicio de sesión y montaje MCP |
+| `intake_prompt.py` | cuestionario de diseño generado a partir del tema |
 | `plan_check.py` | linter del plan: presupuestos de palabras, títulos, duplicados, ritmo, índice, ejemplos |
 | `text_diff.py` | cadenas previstas frente al texto real |
 | `deck_audit.py` | auditoría medida: desplazamientos, zonas seguras, desborde, solapamiento |

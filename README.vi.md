@@ -29,6 +29,7 @@ Skill này ghi lại đúng những gì đã trụ được khi thử thật: ch
 
 ## Bạn nhận được gì
 
+- **Hỏi trước khi dựng** —— bộ câu hỏi sinh theo chủ đề (theme, mật độ, ngôn ngữ thị giác, hình ảnh, trích dẫn, slide đặc biệt); câu trả lời ghi vào plan, thiếu thì linter chặn.
 - **Kế hoạch trước, vẽ sau** — mạch bài, chế độ (presenter / talk / document), tiêu đề hành động từng trang, hạn mức từ, độ phủ ví dụ; linter chặn cấu trúc sai trước khi tạo.
 - **Bám nguồn** — bảng đối chiếu slide ↔ trang (`nguon-doi-chieu.md`) cho deck từ giáo trình/PDF; ví dụ ngoài nguồn được ghi rõ ngay trên slide.
 - **Hệ thị giác, không phải cảm tính** — thang cỡ chữ px cho 1920×1080, một màu nhấn, lưới và lề cố định, danh sách cấm rõ ràng, sơ đồ native.
@@ -91,7 +92,7 @@ scripts/update_canva_deck.sh DAHaPZNNOhs deck.pptx "tmp import" --pages "5,9"
 
 <div align="center"><img src="assets/workflow.svg" alt="Lập kế hoạch, dựng, kiểm chứng, xuất bản, xuất file" width="100%"></div>
 
-- Pha | Cửa chặn trước khi đi tiếp
+| # | Pha | Cửa chặn trước khi đi tiếp |
 |---|---|---|
 | 1 | **Kế hoạch** — intake, bảng nguồn, thuật ngữ, hồ sơ từng trang, ví dụ | `plan_check.py --ghost` báo **0 lỗi** |
 | 2 | **Dựng** — Canva AI (`create-design`) *hoặc* PPTX native, chữ Arial, đo chiều cao thật | số trang khớp kế hoạch |
@@ -118,6 +119,7 @@ Mỗi trang là 2 job merge (insert + delete) nên tổng số trang không đ�
 | Script | Việc |
 |---|---|
 | `bootstrap.sh` | cài phần thiếu; kiểm đăng nhập và mount MCP |
+| `intake_prompt.py` | sinh bộ câu hỏi thiết kế theo chủ đề trước khi dựng |
 | `plan_check.py` | lint kế hoạch: hạn mức từ, tiêu đề, trùng lặp, nhịp, mục lục, ví dụ, ghost-deck |
 | `text_diff.py` | đối chiếu chuỗi dự kiến với chữ thực tế |
 | `deck_audit.py` | audit bố cục đo được: lệch tiêu đề, vùng an toàn, tràn, chồng, dấu hiệu AI |
